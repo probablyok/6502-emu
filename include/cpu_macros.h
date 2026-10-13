@@ -1,0 +1,10 @@
+#ifndef CPU_MACROS
+#define CPU_MACROS
+
+#define CPU_MEM_RESET_VEC_ADDR_H 0xFFFC
+#define CPU_MEM_RESET_VEC_ADDR_L 0xFFFD
+
+#define CPU_MEM_STACK_START 0x0100
+#define CPU_MEM_STACK_END   0x1FF
+
+#endif
