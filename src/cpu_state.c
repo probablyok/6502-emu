@@ -1,20 +1,18 @@
-#include <cpu_macros.h>
-#include <cpu_state.h>
+#include "cpu_state.h"
+#include "cpu_macros.h"
+#include "util.h"
 #include <stdlib.h>
-#include <util.h>
 
-CpuByte *cpu_create_mem(void) {
-    CpuByte *buf = safe_malloc(sizeof(CpuByte) * CPU_MEM_MAX_SIZE);
+/// @brief Creates 256x256 array containing bytes of memory for CPU
+/// @param cpu The emulated 6502 CPU
+static void cpu_create_mem(Cpu *cpu);
 
-    // Do other memory initialisation soon
-    return buf;
+/// @brief Lookup table where opcode is assigned to CPU instruction with
+/// specific per-cycle steps
+static void (*INSTRUCTION_TABLE[256])(CpuInstruction *);
+
+static void cpu_create_mem(Cpu *cpu) {
+    cpu->mem = safe_calloc(CPU_MEM_MAX_SIZE, sizeof(CpuByte));
 }
 
-void cpu_state_zero(Cpu *cpu) {
-    cpu->a = 0;
-    cpu->x = 0;
-    cpu->y = 0;
-    cpu->sp = 0;
-    cpu->sr = 0;
-    cpu->pc = 0;
-}
+void cpu_free_mem(Cpu *cpu) { free(cpu->mem); }
