@@ -1,10 +1,7 @@
-#ifndef CPU_STATE
-#define CPU_STATE
+#ifndef CPU_STATE_H
+#define CPU_STATE_H
 
-#include <stdint.h>
-
-typedef uint8_t CpuByte;
-typedef uint16_t CpuWord;
+#include <cpu_types.h>
 
 typedef struct {
     CpuWord pc;
@@ -19,4 +16,8 @@ typedef struct {
 /// @param cpu The emulated 6502 CPU
 void cpu_state_zero(Cpu *cpu);
 
-#endif // CPU_STATE
+/// @brief Creates 256x256 array containing bytes of memory
+/// @return Memory array
+CpuByte *cpu_create_mem(void);
+
+#endif // CPU_STATE_H
