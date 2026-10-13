@@ -4,7 +4,7 @@
 #include "cpu_types.h"
 
 /// @brief Representation of 6502 CPU register state
-typedef struct {
+typedef struct Cpu {
     // Internal registers
     CpuByte a, x, y, sr, sp;
     CpuWord pc;
@@ -18,6 +18,8 @@ typedef struct {
     CpuByte data_bus;
 
     // State machine pointer
+    void (*cur_step)(struct Cpu *);
+    void (*pending_operation)(struct Cpu *);
 } Cpu;
 
 /// @brief Function that executes exactly one clock cycle of work
@@ -48,12 +50,12 @@ typedef enum {
     ADDR_ILLEGAL
 } AddrMode;
 
-/// @brief Zeros all CPU registers
-/// @param cpu The emulated 6502 CPU
-void cpu_state_zero(Cpu *cpu);
-
 /// @brief Frees the 256x256 array for memory in CPU
 /// @param cpu The emulated 6502 CPU
 void cpu_free_mem(Cpu *cpu);
+
+/// @brief Performs one clock cycle on the CPU
+/// @param cpu The emulated emulated 6502 CPU
+void cpu_tick(Cpu *cpu);
 
 #endif // CPU_STATE_H
