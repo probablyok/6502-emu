@@ -6,7 +6,6 @@
 int main(void) {
     // Create CPU and initialise memory
     Cpu cpu = {0};
-    cpu_mem_create(&cpu);
 
     // Mock CPU state
     cpu.pc = 0x8000;
@@ -20,7 +19,5 @@ int main(void) {
     cpu_tick(&cpu);
     cpu_tick(&cpu);
 
-    // Cleanup CPU memory
-    cpu_mem_free(&cpu);
     return 0;
 }

@@ -1,6 +1,7 @@
 #ifndef CPU_STATE_H
 #define CPU_STATE_H
 
+#include "cpu_macros.h"
 #include "cpu_types.h"
 
 /// @brief Representation of 6502 CPU register state
@@ -10,7 +11,7 @@ typedef struct Cpu {
     CpuWord pc;
 
     // CPU Memory
-    CpuByte *mem;
+    CpuByte mem[CPU_MEM_MAX_SIZE];
 
     // Internal latches
     CpuByte opcode;

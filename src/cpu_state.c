@@ -1,7 +1,6 @@
 #include "cpu_state.h"
 #include "cpu_macros.h"
 #include "cpu_mem.h"
-#include "util.h"
 #include <stdlib.h>
 
 /// @brief Lookup table where opcode is assigned to CPU instruction with
@@ -23,7 +22,7 @@ static void cpu_status_reg_update_zero(Cpu *cpu, CpuByte data) {
 /// @param data The data to test
 static void cpu_status_reg_update_negative(Cpu *cpu, CpuByte data) {
     cpu->sr =
-        (data &= 0x80) ? ((cpu->sr) | CPU_FLAG_N) : ((cpu->sr) & ~CPU_FLAG_N);
+        (data & 0x80) ? ((cpu->sr) | CPU_FLAG_N) : ((cpu->sr) & ~CPU_FLAG_N);
 }
 
 void cpu_tick(Cpu *cpu) { cpu->cur_step(cpu); }
