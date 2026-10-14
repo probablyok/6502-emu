@@ -4,7 +4,8 @@
 #include <string.h>
 
 static void test_opcode(const char *filepath) {
-    printf("Loading %s...\n", filepath);
+    printf("Running %s...\n", filepath);
+    fflush(stdout);
 
     // Load JSON
     char *json_buf = NULL;
@@ -58,16 +59,17 @@ static void test_opcode(const char *filepath) {
             cpu.mem[addr] = data;
         }
 
-        printf("Simulating %s...\n", name->valuestring);
+        // There are a lot of test cases so maybe only show where fails happen?
+        // printf("Simulating %s...\n", name->valuestring);
 
         // Loop CPU tick
         cJSON *cycle_item = NULL;
         unsigned int tick = 0;
         unsigned int passed = 1;
+
         cJSON_ArrayForEach(cycle_item, cycles) {
             cpu_tick(&cpu); // Simulate CPU tick
             tick++;
-            printf("Simulated tick %d...\n", tick);
 
             // Verify cycle readings
             CpuWord valid_addr_cmp =
@@ -80,25 +82,25 @@ static void test_opcode(const char *filepath) {
 
             // Compare
             if (valid_addr_cmp != cpu.addr_bus) {
-                fprintf(
-                    stderr,
-                    "Error: Expected address %d, got %d. Aborting test case!\n",
-                    valid_addr_cmp, cpu.addr_bus);
+                fprintf(stderr,
+                        "\n[%s] Tick %d - Addr mismatch: Expected 0x%04X\n, "
+                        "got 0x%04X\n",
+                        name->valuestring, tick, valid_addr_cmp, cpu.addr_bus);
                 passed = 0;
                 break;
             }
             if (valid_data_cmp != cpu.data_bus) {
-                fprintf(
-                    stderr,
-                    "Error: Expected data %d, got %d. Aborting test case!\n",
-                    valid_data_cmp, cpu.data_bus);
+                fprintf(stderr,
+                        "\n[%s] Tick %d - Data mismatch: Expected 0x%02X, got "
+                        "0x%02X",
+                        name->valuestring, tick, valid_data_cmp, cpu.data_bus);
                 passed = 0;
                 break;
             }
             if (valid_type_cmp != cpu.is_read) {
                 fprintf(stderr,
-                        "Error: Expected R/W %d, got %d. Aborting test case!\n",
-                        valid_type_cmp, cpu.is_read);
+                        "\n[%s] Tick %d - R/W mismatch: Expected %d, got %d",
+                        name->valuestring, tick, valid_type_cmp, cpu.is_read);
                 passed = 0;
                 break;
             }
@@ -123,49 +125,44 @@ static void test_opcode(const char *filepath) {
                 (CpuByte)cJSON_GetObjectItemCaseSensitive(final, "y")->valueint;
 
             if (valid_pc != cpu.pc) {
-                fprintf(stderr,
-                        "Error: Expected PC %d, got %d. Aborting test case!\n",
-                        valid_pc, cpu.pc);
-                break;
+                fprintf(stderr, "\n[%s] PC Error: Expected 0x%04X, got 0x%04X",
+                        name->valuestring, valid_pc, cpu.pc);
+                passed = 0;
             }
             if (valid_sp != cpu.sp) {
-                fprintf(stderr,
-                        "Error: Expected SP %d, got %d. Aborting test case!\n",
-                        valid_sp, cpu.sp);
-                break;
+                fprintf(stderr, "\n[%s] SP Error: Expected 0x%02X, got 0x%02X",
+                        name->valuestring, valid_sp, cpu.sp);
+                passed = 0;
             }
             if (valid_sr != cpu.sr) {
-                fprintf(stderr,
-                        "Error: Expected SR %d, got %d. Aborting test case!\n",
-                        valid_sr, cpu.sr);
-                break;
+                fprintf(stderr, "\n[%s] SR Error: Expected 0x%02X, got 0x%02X",
+                        name->valuestring, valid_sr, cpu.sr);
+                passed = 0;
             }
             if (valid_a != cpu.a) {
-                fprintf(stderr,
-                        "Error: Expected A %d, got %d. Aborting test case!\n",
-                        valid_a, cpu.a);
-                break;
+                fprintf(stderr, "\n[%s] A Error: Expected 0x%02X, got 0x%02X",
+                        name->valuestring, valid_a, cpu.a);
+                passed = 0;
             }
             if (valid_x != cpu.x) {
-                fprintf(stderr,
-                        "Error: Expected X %d, got %d. Aborting test case!\n",
-                        valid_x, cpu.x);
-                break;
+                fprintf(stderr, "\n[%s] X Error: Expected 0x%02X, got 0x%02X",
+                        name->valuestring, valid_x, cpu.x);
+                passed = 0;
             }
             if (valid_y != cpu.y) {
-                fprintf(stderr,
-                        "Error: Expected Y %d, got %d. Aborting test case!\n",
-                        valid_y, cpu.y);
-                break;
+                fprintf(stderr, "\n[%s] Y Error: Expected 0x%02X, got 0x%02X",
+                        name->valuestring, valid_y, cpu.y);
+                passed = 0;
             }
 
-            // Test was successful
-            passed_cnt++;
-            printf("Test case successful!\n");
+            if (passed) {
+                // Test was successful
+                passed_cnt++;
+            }
         }
     }
 
-    printf("%s outcome: %d/%d\n", filepath, passed_cnt, test_case_cnt);
+    printf("Done. %d/%d passed.\n", passed_cnt, test_case_cnt);
 
     // Free JSON
     cJSON_Delete(root);
