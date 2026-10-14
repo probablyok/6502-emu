@@ -36,6 +36,7 @@
 *.x86_64
 *.hex
 6502-emu
+run_tests
 
 # Debug files
 *.dSYM/
