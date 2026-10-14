@@ -10,17 +10,18 @@ typedef struct Cpu {
     CpuByte a, x, y, sr, sp;
     CpuWord pc;
 
-    // CPU Memory
-    CpuByte mem[CPU_MEM_MAX_SIZE];
-
     // Internal latches
     CpuByte opcode;
     CpuWord addr_bus;
     CpuByte data_bus;
+    CpuByte is_read;
 
     // State machine pointer
     void (*cur_step)(struct Cpu *);
     void (*pending_alu)(struct Cpu *);
+
+    // CPU Memory
+    CpuByte mem[CPU_MEM_MAX_SIZE];
 } Cpu;
 
 /// @brief Function that executes exactly one clock cycle of work

@@ -41,7 +41,7 @@ void cpu_fetch_opcode(Cpu *cpu) {
 
 void cpu_addr_immediate(Cpu *cpu) {
     // Read byte after opcode
-    cpu->data_bus = cpu_mem_read(cpu, cpu->pc++);
+    cpu_mem_read(cpu, cpu->pc++);
 
     // Run pending ALU operation using fetched data
     if (cpu->pending_alu) {

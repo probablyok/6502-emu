@@ -10,6 +10,10 @@
 #define CPU_MEM_STACK_START 0x0100
 #define CPU_MEM_STACK_END 0x1FF
 
+// Flags
+#define CPU_IS_READ 1
+#define CPU_IS_WRITE 0
+
 // Op codes
 #define CPU_OP_LDA_IMMEDIATE 0xA9
 
