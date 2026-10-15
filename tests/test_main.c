@@ -172,7 +172,7 @@ int main(void) {
     printf("Starting 6502 Emulator Test Suite...\n");
     printf("------------------------------------\n");
 
-    test_opcode("tests/a9.json");
+    test_opcode("tests/test_json/6502/v1/a9.json");
 
     printf("All tests completed!\n");
     return 0;

@@ -13,7 +13,7 @@ Basic NMOS 6502 Emulator implemented in C.
 In the root directory of the project, compile and run the emulator with,
 
 ```
-make all
+make
 ./6502-emu
 ```
 
@@ -27,6 +27,12 @@ and re-run with,
 
 ```
 ./run_tests
+```
+
+Test cases are pulled from the 65x02 Processor Tests repository, which takes up some 1.2GiB. You can clean this out with,
+
+```
+make clean-tests
 ```
 
 # References

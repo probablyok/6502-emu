@@ -57,7 +57,7 @@ dkms.conf
 *.dwo
 
 # Testing JSON
-tests/*.json
+tests/test_json
 
 # Code editor / formatting
 .clang-format
