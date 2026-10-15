@@ -1,27 +1,36 @@
 # 6502-emu
+
 Basic NMOS 6502 Emulator implemented in C.
 
 # Features (WIP)
+
 - Cycle level accurate emulation
 - Test suite for each instruction
 - ROM loading support
 
 # Usage
+
 In the root directory of the project, compile and run the emulator with,
+
 ```
 make all
 ./6502-emu
 ```
+
 Compile/run the test suite with,
+
 ```
 make test
 ```
+
 and re-run with,
+
 ```
 ./run_tests
 ```
 
 # References
+
 - [6502 Instruction Set](https://www.masswerk.at/6502/6502_instruction_set.html)
   - Contains details about the 6602 ISA
   - Explains addressing modes, register purposes, memory, etc.
@@ -29,7 +38,7 @@ and re-run with,
   - Language agnostic JSON test cases for each 6502 opcode
   - Details exact data/address bus and R/W statuses per clock cycle
 - [6502_cpu.txt](https://www.nesdev.org/6502_cpu.txt)
-  - Cycle-by-cycle breakdown of each instruction/addressing mode.
+  - Cycle-by-cycle breakdown of each instruction/addressing mode
 - [cJSON](https://github.com/DaveGamble/cJSON)
   - Lightweight library for parsing JSON in C
   - Used for parsing the 65x02 JSON tests
