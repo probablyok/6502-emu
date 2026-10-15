@@ -29,7 +29,7 @@ and re-run with,
 ./run_tests
 ```
 
-Test cases are pulled from the 65x02 Processor Tests repository, which takes up some 1.2GiB. You can clean this out with,
+Test cases are pulled from the [65x02 Processor Tests](https://github.com/SingleStepTests/65x02) repository, which takes up some 1.2GiB. You can clean this out with,
 
 ```
 make clean-tests
