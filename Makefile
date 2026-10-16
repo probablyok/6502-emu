@@ -57,7 +57,6 @@ clean-tests:
 
 # Build and run the test suite
 test: fetch-tests $(TEST_TARGET)
-	./$(TEST_TARGET)
 
 $(TEST_TARGET): $(LIB_OBJS) $(TEST_OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)

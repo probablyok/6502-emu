@@ -33,6 +33,11 @@ void cpu_fetch_opcode(Cpu *cpu) {
     // Get instruction from opcode
     CpuInstruction instruction = INSTRUCTION_TABLE[cpu->opcode];
 
+    if (instruction.first_step == NULL) {
+        cpu->not_impl = 1;
+        return;
+    }
+
     // Save operation being carried out until address resolved
     cpu->pending_alu = instruction.alu_op;
     // Start pipeline

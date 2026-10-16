@@ -20,6 +20,9 @@ typedef struct Cpu {
     void (*cur_step)(struct Cpu *);
     void (*pending_alu)(struct Cpu *);
 
+    // For testing - is 1 if opcode lookup fails
+    CpuByte not_impl;
+
     // CPU Memory
     CpuByte mem[CPU_MEM_MAX_SIZE];
 } Cpu;

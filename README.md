@@ -17,17 +17,20 @@ make
 ./6502-emu
 ```
 
-Compile/run the test suite with,
+Compile the test suite and run all tests with,
 
 ```
 make test
-```
-
-and re-run with,
-
-```
 ./run_tests
 ```
+
+The `./run_tests` script runs JSON tests for all opcodes when no arguments are specified. Opcodes (in hexadecimal) can be specified as arguments to perform specific opcode tests only. For example,
+
+```
+./run_tests a2 a0
+```
+
+would test `LDX #` and `LDY #` in that order.
 
 Test cases are pulled from the [65x02 Processor Tests](https://github.com/SingleStepTests/65x02) repository, which takes up some 1.2GiB. You can clean this out with,
 

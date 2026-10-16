@@ -3,19 +3,22 @@
 #include <stdio.h>
 #include <string.h>
 
-static void test_opcode(const char *filepath) {
+static const char TEST_DIR_PATH[] = "tests/test_json/6502/v1";
+static const char JSON_EXTENSION[] = ".json";
+
+static unsigned int test_opcode(const char *filepath) {
     printf("Running %s...\n", filepath);
     fflush(stdout);
 
     // Load JSON
     char *json_buf = NULL;
     if (safe_read_file(filepath, &json_buf)) {
-        return;
+        return 1;
     }
     cJSON *root = NULL;
     if (safe_json_parse(json_buf, &root)) {
         free(json_buf);
-        return;
+        return 1;
     }
     free(json_buf);
 
@@ -71,6 +74,12 @@ static void test_opcode(const char *filepath) {
             cpu_tick(&cpu); // Simulate CPU tick
             tick++;
 
+            // Check to see if we tried to run unimplemented opcode
+            if (cpu.not_impl) {
+                fprintf(stderr, "Opcode implementation missing!\n");
+                return 1;
+            }
+
             // Verify cycle readings
             CpuWord valid_addr_cmp =
                 (CpuWord)cJSON_GetArrayItem(cycle_item, 0)->valueint;
@@ -83,7 +92,7 @@ static void test_opcode(const char *filepath) {
             // Compare
             if (valid_addr_cmp != cpu.addr_bus) {
                 fprintf(stderr,
-                        "\n[%s] Tick %d - Addr mismatch: Expected 0x%04X\n, "
+                        "[%s] Tick %d - Addr mismatch: Expected 0x%04X, "
                         "got 0x%04X\n",
                         name->valuestring, tick, valid_addr_cmp, cpu.addr_bus);
                 passed = 0;
@@ -91,15 +100,15 @@ static void test_opcode(const char *filepath) {
             }
             if (valid_data_cmp != cpu.data_bus) {
                 fprintf(stderr,
-                        "\n[%s] Tick %d - Data mismatch: Expected 0x%02X, got "
-                        "0x%02X",
+                        "[%s] Tick %d - Data mismatch: Expected 0x%02X, got "
+                        "0x%02X\n",
                         name->valuestring, tick, valid_data_cmp, cpu.data_bus);
                 passed = 0;
                 break;
             }
             if (valid_type_cmp != cpu.is_read) {
                 fprintf(stderr,
-                        "\n[%s] Tick %d - R/W mismatch: Expected %d, got %d",
+                        "[%s] Tick %d - R/W mismatch: Expected %d, got %d\n",
                         name->valuestring, tick, valid_type_cmp, cpu.is_read);
                 passed = 0;
                 break;
@@ -125,32 +134,32 @@ static void test_opcode(const char *filepath) {
                 (CpuByte)cJSON_GetObjectItemCaseSensitive(final, "y")->valueint;
 
             if (valid_pc != cpu.pc) {
-                fprintf(stderr, "\n[%s] PC Error: Expected 0x%04X, got 0x%04X",
+                fprintf(stderr, "[%s] PC Error: Expected 0x%04X, got 0x%04X\n",
                         name->valuestring, valid_pc, cpu.pc);
                 passed = 0;
             }
             if (valid_sp != cpu.sp) {
-                fprintf(stderr, "\n[%s] SP Error: Expected 0x%02X, got 0x%02X",
+                fprintf(stderr, "[%s] SP Error: Expected 0x%02X, got 0x%02X\n",
                         name->valuestring, valid_sp, cpu.sp);
                 passed = 0;
             }
             if (valid_sr != cpu.sr) {
-                fprintf(stderr, "\n[%s] SR Error: Expected 0x%02X, got 0x%02X",
+                fprintf(stderr, "[%s] SR Error: Expected 0x%02X, got 0x%02X\n",
                         name->valuestring, valid_sr, cpu.sr);
                 passed = 0;
             }
             if (valid_a != cpu.a) {
-                fprintf(stderr, "\n[%s] A Error: Expected 0x%02X, got 0x%02X",
+                fprintf(stderr, "[%s] A Error: Expected 0x%02X, got 0x%02X\n",
                         name->valuestring, valid_a, cpu.a);
                 passed = 0;
             }
             if (valid_x != cpu.x) {
-                fprintf(stderr, "\n[%s] X Error: Expected 0x%02X, got 0x%02X",
+                fprintf(stderr, "[%s] X Error: Expected 0x%02X, got 0x%02X\n",
                         name->valuestring, valid_x, cpu.x);
                 passed = 0;
             }
             if (valid_y != cpu.y) {
-                fprintf(stderr, "\n[%s] Y Error: Expected 0x%02X, got 0x%02X",
+                fprintf(stderr, "[%s] Y Error: Expected 0x%02X, got 0x%02X\n",
                         name->valuestring, valid_y, cpu.y);
                 passed = 0;
             }
@@ -166,14 +175,55 @@ static void test_opcode(const char *filepath) {
 
     // Free JSON
     cJSON_Delete(root);
+
+    // 0 if all test cases pass, 1 otherwise
+    if (passed_cnt == test_case_cnt) {
+        return 0;
+    }
+    return 1;
 }
 
-int main(void) {
-    printf("Starting 6502 Emulator Test Suite...\n");
-    printf("------------------------------------\n");
+char *get_json_fullpath(const char *filename) {
+    size_t fullpath_len =
+        strlen(TEST_DIR_PATH) + strlen(filename) + strlen(JSON_EXTENSION) + 3;
+    char *fullpath = safe_malloc(fullpath_len);
+    snprintf(fullpath, fullpath_len, "%s/%s%s", TEST_DIR_PATH, filename,
+             JSON_EXTENSION);
+    return fullpath;
+}
 
-    test_opcode("tests/test_json/6502/v1/a9.json");
+int main(int argc, char **argv) {
+    printf("%d\n", argc);
+    printf("Starting NMOS 6502 Emulator Test Suite...\n");
+    printf("-----------------------------------------\n");
 
-    printf("All tests completed!\n");
+    unsigned int opcode_cnt = argc - 1;
+    unsigned int opcode_pass = 0;
+
+    char *fullpath;
+
+    if (argc == 1) {
+        opcode_cnt = 256;
+        // Run all tests
+        char hex_str[3];
+        for (unsigned int i = 0; i <= 0xFF; i++) {
+            snprintf(hex_str, sizeof(hex_str), "%02x", i);
+
+            // Run test
+            fullpath = get_json_fullpath(hex_str);
+            opcode_pass += !(test_opcode(fullpath));
+            free(fullpath);
+        }
+    } else {
+        // Run individual tests
+        for (unsigned int i = 1; i < (unsigned int)argc; i++) {
+            // Run test
+            fullpath = get_json_fullpath(argv[i]);
+            opcode_pass += !(test_opcode(fullpath));
+            free(fullpath);
+        }
+    }
+    printf("All tests completed! %d/%d opcodes completely pass.\n", opcode_pass,
+           opcode_cnt);
     return 0;
 }
