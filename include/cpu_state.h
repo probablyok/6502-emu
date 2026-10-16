@@ -71,4 +71,9 @@ void cpu_alu_ldy(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_and(Cpu *cpu);
 
+/// @brief ORA Instruction ALU logic: OR data bus with accumulator and store
+/// back in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_ora(Cpu *cpu);
+
 #endif // CPU_STATE_H

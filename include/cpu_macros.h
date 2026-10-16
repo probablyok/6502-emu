@@ -19,6 +19,7 @@
 #define CPU_OP_LDX_IMMEDIATE 0xA2
 #define CPU_OP_LDY_IMMEDIATE 0xA0
 #define CPU_OP_AND_IMMEDIATE 0x29
+#define CPU_OP_ORA_IMMEDIATE 0x09
 
 // Status register masks
 #define CPU_FLAG_N (1 << 7)
