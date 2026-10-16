@@ -16,6 +16,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                               .alu_op = cpu_alu_and},
     [CPU_OP_ORA_IMMEDIATE] = {.first_step = cpu_addr_immediate,
                               .alu_op = cpu_alu_ora},
+    [CPU_OP_EOR_IMMEDIATE] = {.first_step = cpu_addr_immediate,
+                              .alu_op = cpu_alu_eor},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -104,6 +106,14 @@ void cpu_alu_and(Cpu *cpu) {
 void cpu_alu_ora(Cpu *cpu) {
     // Load data bus content into accumulator
     cpu->a = cpu->a | cpu->data_bus;
+    // Update status register
+    cpu_status_reg_update_negative(cpu, cpu->a);
+    cpu_status_reg_update_zero(cpu, cpu->a);
+}
+
+void cpu_alu_eor(Cpu *cpu) {
+    // Load data bus content into accumulator
+    cpu->a = cpu->a ^ cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
     cpu_status_reg_update_zero(cpu, cpu->a);

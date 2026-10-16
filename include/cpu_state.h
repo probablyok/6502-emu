@@ -76,4 +76,9 @@ void cpu_alu_and(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_ora(Cpu *cpu);
 
+/// @brief EOR Instruction ALU logic: XOR data bus with accumulator and store
+/// back in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_eor(Cpu *cpu);
+
 #endif // CPU_STATE_H
