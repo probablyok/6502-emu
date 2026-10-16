@@ -66,4 +66,9 @@ void cpu_alu_ldx(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_ldy(Cpu *cpu);
 
+/// @brief AND Instruction ALU logic: AND data bus with accumulator and store
+/// back in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_and(Cpu *cpu);
+
 #endif // CPU_STATE_H
