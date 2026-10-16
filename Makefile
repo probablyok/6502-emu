@@ -33,6 +33,9 @@ TEST_JSON_REPO_URL := https://github.com/SingleStepTests/65x02.git
 TEST_JSON_DIR := tests/test_json
 TEST_JSON_REPO_DIR := 6502/v1
 
+# Auto-generate dependencies
+CFLAGS += -MMD -MP
+
 .DEFAULT_GOAL := all
 .PHONY: all debug test clean clean-tests fetch-tests
 
@@ -82,3 +85,6 @@ clean:
 	rm -rf $(TARGET)
 	rm -rf $(TEST_TARGET)
 	rm -rf $(OBJ_DIR)
+
+# Dependencies include
+-include $(LIB_OBJS:.o=.d) $(MAIN_OBJ:.o=.d $TEST_OBJS:.o.d)
