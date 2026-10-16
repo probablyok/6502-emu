@@ -58,4 +58,12 @@ void cpu_addr_immediate(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_lda(Cpu *cpu);
 
+/// @brief LDX Instruction ALU logic: Load X with memory in data bus
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_ldx(Cpu *cpu);
+
+/// @brief LDY Instruction ALU logic: Load Y with memory in data bus
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_ldy(Cpu *cpu);
+
 #endif // CPU_STATE_H

@@ -16,6 +16,8 @@
 
 // Op codes
 #define CPU_OP_LDA_IMMEDIATE 0xA9
+#define CPU_OP_LDX_IMMEDIATE 0xA2
+#define CPU_OP_LDY_IMMEDIATE 0xA0
 
 // Status register masks
 #define CPU_FLAG_N (1 << 7)

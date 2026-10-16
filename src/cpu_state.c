@@ -7,7 +7,11 @@
 /// specific per-cycle steps
 static const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_LDA_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_lda}};
+                              .alu_op = cpu_alu_lda},
+    [CPU_OP_LDX_IMMEDIATE] = {.first_step = cpu_addr_immediate,
+                              .alu_op = cpu_alu_ldx},
+    [CPU_OP_LDY_IMMEDIATE] = {.first_step = cpu_addr_immediate,
+                              .alu_op = cpu_alu_ldy}};
 
 /// @brief Set/unset the zero flag in the status register based on input
 /// @param cpu The emulated 6502 CPU
@@ -66,4 +70,20 @@ void cpu_alu_lda(Cpu *cpu) {
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
     cpu_status_reg_update_zero(cpu, cpu->a);
+}
+
+void cpu_alu_ldx(Cpu *cpu) {
+    // Load data bus content into accumulator
+    cpu->x = cpu->data_bus;
+    // Update status register
+    cpu_status_reg_update_negative(cpu, cpu->x);
+    cpu_status_reg_update_zero(cpu, cpu->x);
+}
+
+void cpu_alu_ldy(Cpu *cpu) {
+    // Load data bus content into accumulator
+    cpu->y = cpu->data_bus;
+    // Update status register
+    cpu_status_reg_update_negative(cpu, cpu->y);
+    cpu_status_reg_update_zero(cpu, cpu->y);
 }
