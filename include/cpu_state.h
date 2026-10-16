@@ -20,9 +20,6 @@ typedef struct Cpu {
     void (*cur_step)(struct Cpu *);
     void (*pending_alu)(struct Cpu *);
 
-    // For testing - is 1 if opcode lookup fails
-    CpuByte not_impl;
-
     // CPU Memory
     CpuByte mem[CPU_MEM_MAX_SIZE];
 } Cpu;
@@ -38,6 +35,11 @@ typedef struct {
     CpuStep first_step;
     AluOperation alu_op;
 } CpuInstruction;
+
+/// @brief Checks if a given opcode has actually been implemented by the CPU
+/// @param opcode The 6502 opcode to check
+/// @return 0 if implemented, 1 otherwise
+int cpu_inst_implemented(CpuByte opcode);
 
 /// @brief Performs one clock cycle on the CPU
 /// @param cpu The emulated emulated 6502 CPU

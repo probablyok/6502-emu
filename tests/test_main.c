@@ -65,6 +65,15 @@ static unsigned int test_opcode(const char *filepath) {
         // There are a lot of test cases so maybe only show where fails happen?
         // printf("Simulating %s...\n", name->valuestring);
 
+        CpuByte opcode_under_test = cpu.mem[cpu.pc];
+        // True if opcode not implemented
+        if (cpu_inst_implemented(opcode_under_test)) {
+            fprintf(stderr, "Opcode %02X implementation missing!\n",
+                    opcode_under_test);
+            cJSON_Delete(root);
+            return 1; // Leave early
+        }
+
         // Loop CPU tick
         cJSON *cycle_item = NULL;
         unsigned int tick = 0;
@@ -73,12 +82,6 @@ static unsigned int test_opcode(const char *filepath) {
         cJSON_ArrayForEach(cycle_item, cycles) {
             cpu_tick(&cpu); // Simulate CPU tick
             tick++;
-
-            // Check to see if we tried to run unimplemented opcode
-            if (cpu.not_impl) {
-                fprintf(stderr, "Opcode implementation missing!\n");
-                return 1;
-            }
 
             // Verify cycle readings
             CpuWord valid_addr_cmp =

@@ -25,6 +25,10 @@ static void cpu_status_reg_update_negative(Cpu *cpu, CpuByte data) {
         (data & 0x80) ? ((cpu->sr) | CPU_FLAG_N) : ((cpu->sr) & ~CPU_FLAG_N);
 }
 
+int cpu_inst_implemented(CpuByte opcode) {
+    return INSTRUCTION_TABLE[opcode].first_step == NULL;
+}
+
 void cpu_tick(Cpu *cpu) { cpu->cur_step(cpu); }
 
 void cpu_fetch_opcode(Cpu *cpu) {
@@ -34,8 +38,7 @@ void cpu_fetch_opcode(Cpu *cpu) {
     CpuInstruction instruction = INSTRUCTION_TABLE[cpu->opcode];
 
     if (instruction.first_step == NULL) {
-        cpu->not_impl = 1;
-        return;
+        return; // NOP - invalid instruction pipeline
     }
 
     // Save operation being carried out until address resolved
