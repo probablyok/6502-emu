@@ -25,9 +25,17 @@ int safe_read_file(const char *filepath, char **buffer) {
 
     // Read file into buffer
     *buffer = (char *)safe_malloc(file_size + 1);
-    fread(*buffer, 1, file_size, fp);
-    (*buffer)[file_size] = '\0';
+    size_t bytes_read = fread(*buffer, 1, file_size, fp);
 
+    if (bytes_read != (size_t)file_size) {
+        fprintf(stderr, "Error: Failed to read entire file \"%s\".\n",
+                filepath);
+        free(*buffer);
+        fclose(fp);
+        return 1;
+    }
+
+    (*buffer)[file_size] = '\0';
     // Close file
     fclose(fp);
     return 0;

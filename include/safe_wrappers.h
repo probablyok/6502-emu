@@ -10,7 +10,8 @@
 void *safe_malloc(size_t n);
 
 /// @brief Reads the contents of a file at given path into buffer. Buffer memory
-/// is allocated within function and must be freed later
+/// is allocated within function and must be freed later. Memory does not need
+/// to be freed if this function returns 1
 /// @param filepath The string filepath to the file that will be opened
 /// @param buffer Character buffer that holds contents of file
 /// @return 1 if the file was unable to be opened, 0 otherwise
