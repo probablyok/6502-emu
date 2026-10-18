@@ -115,6 +115,11 @@ void cpu_alu_sbc(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_sed(Cpu *cpu);
 
+/// @brief CLD Instruction ALU logic: Unet the decimal flag in the status
+/// register
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_cld(Cpu *cpu);
+
 /// @brief NOP Instruction ALU logic: Do nothing
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_nop(Cpu *cpu);
