@@ -86,4 +86,9 @@ void cpu_alu_eor(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_adc(Cpu *cpu);
 
+/// @brief CMP Instruction ALU logic: CMP (subtract) data bus with accumulator
+/// and update flags without storing result back in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_cmp(Cpu *cpu);
+
 #endif // CPU_STATE_H

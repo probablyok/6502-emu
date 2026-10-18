@@ -20,6 +20,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                               .alu_op = cpu_alu_eor},
     [CPU_OP_ADC_IMMEDIATE] = {.first_step = cpu_addr_immediate,
                               .alu_op = cpu_alu_adc},
+    [CPU_OP_CMP_IMMEDIATE] = {.first_step = cpu_addr_immediate,
+                              .alu_op = cpu_alu_cmp},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -177,4 +179,12 @@ void cpu_alu_adc(Cpu *cpu) {
     // Update accumulator and carry
     cpu->a = word_result_bin & 0xFF;
     cpu_status_reg_update_carry(cpu, word_result_bin > 0xFF);
+}
+
+void cpu_alu_cmp(Cpu *cpu) {
+    CpuWord compareResult = cpu->a - cpu->data_bus;
+    // Update status register
+    cpu_status_reg_update_negative(cpu, (CpuByte)compareResult);
+    cpu_status_reg_update_zero(cpu, (CpuByte)compareResult);
+    cpu_status_reg_update_carry(cpu, cpu->a >= cpu->data_bus);
 }
