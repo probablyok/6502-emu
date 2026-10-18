@@ -68,6 +68,10 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_txs},
     [CPU_OP_TSX_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_tsx},
+    [CPU_OP_CLI_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_cli},
+    [CPU_OP_SEI_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_sei},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -107,6 +111,14 @@ static void cpu_status_reg_update_overflow(Cpu *cpu, int condition) {
 /// @param condition The data to set
 static void cpu_status_reg_update_decimal(Cpu *cpu, int data) {
     cpu->sr = (data) ? ((cpu->sr) | CPU_FLAG_D) : ((cpu->sr) & ~CPU_FLAG_D);
+}
+
+/// @brief Set/unset the interrupt disable flag in the status register based on
+/// input
+/// @param cpu The emulated 6502 CPU
+/// @param condition The data to set
+static void cpu_status_reg_update_interrupt_disable(Cpu *cpu, int data) {
+    cpu->sr = (data) ? ((cpu->sr) | CPU_FLAG_I) : ((cpu->sr) & ~CPU_FLAG_I);
 }
 
 int cpu_inst_implemented(CpuByte opcode) {
@@ -460,4 +472,14 @@ void cpu_alu_tsx(Cpu *cpu) {
     // Update stack register
     cpu_status_reg_update_zero(cpu, cpu->x);
     cpu_status_reg_update_negative(cpu, cpu->x);
+}
+
+void cpu_alu_cli(Cpu *cpu) {
+    // Set status register
+    cpu_status_reg_update_interrupt_disable(cpu, 0);
+}
+
+void cpu_alu_sei(Cpu *cpu) {
+    // Set status register
+    cpu_status_reg_update_interrupt_disable(cpu, 1);
 }

@@ -212,4 +212,14 @@ void cpu_alu_txs(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_tsx(Cpu *cpu);
 
+/// @brief CLI Instruction ALU logic: Set interrupt disable flag in status
+/// register
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_cli(Cpu *cpu);
+
+/// @brief SEI Instruction ALU logic: Unset interrupt disable flag in status
+/// register
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_sei(Cpu *cpu);
+
 #endif // CPU_STATE_H

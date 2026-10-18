@@ -35,7 +35,9 @@
 #define CPU_OP_PLP_IMPLIED 0x28
 #define CPU_OP_SEC_IMPLIED 0x38
 #define CPU_OP_PHA_IMPLIED 0x48
+#define CPU_OP_CLI_IMPLIED 0x58
 #define CPU_OP_PLA_IMPLIED 0x68
+#define CPU_OP_SEI_IMPLIED 0x78
 #define CPU_OP_DEY_IMPLIED 0x88
 #define CPU_OP_TXA_IMPLIED 0x8A
 #define CPU_OP_TYA_IMPLIED 0x98
@@ -50,7 +52,6 @@
 #define CPU_OP_INX_IMPLIED 0xE8
 #define CPU_OP_NOP_IMPLIED 0xEA
 #define CPU_OP_SED_IMPLIED 0xF8
-
 // Status register masks
 #define CPU_FLAG_N (1 << 7)
 #define CPU_FLAG_V (1 << 6)
