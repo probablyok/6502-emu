@@ -54,6 +54,10 @@ void cpu_fetch_opcode(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_addr_immediate(Cpu *cpu);
 
+/// @brief Handle implied addressing and run pending ALU
+/// @param cpu The emulated 6502 CPU
+void cpu_addr_implied(Cpu *cpu);
+
 /// @brief LDA Instruction ALU logic: Load accumulator with memory in data bus
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_lda(Cpu *cpu);
@@ -105,5 +109,10 @@ void cpu_alu_cpx(Cpu *cpu);
 /// carry and store back in accumulator
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_sbc(Cpu *cpu);
+
+/// @brief SED Instruction ALU logic: Set the decimal flag in the status
+/// register
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_sed(Cpu *cpu);
 
 #endif // CPU_STATE_H

@@ -28,6 +28,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                               .alu_op = cpu_alu_cpx},
     [CPU_OP_SBC_IMMEDIATE] = {.first_step = cpu_addr_immediate,
                               .alu_op = cpu_alu_sbc},
+    [CPU_OP_SED_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_sed},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -62,6 +64,13 @@ static void cpu_status_reg_update_overflow(Cpu *cpu, int condition) {
     cpu->sr = condition ? ((cpu->sr) | CPU_FLAG_V) : ((cpu->sr) & ~CPU_FLAG_V);
 }
 
+/// @brief Set/unset the BCD flag in the status register based on input
+/// @param cpu The emulated 6502 CPU
+/// @param condition The data to set
+static void cpu_status_reg_update_decimal(Cpu *cpu, int data) {
+    cpu->sr = (data) ? ((cpu->sr) | CPU_FLAG_D) : ((cpu->sr) & ~CPU_FLAG_D);
+}
+
 int cpu_inst_implemented(CpuByte opcode) {
     return INSTRUCTION_TABLE[opcode].first_step == NULL;
 }
@@ -89,6 +98,18 @@ void cpu_addr_immediate(Cpu *cpu) {
     cpu_mem_read(cpu, cpu->pc++);
 
     // Run pending ALU operation using fetched data
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    // Operation complete, fetch new opcode
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_implied(Cpu *cpu) {
+    // Dummy read byte after opcode
+    cpu_mem_read(cpu, cpu->pc);
+
     if (cpu->pending_alu) {
         cpu->pending_alu(cpu);
     }
@@ -245,4 +266,9 @@ void cpu_alu_sbc(Cpu *cpu) {
     }
     // Update accumulator and carry
     cpu->a = word_result_bin & 0xFF;
+}
+
+void cpu_alu_sed(Cpu *cpu) {
+    // Update status register
+    cpu_status_reg_update_decimal(cpu, 1);
 }

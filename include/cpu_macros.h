@@ -29,6 +29,9 @@
 #define CPU_OP_CPX_IMMEDIATE 0xE0
 #define CPU_OP_SBC_IMMEDIATE 0xE9
 
+// Implied addressing
+#define CPU_OP_SED_IMPLIED 0xF8
+
 // Status register masks
 #define CPU_FLAG_N (1 << 7)
 #define CPU_FLAG_V (1 << 6)
