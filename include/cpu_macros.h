@@ -32,6 +32,7 @@
 // Implied addressing
 #define CPU_OP_CLC_IMPLIED 0x18
 #define CPU_OP_SEC_IMPLIED 0x38
+#define CPU_OP_DEY_IMPLIED 0x88
 #define CPU_OP_NOP_IMPLIED 0xEA
 #define CPU_OP_SED_IMPLIED 0xF8
 

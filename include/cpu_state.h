@@ -127,4 +127,8 @@ void cpu_alu_clc(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_sec(Cpu *cpu);
 
+/// @brief DEY Instruction ALU logic: Decrement Y by 1
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_dey(Cpu *cpu);
+
 #endif // CPU_STATE_H
