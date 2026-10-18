@@ -52,6 +52,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_tay},
     [CPU_OP_CLV_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_clv},
+    [CPU_OP_INX_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_inx},
     [CPU_OP_INY_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_iny},
 };
@@ -358,6 +360,13 @@ void cpu_alu_tay(Cpu *cpu) {
 void cpu_alu_clv(Cpu *cpu) {
     // Set status flag
     cpu_status_reg_update_overflow(cpu, 0);
+}
+
+void cpu_alu_inx(Cpu *cpu) {
+    cpu->x = cpu->x + 1;
+    // Set status flag
+    cpu_status_reg_update_zero(cpu, cpu->x);
+    cpu_status_reg_update_negative(cpu, cpu->x);
 }
 
 void cpu_alu_iny(Cpu *cpu) {

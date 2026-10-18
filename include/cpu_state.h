@@ -160,6 +160,10 @@ void cpu_alu_tay(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_clv(Cpu *cpu);
 
+/// @brief INX Instruction ALU logic: Increment the value in the X register
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_inx(Cpu *cpu);
+
 /// @brief INY Instruction ALU logic: Increment the value in the Y register
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_iny(Cpu *cpu);
