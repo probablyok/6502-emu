@@ -189,15 +189,19 @@ void cpu_alu_pha(Cpu *cpu);
 /// @brief PLP Instruction cycle 2: Does dummy read on next instruction byte and
 /// does nothing
 /// @param cpu The emulated 6502 CPU
-void cpu_wait1_plp(Cpu *cpu);
+void cpu_wait1_plp_pla(Cpu *cpu);
 
 /// @brief PLP Instruction cycle 3: Does dummy read on current stack pointer and
 /// does nothing
 /// @param cpu The emulated 6502 CPU
-void cpu_wait2_plp(Cpu *cpu);
+void cpu_wait2_plp_pla(Cpu *cpu);
 
 /// @brief PLP Instruction ALU logic: Pull new status register value from stack
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_plp(Cpu *cpu);
+
+/// @brief PLA Instruction ALU logic: Pull new accumulator value from stack
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_pla(Cpu *cpu);
 
 #endif // CPU_STATE_H

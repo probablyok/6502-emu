@@ -60,7 +60,10 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_php},
     [CPU_OP_PHA_IMPLIED] = {.first_step = cpu_wait_php_pha,
                             .alu_op = cpu_alu_pha},
-    [CPU_OP_PLP_IMPLIED] = {.first_step = cpu_wait1_plp, .alu_op = cpu_alu_plp},
+    [CPU_OP_PLP_IMPLIED] = {.first_step = cpu_wait1_plp_pla,
+                            .alu_op = cpu_alu_plp},
+    [CPU_OP_PLA_IMPLIED] = {.first_step = cpu_wait1_plp_pla,
+                            .alu_op = cpu_alu_pla},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -406,13 +409,13 @@ void cpu_alu_pha(Cpu *cpu) {
     cpu_mem_write(cpu, stack_pos, cpu->a);
 }
 
-void cpu_wait1_plp(Cpu *cpu) {
+void cpu_wait1_plp_pla(Cpu *cpu) {
     // Dummy read read on next instruction byte
     cpu_mem_read(cpu, cpu->pc);
-    cpu->cur_step = cpu_wait2_plp;
+    cpu->cur_step = cpu_wait2_plp_pla;
 }
 
-void cpu_wait2_plp(Cpu *cpu) {
+void cpu_wait2_plp_pla(Cpu *cpu) {
     // Dummy read on stack pointer with increment
     CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp++;
     cpu_mem_read(cpu, stack_pos);
@@ -426,4 +429,17 @@ void cpu_alu_plp(Cpu *cpu) {
 
     // Force bit 5 to 1 and clear BREAK
     cpu->sr = (stack_read & ~CPU_FLAG_B) | CPU_FLAG_U;
+}
+
+void cpu_alu_pla(Cpu *cpu) {
+    // Pull new status register from stack
+    CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp;
+    CpuByte stack_read = cpu_mem_read(cpu, stack_pos);
+
+    // Read into accumulator from stack
+    cpu->a = stack_read;
+
+    // Update stack register
+    cpu_status_reg_update_zero(cpu, cpu->a);
+    cpu_status_reg_update_negative(cpu, cpu->a);
 }
