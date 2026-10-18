@@ -204,8 +204,12 @@ void cpu_alu_plp(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_pla(Cpu *cpu);
 
-/// @brief TXS Instruction ALU logic: Push X register into stack
+/// @brief TXS Instruction ALU logic: Set stack pointer to X register
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_txs(Cpu *cpu);
+
+/// @brief TSX Instruction ALU logic: Set X register to stack pointer
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_tsx(Cpu *cpu);
 
 #endif // CPU_STATE_H

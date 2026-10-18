@@ -66,6 +66,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_pla},
     [CPU_OP_TXS_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_txs},
+    [CPU_OP_TSX_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_tsx},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -447,6 +449,15 @@ void cpu_alu_pla(Cpu *cpu) {
 }
 
 void cpu_alu_txs(Cpu *cpu) {
-    // Push X register into stack
+    // Set X register to stack pointer
     cpu->sp = cpu->x;
+}
+
+void cpu_alu_tsx(Cpu *cpu) {
+    // Set X register to stack pointer
+    cpu->x = cpu->sp;
+
+    // Update stack register
+    cpu_status_reg_update_zero(cpu, cpu->x);
+    cpu_status_reg_update_negative(cpu, cpu->x);
 }
