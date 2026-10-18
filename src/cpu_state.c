@@ -22,6 +22,12 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                               .alu_op = cpu_alu_adc},
     [CPU_OP_CMP_IMMEDIATE] = {.first_step = cpu_addr_immediate,
                               .alu_op = cpu_alu_cmp},
+    [CPU_OP_CPY_IMMEDIATE] = {.first_step = cpu_addr_immediate,
+                              .alu_op = cpu_alu_cpy},
+    [CPU_OP_CPX_IMMEDIATE] = {.first_step = cpu_addr_immediate,
+                              .alu_op = cpu_alu_cpx},
+    [CPU_OP_SBC_IMMEDIATE] = {.first_step = cpu_addr_immediate,
+                              .alu_op = cpu_alu_sbc},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -182,9 +188,61 @@ void cpu_alu_adc(Cpu *cpu) {
 }
 
 void cpu_alu_cmp(Cpu *cpu) {
-    CpuWord compareResult = cpu->a - cpu->data_bus;
+    CpuWord compare_result = cpu->a - cpu->data_bus;
     // Update status register
-    cpu_status_reg_update_negative(cpu, (CpuByte)compareResult);
-    cpu_status_reg_update_zero(cpu, (CpuByte)compareResult);
+    cpu_status_reg_update_negative(cpu, (CpuByte)compare_result);
+    cpu_status_reg_update_zero(cpu, (CpuByte)compare_result);
     cpu_status_reg_update_carry(cpu, cpu->a >= cpu->data_bus);
+}
+
+void cpu_alu_cpy(Cpu *cpu) {
+    CpuWord comapre_result = cpu->y - cpu->data_bus;
+    // Update status register
+    cpu_status_reg_update_negative(cpu, (CpuByte)comapre_result);
+    cpu_status_reg_update_zero(cpu, (CpuByte)comapre_result);
+    cpu_status_reg_update_carry(cpu, cpu->y >= cpu->data_bus);
+}
+
+void cpu_alu_cpx(Cpu *cpu) {
+    CpuWord compare_result = cpu->x - cpu->data_bus;
+    // Update status register
+    cpu_status_reg_update_negative(cpu, (CpuByte)compare_result);
+    cpu_status_reg_update_zero(cpu, (CpuByte)compare_result);
+    cpu_status_reg_update_carry(cpu, cpu->x >= cpu->data_bus);
+}
+
+void cpu_alu_sbc(Cpu *cpu) {
+    CpuByte old_a = cpu->a;
+    CpuByte operand = cpu->data_bus;
+    CpuByte carry_in = !!(cpu->sr & CPU_FLAG_C);
+
+    // 16-bit binary result
+    CpuWord word_result_bin = old_a - operand - (1 - carry_in);
+
+    // Status flags
+    cpu_status_reg_update_zero(cpu, word_result_bin & 0xFF);
+    cpu_status_reg_update_negative(cpu, word_result_bin & 0xFF);
+    cpu_status_reg_update_overflow(
+        cpu, (old_a ^ operand) & (old_a ^ (word_result_bin & 0xFF)) & 0x80);
+    // Inverted borrow (carry only 1 on no underflow)
+    cpu_status_reg_update_carry(cpu, word_result_bin < 0x100);
+
+    // BCD specific instructions
+    if (cpu->sr & CPU_FLAG_D) {
+        // Bruce Clark's canonical BCD SBC algorithm
+        int al = (old_a & 0x0F) - (operand & 0x0F) - (1 - carry_in);
+        if (al < 0) {
+            al = ((al - 0x06) & 0x0F) - 0x10;
+        }
+
+        int a = (old_a & 0xF0) - (operand & 0xF0) + al;
+        if (a < 0) {
+            a -= 0x60;
+        }
+
+        cpu->a = a & 0xFF;
+        return;
+    }
+    // Update accumulator and carry
+    cpu->a = word_result_bin & 0xFF;
 }

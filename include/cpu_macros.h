@@ -15,6 +15,8 @@
 #define CPU_IS_WRITE 0
 
 // Op codes
+
+// Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09
 #define CPU_OP_AND_IMMEDIATE 0x29
 #define CPU_OP_EOR_IMMEDIATE 0x49
@@ -22,7 +24,10 @@
 #define CPU_OP_LDY_IMMEDIATE 0xA0
 #define CPU_OP_LDX_IMMEDIATE 0xA2
 #define CPU_OP_LDA_IMMEDIATE 0xA9
+#define CPU_OP_CPY_IMMEDIATE 0xC0
 #define CPU_OP_CMP_IMMEDIATE 0xC9
+#define CPU_OP_CPX_IMMEDIATE 0xE0
+#define CPU_OP_SBC_IMMEDIATE 0xE9
 
 // Status register masks
 #define CPU_FLAG_N (1 << 7)

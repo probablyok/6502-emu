@@ -82,7 +82,7 @@ void cpu_alu_ora(Cpu *cpu);
 void cpu_alu_eor(Cpu *cpu);
 
 /// @brief ADC Instruction ALU logic: add data bus with accumulator with carry
-/// and store in accumulator back in accumulator
+/// and store back in accumulator
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_adc(Cpu *cpu);
 
@@ -90,5 +90,20 @@ void cpu_alu_adc(Cpu *cpu);
 /// and update flags without storing result back in accumulator
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_cmp(Cpu *cpu);
+
+/// @brief CPY Instruction ALU logic: CMP (subtract) data bus with Y
+/// and update flags without storing result back in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_cpy(Cpu *cpu);
+
+/// @brief CPX Instruction ALU logic: CMP (subtract) data bus with X
+/// and update flags without storing result back in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_cpx(Cpu *cpu);
+
+/// @brief SBC Instruction ALU logic: subtract data bus from accumulator with
+/// carry and store back in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_sbc(Cpu *cpu);
 
 #endif // CPU_STATE_H
