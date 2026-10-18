@@ -8,7 +8,7 @@
 #define CPU_MEM_RESET_VEC_ADDR_H 0xFFFC
 #define CPU_MEM_RESET_VEC_ADDR_L 0xFFFD
 #define CPU_MEM_STACK_START 0x0100
-#define CPU_MEM_STACK_END 0x1FF
+#define CPU_MEM_STACK_END 0x01FF
 
 // Flags
 #define CPU_IS_READ 1
@@ -30,8 +30,10 @@
 #define CPU_OP_SBC_IMMEDIATE 0xE9
 
 // Implied addressing
+#define CPU_OP_PHP_IMPLIED 0x08
 #define CPU_OP_CLC_IMPLIED 0x18
 #define CPU_OP_SEC_IMPLIED 0x38
+#define CPU_OP_PHA_IMPLIED 0x48
 #define CPU_OP_DEY_IMPLIED 0x88
 #define CPU_OP_TXA_IMPLIED 0x8A
 #define CPU_OP_TYA_IMPLIED 0x98
@@ -48,6 +50,7 @@
 // Status register masks
 #define CPU_FLAG_N (1 << 7)
 #define CPU_FLAG_V (1 << 6)
+#define CPU_FLAG_U (1 << 5)
 #define CPU_FLAG_B (1 << 4)
 #define CPU_FLAG_D (1 << 3)
 #define CPU_FLAG_I (1 << 2)

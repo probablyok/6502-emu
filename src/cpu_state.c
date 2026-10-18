@@ -56,6 +56,10 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_inx},
     [CPU_OP_INY_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_iny},
+    [CPU_OP_PHP_IMPLIED] = {.first_step = cpu_wait1_php_pha,
+                            .alu_op = cpu_alu_php},
+    [CPU_OP_PHA_IMPLIED] = {.first_step = cpu_wait1_php_pha,
+                            .alu_op = cpu_alu_pha},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -374,4 +378,29 @@ void cpu_alu_iny(Cpu *cpu) {
     // Set status flag
     cpu_status_reg_update_zero(cpu, cpu->y);
     cpu_status_reg_update_negative(cpu, cpu->y);
+}
+
+void cpu_wait1_php_pha(Cpu *cpu) {
+    // Read byte after opcode
+    cpu_mem_read(cpu, cpu->pc);
+
+    // Dummy wait done
+    cpu->cur_step = cpu_wait2_php_pha;
+}
+
+void cpu_wait2_php_pha(Cpu *cpu) {
+    cpu->pending_alu(cpu);            // Do push
+    cpu->cur_step = cpu_fetch_opcode; // Back to getting next opcode
+}
+
+void cpu_alu_php(Cpu *cpu) {
+    // Push status register onto stack with bit 5 and BREAK set to 1
+    CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp--;
+    cpu_mem_write(cpu, stack_pos, cpu->sr | CPU_FLAG_B | CPU_FLAG_U);
+}
+
+void cpu_alu_pha(Cpu *cpu) {
+    // Push status register onto stack with bit 5 and BREAK set to 1
+    CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp--;
+    cpu_mem_write(cpu, stack_pos, cpu->a);
 }

@@ -168,4 +168,22 @@ void cpu_alu_inx(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_iny(Cpu *cpu);
 
+/// @brief PHP/PHA Instruction cycle 2: Fetches next instruction byte and does
+/// nothing
+/// @param cpu The emulated 6502 CPU
+void cpu_wait1_php_pha(Cpu *cpu);
+
+/// @brief PHP/PHA Instruction cycle 3: Performs ALU logic call and sets up
+/// reading next opcode
+/// @param cpu The emulated 6502 CPU
+void cpu_wait2_php_pha(Cpu *cpu);
+
+/// @brief PHP Instruction ALU logic: Push the status register onto the stack
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_php(Cpu *cpu);
+
+/// @brief PHA Instruction ALU logic: Push the accumulator onto the stack
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_pha(Cpu *cpu);
+
 #endif // CPU_STATE_H
