@@ -34,6 +34,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_nop},
     [CPU_OP_CLC_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_clc},
+    [CPU_OP_SEC_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_sec},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -285,4 +287,9 @@ void cpu_alu_nop(Cpu *cpu) {
 void cpu_alu_clc(Cpu *cpu) {
     // Update status register
     cpu_status_reg_update_carry(cpu, 0);
+}
+
+void cpu_alu_sec(Cpu *cpu) {
+    // Update status register
+    cpu_status_reg_update_carry(cpu, 1);
 }

@@ -123,4 +123,8 @@ void cpu_alu_nop(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_clc(Cpu *cpu);
 
+/// @brief SEC Instruction ALU logic: Set carry flag in status register
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_sec(Cpu *cpu);
+
 #endif // CPU_STATE_H
