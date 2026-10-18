@@ -135,4 +135,12 @@ void cpu_alu_dey(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_dex(Cpu *cpu);
 
+/// @brief TXA Instruction ALU logic: Copy X into A
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_txa(Cpu *cpu);
+
+/// @brief TYA Instruction ALU logic: Copy Y into A
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_tya(Cpu *cpu);
+
 #endif // CPU_STATE_H
