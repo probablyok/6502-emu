@@ -168,15 +168,15 @@ void cpu_alu_inx(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_iny(Cpu *cpu);
 
-/// @brief PHP/PHA Instruction cycle 2: Fetches next instruction byte and does
-/// nothing
+/// @brief PHP/PHA Instruction cycle 2: Does dummy read on next instruction byte
+/// and does nothing
 /// @param cpu The emulated 6502 CPU
-void cpu_wait1_php_pha(Cpu *cpu);
+void cpu_wait_php_pha(Cpu *cpu);
 
-/// @brief PHP/PHA Instruction cycle 3: Performs ALU logic call and sets up
-/// reading next opcode
+/// @brief Final step in instruction with many cycles: Performs the ALU
+/// operation and prepares to read next instruction byte as opcode
 /// @param cpu The emulated 6502 CPU
-void cpu_wait2_php_pha(Cpu *cpu);
+void cpu_wait_do_alu(Cpu *cpu);
 
 /// @brief PHP Instruction ALU logic: Push the status register onto the stack
 /// @param cpu The emulated 6502 CPU
@@ -185,5 +185,19 @@ void cpu_alu_php(Cpu *cpu);
 /// @brief PHA Instruction ALU logic: Push the accumulator onto the stack
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_pha(Cpu *cpu);
+
+/// @brief PLP Instruction cycle 2: Does dummy read on next instruction byte and
+/// does nothing
+/// @param cpu The emulated 6502 CPU
+void cpu_wait1_plp(Cpu *cpu);
+
+/// @brief PLP Instruction cycle 3: Does dummy read on current stack pointer and
+/// does nothing
+/// @param cpu The emulated 6502 CPU
+void cpu_wait2_plp(Cpu *cpu);
+
+/// @brief PLP Instruction ALU logic: Pull new status register value from stack
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_plp(Cpu *cpu);
 
 #endif // CPU_STATE_H

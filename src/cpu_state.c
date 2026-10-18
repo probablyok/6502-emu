@@ -56,10 +56,11 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_inx},
     [CPU_OP_INY_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_iny},
-    [CPU_OP_PHP_IMPLIED] = {.first_step = cpu_wait1_php_pha,
+    [CPU_OP_PHP_IMPLIED] = {.first_step = cpu_wait_php_pha,
                             .alu_op = cpu_alu_php},
-    [CPU_OP_PHA_IMPLIED] = {.first_step = cpu_wait1_php_pha,
+    [CPU_OP_PHA_IMPLIED] = {.first_step = cpu_wait_php_pha,
                             .alu_op = cpu_alu_pha},
+    [CPU_OP_PLP_IMPLIED] = {.first_step = cpu_wait1_plp, .alu_op = cpu_alu_plp},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -380,16 +381,16 @@ void cpu_alu_iny(Cpu *cpu) {
     cpu_status_reg_update_negative(cpu, cpu->y);
 }
 
-void cpu_wait1_php_pha(Cpu *cpu) {
+void cpu_wait_php_pha(Cpu *cpu) {
     // Read byte after opcode
     cpu_mem_read(cpu, cpu->pc);
 
     // Dummy wait done
-    cpu->cur_step = cpu_wait2_php_pha;
+    cpu->cur_step = cpu_wait_do_alu;
 }
 
-void cpu_wait2_php_pha(Cpu *cpu) {
-    cpu->pending_alu(cpu);            // Do push
+void cpu_wait_do_alu(Cpu *cpu) {
+    cpu->pending_alu(cpu);            // Do push/pull
     cpu->cur_step = cpu_fetch_opcode; // Back to getting next opcode
 }
 
@@ -403,4 +404,26 @@ void cpu_alu_pha(Cpu *cpu) {
     // Push status register onto stack with bit 5 and BREAK set to 1
     CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp--;
     cpu_mem_write(cpu, stack_pos, cpu->a);
+}
+
+void cpu_wait1_plp(Cpu *cpu) {
+    // Dummy read read on next instruction byte
+    cpu_mem_read(cpu, cpu->pc);
+    cpu->cur_step = cpu_wait2_plp;
+}
+
+void cpu_wait2_plp(Cpu *cpu) {
+    // Dummy read on stack pointer with increment
+    CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp++;
+    cpu_mem_read(cpu, stack_pos);
+    cpu->cur_step = cpu_wait_do_alu;
+}
+
+void cpu_alu_plp(Cpu *cpu) {
+    // Pull new status register from stack
+    CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp;
+    CpuByte stack_read = cpu_mem_read(cpu, stack_pos);
+
+    // Force bit 5 to 1 and clear BREAK
+    cpu->sr = (stack_read & ~CPU_FLAG_B) | CPU_FLAG_U;
 }

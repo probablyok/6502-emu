@@ -32,6 +32,7 @@
 // Implied addressing
 #define CPU_OP_PHP_IMPLIED 0x08
 #define CPU_OP_CLC_IMPLIED 0x18
+#define CPU_OP_PLP_IMPLIED 0x28
 #define CPU_OP_SEC_IMPLIED 0x38
 #define CPU_OP_PHA_IMPLIED 0x48
 #define CPU_OP_DEY_IMPLIED 0x88
