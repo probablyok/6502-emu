@@ -151,4 +151,8 @@ void cpu_alu_tax(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_tay(Cpu *cpu);
 
+/// @brief CLV Instruction ALU logic: Unset the overflow status register flag
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_clv(Cpu *cpu);
+
 #endif // CPU_STATE_H
