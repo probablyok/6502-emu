@@ -143,4 +143,12 @@ void cpu_alu_txa(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_tya(Cpu *cpu);
 
+/// @brief TAX Instruction ALU logic: Copy A into X
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_tax(Cpu *cpu);
+
+/// @brief TAY Instruction ALU logic: Copy A into Y
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_tay(Cpu *cpu);
+
 #endif // CPU_STATE_H

@@ -44,6 +44,10 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_txa},
     [CPU_OP_TYA_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_tya},
+    [CPU_OP_TAX_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_tax},
+    [CPU_OP_TAY_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_tay},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -324,6 +328,18 @@ void cpu_alu_txa(Cpu *cpu) {
 
 void cpu_alu_tya(Cpu *cpu) {
     cpu->a = cpu->y;
+    cpu_status_reg_update_zero(cpu, cpu->y);
+    cpu_status_reg_update_negative(cpu, cpu->y);
+}
+
+void cpu_alu_tax(Cpu *cpu) {
+    cpu->x = cpu->a;
+    cpu_status_reg_update_zero(cpu, cpu->x);
+    cpu_status_reg_update_negative(cpu, cpu->x);
+}
+
+void cpu_alu_tay(Cpu *cpu) {
+    cpu->y = cpu->a;
     cpu_status_reg_update_zero(cpu, cpu->y);
     cpu_status_reg_update_negative(cpu, cpu->y);
 }
