@@ -30,6 +30,7 @@
 #define CPU_OP_SBC_IMMEDIATE 0xE9
 
 // Implied addressing
+#define CPU_OP_NOP_IMPLIED 0xEA
 #define CPU_OP_SED_IMPLIED 0xF8
 
 // Status register masks
