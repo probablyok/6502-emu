@@ -196,7 +196,6 @@ char *get_json_fullpath(const char *filename) {
 }
 
 int main(int argc, char **argv) {
-    printf("%d\n", argc);
     printf("Starting NMOS 6502 Emulator Test Suite...\n");
     printf("-----------------------------------------\n");
 

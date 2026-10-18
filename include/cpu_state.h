@@ -81,4 +81,9 @@ void cpu_alu_ora(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_eor(Cpu *cpu);
 
+/// @brief ADC Instruction ALU logic: add data bus with accumulator with carry
+/// and store in accumulator back in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_adc(Cpu *cpu);
+
 #endif // CPU_STATE_H

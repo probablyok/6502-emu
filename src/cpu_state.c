@@ -18,6 +18,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                               .alu_op = cpu_alu_ora},
     [CPU_OP_EOR_IMMEDIATE] = {.first_step = cpu_addr_immediate,
                               .alu_op = cpu_alu_eor},
+    [CPU_OP_ADC_IMMEDIATE] = {.first_step = cpu_addr_immediate,
+                              .alu_op = cpu_alu_adc},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -34,6 +36,22 @@ static void cpu_status_reg_update_zero(Cpu *cpu, CpuByte data) {
 static void cpu_status_reg_update_negative(Cpu *cpu, CpuByte data) {
     cpu->sr =
         (data & 0x80) ? ((cpu->sr) | CPU_FLAG_N) : ((cpu->sr) & ~CPU_FLAG_N);
+}
+
+/// @brief Set/unset the carry flag in the status register based on true or
+/// false condition provided
+/// @param cpu The emulated 6502 CPU
+/// @param condition The condition used to set the carry flag
+static void cpu_status_reg_update_carry(Cpu *cpu, int condition) {
+    cpu->sr = condition ? ((cpu->sr) | CPU_FLAG_C) : ((cpu->sr) & ~CPU_FLAG_C);
+}
+
+/// @brief Set/unset the overflow flag in the status register based on true or
+/// false condition provided
+/// @param cpu The emulated 6502 CPU
+/// @param condition The condition used to set the overflow flag
+static void cpu_status_reg_update_overflow(Cpu *cpu, int condition) {
+    cpu->sr = condition ? ((cpu->sr) | CPU_FLAG_V) : ((cpu->sr) & ~CPU_FLAG_V);
 }
 
 int cpu_inst_implemented(CpuByte opcode) {
@@ -72,7 +90,6 @@ void cpu_addr_immediate(Cpu *cpu) {
 }
 
 void cpu_alu_lda(Cpu *cpu) {
-    // Load data bus content into accumulator
     cpu->a = cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
@@ -80,7 +97,6 @@ void cpu_alu_lda(Cpu *cpu) {
 }
 
 void cpu_alu_ldx(Cpu *cpu) {
-    // Load data bus content into accumulator
     cpu->x = cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->x);
@@ -88,7 +104,6 @@ void cpu_alu_ldx(Cpu *cpu) {
 }
 
 void cpu_alu_ldy(Cpu *cpu) {
-    // Load data bus content into accumulator
     cpu->y = cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->y);
@@ -96,7 +111,6 @@ void cpu_alu_ldy(Cpu *cpu) {
 }
 
 void cpu_alu_and(Cpu *cpu) {
-    // Load data bus content into accumulator
     cpu->a = cpu->a & cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
@@ -104,7 +118,6 @@ void cpu_alu_and(Cpu *cpu) {
 }
 
 void cpu_alu_ora(Cpu *cpu) {
-    // Load data bus content into accumulator
     cpu->a = cpu->a | cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
@@ -112,9 +125,56 @@ void cpu_alu_ora(Cpu *cpu) {
 }
 
 void cpu_alu_eor(Cpu *cpu) {
-    // Load data bus content into accumulator
     cpu->a = cpu->a ^ cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
     cpu_status_reg_update_zero(cpu, cpu->a);
+}
+
+void cpu_alu_adc(Cpu *cpu) {
+    CpuByte old_a = cpu->a;
+    CpuByte operand = cpu->data_bus;
+    CpuByte carry_in = !!(cpu->sr & CPU_FLAG_C);
+
+    // 16-bit binary result
+    CpuWord word_result_bin = old_a + operand + carry_in;
+
+    // Zero flag uses raw binary result
+    cpu_status_reg_update_zero(cpu, word_result_bin & 0xFF);
+
+    // BCD specific instructions
+    if (cpu->sr & CPU_FLAG_D) {
+        // Bruce Clark's canonical BCD algorithm
+        CpuWord al = (old_a & 0x0F) + (operand & 0x0F) + carry_in;
+        // Apply offset
+        if (al >= 0x0A) {
+            al = ((al + 0x06) & 0x0F) + 0x10;
+        }
+
+        CpuWord a = (old_a & 0xF0) + (operand & 0xF0) + al;
+
+        // N and V flags use the intermediate result
+        cpu_status_reg_update_negative(cpu, a & 0xFF);
+
+        cpu_status_reg_update_overflow(cpu, ~(old_a ^ operand) &
+                                                (old_a ^ (a & 0xFF)) & 0x80);
+
+        // Apply offset
+        if (a >= 0xA0) {
+            a += 0x60;
+        }
+
+        // Update accumulator and carry
+        cpu->a = a & 0xFF;
+        cpu_status_reg_update_carry(cpu, a >= 0x100);
+        return;
+    }
+    // Update N and V flags with raw binary result
+    cpu_status_reg_update_negative(cpu, word_result_bin & 0xFF);
+    cpu_status_reg_update_overflow(
+        cpu, ~(old_a ^ operand) & (old_a ^ (word_result_bin & 0xFF)) & 0x80);
+
+    // Update accumulator and carry
+    cpu->a = word_result_bin & 0xFF;
+    cpu_status_reg_update_carry(cpu, word_result_bin > 0xFF);
 }
