@@ -50,6 +50,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                             .alu_op = cpu_alu_tay},
     [CPU_OP_CLV_IMPLIED] = {.first_step = cpu_addr_implied,
                             .alu_op = cpu_alu_clv},
+    [CPU_OP_INY_IMPLIED] = {.first_step = cpu_addr_implied,
+                            .alu_op = cpu_alu_iny},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -346,4 +348,14 @@ void cpu_alu_tay(Cpu *cpu) {
     cpu_status_reg_update_negative(cpu, cpu->y);
 }
 
-void cpu_alu_clv(Cpu *cpu) { cpu_status_reg_update_overflow(cpu, 0); }
+void cpu_alu_clv(Cpu *cpu) {
+    // Set status flag
+    cpu_status_reg_update_overflow(cpu, 0);
+}
+
+void cpu_alu_iny(Cpu *cpu) {
+    cpu->y = cpu->y + 1;
+    // Set status flag
+    cpu_status_reg_update_zero(cpu, cpu->y);
+    cpu_status_reg_update_negative(cpu, cpu->y);
+}
