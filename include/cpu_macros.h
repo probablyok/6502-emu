@@ -56,6 +56,7 @@
 // Accumulator addressing
 #define CPU_OP_ASL_ACCUMULATOR 0x0A
 #define CPU_OP_ROL_ACCUMULATOR 0x2A
+#define CPU_OP_LSR_ACCUMULATOR 0x4A
 
 // Status register masks
 #define CPU_FLAG_N (1 << 7)
