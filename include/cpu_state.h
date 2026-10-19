@@ -222,4 +222,8 @@ void cpu_alu_cli(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_sei(Cpu *cpu);
 
+/// @brief ASL Instruction ALU logic: Shift left one bit in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_asl(Cpu *cpu);
+
 #endif // CPU_STATE_H

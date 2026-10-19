@@ -52,6 +52,10 @@
 #define CPU_OP_INX_IMPLIED 0xE8
 #define CPU_OP_NOP_IMPLIED 0xEA
 #define CPU_OP_SED_IMPLIED 0xF8
+
+// Accumulator addressing
+#define CPU_OP_ASL_ACCUMULATOR 0x0A
+
 // Status register masks
 #define CPU_FLAG_N (1 << 7)
 #define CPU_FLAG_V (1 << 6)
