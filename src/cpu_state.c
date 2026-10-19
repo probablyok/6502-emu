@@ -78,6 +78,8 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
                                 .alu_op = cpu_alu_rol},
     [CPU_OP_LSR_ACCUMULATOR] = {.first_step = cpu_addr_implied,
                                 .alu_op = cpu_alu_lsr},
+    [CPU_OP_ROR_ACCUMULATOR] = {.first_step = cpu_addr_implied,
+                                .alu_op = cpu_alu_ror},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -514,6 +516,17 @@ void cpu_alu_rol(Cpu *cpu) {
 void cpu_alu_lsr(Cpu *cpu) {
     CpuByte old = cpu->a;
     cpu->a = cpu->a >> 1;
+
+    // Set status register
+    cpu_status_reg_update_carry(cpu, old & 0x01);
+    cpu_status_reg_update_zero(cpu, cpu->a);
+    cpu_status_reg_update_negative(cpu, cpu->a);
+}
+
+void cpu_alu_ror(Cpu *cpu) {
+    CpuByte old = cpu->a;
+    cpu->a = cpu->a >> 1;
+    cpu->a = cpu->a | ((cpu->sr & CPU_FLAG_C) ? 0x80 : 0x00);
 
     // Set status register
     cpu_status_reg_update_carry(cpu, old & 0x01);

@@ -234,4 +234,8 @@ void cpu_alu_rol(Cpu *cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_lsr(Cpu *cpu);
 
+/// @brief ROR Instruction ALU logic: Rotate one bit right in accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_ror(Cpu *cpu);
+
 #endif // CPU_STATE_H
