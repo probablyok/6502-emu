@@ -6,103 +6,64 @@
 /// @brief Lookup table where opcode is assigned to CPU instruction with
 /// specific per-cycle steps
 static const CpuInstruction INSTRUCTION_TABLE[256] = {
-    [CPU_OP_LDA_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_lda},
-    [CPU_OP_LDX_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_ldx},
-    [CPU_OP_LDY_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_ldy},
-    [CPU_OP_AND_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_and},
-    [CPU_OP_ORA_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_ora},
-    [CPU_OP_EOR_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_eor},
-    [CPU_OP_ADC_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_adc},
-    [CPU_OP_CMP_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_cmp},
-    [CPU_OP_CPY_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_cpy},
-    [CPU_OP_CPX_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_cpx},
-    [CPU_OP_SBC_IMMEDIATE] = {.first_step = cpu_addr_immediate,
-                              .alu_op = cpu_alu_sbc},
-    [CPU_OP_SED_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_sed},
-    [CPU_OP_CLD_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_cld},
-    [CPU_OP_NOP_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_nop},
-    [CPU_OP_CLC_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_clc},
-    [CPU_OP_SEC_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_sec},
-    [CPU_OP_DEY_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_dey},
-    [CPU_OP_DEX_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_dex},
-    [CPU_OP_TXA_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_txa},
-    [CPU_OP_TYA_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_tya},
-    [CPU_OP_TAX_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_tax},
-    [CPU_OP_TAY_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_tay},
-    [CPU_OP_CLV_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_clv},
-    [CPU_OP_INX_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_inx},
-    [CPU_OP_INY_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_iny},
-    [CPU_OP_PHP_IMPLIED] = {.first_step = cpu_wait_php_pha,
-                            .alu_op = cpu_alu_php},
-    [CPU_OP_PHA_IMPLIED] = {.first_step = cpu_wait_php_pha,
-                            .alu_op = cpu_alu_pha},
-    [CPU_OP_PLP_IMPLIED] = {.first_step = cpu_wait1_plp_pla,
-                            .alu_op = cpu_alu_plp},
-    [CPU_OP_PLA_IMPLIED] = {.first_step = cpu_wait1_plp_pla,
-                            .alu_op = cpu_alu_pla},
-    [CPU_OP_TXS_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_txs},
-    [CPU_OP_TSX_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_tsx},
-    [CPU_OP_CLI_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_cli},
-    [CPU_OP_SEI_IMPLIED] = {.first_step = cpu_addr_implied,
-                            .alu_op = cpu_alu_sei},
-    [CPU_OP_ASL_ACCUMULATOR] = {.first_step = cpu_addr_implied,
-                                .alu_op = cpu_alu_asl},
-    [CPU_OP_ROL_ACCUMULATOR] = {.first_step = cpu_addr_implied,
-                                .alu_op = cpu_alu_rol},
-    [CPU_OP_LSR_ACCUMULATOR] = {.first_step = cpu_addr_implied,
-                                .alu_op = cpu_alu_lsr},
-    [CPU_OP_ROR_ACCUMULATOR] = {.first_step = cpu_addr_implied,
-                                .alu_op = cpu_alu_ror},
+    [CPU_OP_LDA_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_lda},
+    [CPU_OP_LDX_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_ldx},
+    [CPU_OP_LDY_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_ldy},
+    [CPU_OP_AND_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_and},
+    [CPU_OP_ORA_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_ora},
+    [CPU_OP_EOR_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_eor},
+    [CPU_OP_ADC_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_adc},
+    [CPU_OP_CMP_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_cmp},
+    [CPU_OP_CPY_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_cpy},
+    [CPU_OP_CPX_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_cpx},
+    [CPU_OP_SBC_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_sbc},
+    [CPU_OP_SED_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_sed},
+    [CPU_OP_CLD_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_cld},
+    [CPU_OP_NOP_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_nop},
+    [CPU_OP_CLC_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_clc},
+    [CPU_OP_SEC_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_sec},
+    [CPU_OP_DEY_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_dey},
+    [CPU_OP_DEX_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_dex},
+    [CPU_OP_TXA_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_txa},
+    [CPU_OP_TYA_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_tya},
+    [CPU_OP_TAX_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_tax},
+    [CPU_OP_TAY_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_tay},
+    [CPU_OP_CLV_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_clv},
+    [CPU_OP_INX_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_inx},
+    [CPU_OP_INY_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_iny},
+    [CPU_OP_PHP_IMPLIED] = {.first_step = cpu_wait_php_pha, .alu_op = cpu_alu_php},
+    [CPU_OP_PHA_IMPLIED] = {.first_step = cpu_wait_php_pha, .alu_op = cpu_alu_pha},
+    [CPU_OP_PLP_IMPLIED] = {.first_step = cpu_wait1_plp_pla, .alu_op = cpu_alu_plp},
+    [CPU_OP_PLA_IMPLIED] = {.first_step = cpu_wait1_plp_pla, .alu_op = cpu_alu_pla},
+    [CPU_OP_TXS_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_txs},
+    [CPU_OP_TSX_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_tsx},
+    [CPU_OP_CLI_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_cli},
+    [CPU_OP_SEI_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_sei},
+    [CPU_OP_ASL_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_asl},
+    [CPU_OP_ROL_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_rol},
+    [CPU_OP_LSR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_lsr},
+    [CPU_OP_ROR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_ror},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
 /// @param cpu The emulated 6502 CPU
 /// @param data The data to test
-static void cpu_status_reg_update_zero(Cpu *cpu, CpuByte data) {
-    cpu->sr =
-        (data == 0) ? ((cpu->sr) | CPU_FLAG_Z) : ((cpu->sr) & ~CPU_FLAG_Z);
+static void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {
+    cpu->sr = (data == 0) ? ((cpu->sr) | CPU_FLAG_Z) : ((cpu->sr) & ~CPU_FLAG_Z);
 }
 
 /// @brief Set/unset the negative flag in the status register based on input
 /// @param cpu The emulated 6502 CPU
 /// @param data The data to test
-static void cpu_status_reg_update_negative(Cpu *cpu, CpuByte data) {
-    cpu->sr =
-        (data & 0x80) ? ((cpu->sr) | CPU_FLAG_N) : ((cpu->sr) & ~CPU_FLAG_N);
+static void cpu_status_reg_update_negative(Cpu* cpu, CpuByte data) {
+    cpu->sr = (data & 0x80) ? ((cpu->sr) | CPU_FLAG_N) : ((cpu->sr) & ~CPU_FLAG_N);
 }
 
 /// @brief Set/unset the carry flag in the status register based on true or
 /// false condition provided
 /// @param cpu The emulated 6502 CPU
 /// @param condition The condition used to set the carry flag
-static void cpu_status_reg_update_carry(Cpu *cpu, int condition) {
+static void cpu_status_reg_update_carry(Cpu* cpu, int condition) {
     cpu->sr = condition ? ((cpu->sr) | CPU_FLAG_C) : ((cpu->sr) & ~CPU_FLAG_C);
 }
 
@@ -110,14 +71,14 @@ static void cpu_status_reg_update_carry(Cpu *cpu, int condition) {
 /// false condition provided
 /// @param cpu The emulated 6502 CPU
 /// @param condition The condition used to set the overflow flag
-static void cpu_status_reg_update_overflow(Cpu *cpu, int condition) {
+static void cpu_status_reg_update_overflow(Cpu* cpu, int condition) {
     cpu->sr = condition ? ((cpu->sr) | CPU_FLAG_V) : ((cpu->sr) & ~CPU_FLAG_V);
 }
 
 /// @brief Set/unset the BCD flag in the status register based on input
 /// @param cpu The emulated 6502 CPU
 /// @param condition The data to set
-static void cpu_status_reg_update_decimal(Cpu *cpu, int data) {
+static void cpu_status_reg_update_decimal(Cpu* cpu, int data) {
     cpu->sr = (data) ? ((cpu->sr) | CPU_FLAG_D) : ((cpu->sr) & ~CPU_FLAG_D);
 }
 
@@ -125,17 +86,15 @@ static void cpu_status_reg_update_decimal(Cpu *cpu, int data) {
 /// input
 /// @param cpu The emulated 6502 CPU
 /// @param condition The data to set
-static void cpu_status_reg_update_interrupt_disable(Cpu *cpu, int data) {
+static void cpu_status_reg_update_interrupt_disable(Cpu* cpu, int data) {
     cpu->sr = (data) ? ((cpu->sr) | CPU_FLAG_I) : ((cpu->sr) & ~CPU_FLAG_I);
 }
 
-int cpu_inst_implemented(CpuByte opcode) {
-    return INSTRUCTION_TABLE[opcode].first_step == NULL;
-}
+int cpu_inst_implemented(CpuByte opcode) { return INSTRUCTION_TABLE[opcode].first_step == NULL; }
 
-void cpu_tick(Cpu *cpu) { cpu->cur_step(cpu); }
+void cpu_tick(Cpu* cpu) { cpu->cur_step(cpu); }
 
-void cpu_fetch_opcode(Cpu *cpu) {
+void cpu_fetch_opcode(Cpu* cpu) {
     // Read opcode from PC
     cpu->opcode = cpu_mem_read(cpu, cpu->pc++);
     // Get instruction from opcode
@@ -151,7 +110,7 @@ void cpu_fetch_opcode(Cpu *cpu) {
     cpu->cur_step = instruction.first_step;
 }
 
-void cpu_addr_immediate(Cpu *cpu) {
+void cpu_addr_immediate(Cpu* cpu) {
     // Read byte after opcode
     cpu_mem_read(cpu, cpu->pc++);
 
@@ -164,7 +123,7 @@ void cpu_addr_immediate(Cpu *cpu) {
     cpu->cur_step = cpu_fetch_opcode;
 }
 
-void cpu_addr_implied(Cpu *cpu) {
+void cpu_addr_implied(Cpu* cpu) {
     // Dummy read byte after opcode
     cpu_mem_read(cpu, cpu->pc);
 
@@ -176,49 +135,49 @@ void cpu_addr_implied(Cpu *cpu) {
     cpu->cur_step = cpu_fetch_opcode;
 }
 
-void cpu_alu_lda(Cpu *cpu) {
+void cpu_alu_lda(Cpu* cpu) {
     cpu->a = cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
     cpu_status_reg_update_zero(cpu, cpu->a);
 }
 
-void cpu_alu_ldx(Cpu *cpu) {
+void cpu_alu_ldx(Cpu* cpu) {
     cpu->x = cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->x);
     cpu_status_reg_update_zero(cpu, cpu->x);
 }
 
-void cpu_alu_ldy(Cpu *cpu) {
+void cpu_alu_ldy(Cpu* cpu) {
     cpu->y = cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->y);
     cpu_status_reg_update_zero(cpu, cpu->y);
 }
 
-void cpu_alu_and(Cpu *cpu) {
+void cpu_alu_and(Cpu* cpu) {
     cpu->a = cpu->a & cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
     cpu_status_reg_update_zero(cpu, cpu->a);
 }
 
-void cpu_alu_ora(Cpu *cpu) {
+void cpu_alu_ora(Cpu* cpu) {
     cpu->a = cpu->a | cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
     cpu_status_reg_update_zero(cpu, cpu->a);
 }
 
-void cpu_alu_eor(Cpu *cpu) {
+void cpu_alu_eor(Cpu* cpu) {
     cpu->a = cpu->a ^ cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, cpu->a);
     cpu_status_reg_update_zero(cpu, cpu->a);
 }
 
-void cpu_alu_adc(Cpu *cpu) {
+void cpu_alu_adc(Cpu* cpu) {
     CpuByte old_a = cpu->a;
     CpuByte operand = cpu->data_bus;
     CpuByte carry_in = !!(cpu->sr & CPU_FLAG_C);
@@ -243,8 +202,7 @@ void cpu_alu_adc(Cpu *cpu) {
         // N and V flags use the intermediate result
         cpu_status_reg_update_negative(cpu, a & 0xFF);
 
-        cpu_status_reg_update_overflow(cpu, ~(old_a ^ operand) &
-                                                (old_a ^ (a & 0xFF)) & 0x80);
+        cpu_status_reg_update_overflow(cpu, ~(old_a ^ operand) & (old_a ^ (a & 0xFF)) & 0x80);
 
         // Apply offset
         if (a >= 0xA0) {
@@ -258,15 +216,15 @@ void cpu_alu_adc(Cpu *cpu) {
     }
     // Update N and V flags with raw binary result
     cpu_status_reg_update_negative(cpu, word_result_bin & 0xFF);
-    cpu_status_reg_update_overflow(
-        cpu, ~(old_a ^ operand) & (old_a ^ (word_result_bin & 0xFF)) & 0x80);
+    cpu_status_reg_update_overflow(cpu,
+                                   ~(old_a ^ operand) & (old_a ^ (word_result_bin & 0xFF)) & 0x80);
 
     // Update accumulator and carry
     cpu->a = word_result_bin & 0xFF;
     cpu_status_reg_update_carry(cpu, word_result_bin > 0xFF);
 }
 
-void cpu_alu_cmp(Cpu *cpu) {
+void cpu_alu_cmp(Cpu* cpu) {
     CpuWord compare_result = cpu->a - cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, (CpuByte)compare_result);
@@ -274,7 +232,7 @@ void cpu_alu_cmp(Cpu *cpu) {
     cpu_status_reg_update_carry(cpu, cpu->a >= cpu->data_bus);
 }
 
-void cpu_alu_cpy(Cpu *cpu) {
+void cpu_alu_cpy(Cpu* cpu) {
     CpuWord comapre_result = cpu->y - cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, (CpuByte)comapre_result);
@@ -282,7 +240,7 @@ void cpu_alu_cpy(Cpu *cpu) {
     cpu_status_reg_update_carry(cpu, cpu->y >= cpu->data_bus);
 }
 
-void cpu_alu_cpx(Cpu *cpu) {
+void cpu_alu_cpx(Cpu* cpu) {
     CpuWord compare_result = cpu->x - cpu->data_bus;
     // Update status register
     cpu_status_reg_update_negative(cpu, (CpuByte)compare_result);
@@ -290,7 +248,7 @@ void cpu_alu_cpx(Cpu *cpu) {
     cpu_status_reg_update_carry(cpu, cpu->x >= cpu->data_bus);
 }
 
-void cpu_alu_sbc(Cpu *cpu) {
+void cpu_alu_sbc(Cpu* cpu) {
     CpuByte old_a = cpu->a;
     CpuByte operand = cpu->data_bus;
     CpuByte carry_in = !!(cpu->sr & CPU_FLAG_C);
@@ -301,8 +259,8 @@ void cpu_alu_sbc(Cpu *cpu) {
     // Status flags
     cpu_status_reg_update_zero(cpu, word_result_bin & 0xFF);
     cpu_status_reg_update_negative(cpu, word_result_bin & 0xFF);
-    cpu_status_reg_update_overflow(
-        cpu, (old_a ^ operand) & (old_a ^ (word_result_bin & 0xFF)) & 0x80);
+    cpu_status_reg_update_overflow(cpu,
+                                   (old_a ^ operand) & (old_a ^ (word_result_bin & 0xFF)) & 0x80);
     // Inverted borrow (carry only 1 on no underflow)
     cpu_status_reg_update_carry(cpu, word_result_bin < 0x100);
 
@@ -326,89 +284,89 @@ void cpu_alu_sbc(Cpu *cpu) {
     cpu->a = word_result_bin & 0xFF;
 }
 
-void cpu_alu_sed(Cpu *cpu) {
+void cpu_alu_sed(Cpu* cpu) {
     // Update status register
     cpu_status_reg_update_decimal(cpu, 1);
 }
 
-void cpu_alu_cld(Cpu *cpu) {
+void cpu_alu_cld(Cpu* cpu) {
     // Update status register
     cpu_status_reg_update_decimal(cpu, 0);
 }
 
-void cpu_alu_nop(Cpu *cpu) {
-    cpu = (Cpu *)cpu;
+void cpu_alu_nop(Cpu* cpu) {
+    cpu = (Cpu*)cpu;
     return; // Do nothing
 }
 
-void cpu_alu_clc(Cpu *cpu) {
+void cpu_alu_clc(Cpu* cpu) {
     // Update status register
     cpu_status_reg_update_carry(cpu, 0);
 }
 
-void cpu_alu_sec(Cpu *cpu) {
+void cpu_alu_sec(Cpu* cpu) {
     // Update status register
     cpu_status_reg_update_carry(cpu, 1);
 }
 
-void cpu_alu_dey(Cpu *cpu) {
+void cpu_alu_dey(Cpu* cpu) {
     cpu->y = cpu->y - 1;
     // Update status registers
     cpu_status_reg_update_zero(cpu, cpu->y);
     cpu_status_reg_update_negative(cpu, cpu->y);
 }
 
-void cpu_alu_dex(Cpu *cpu) {
+void cpu_alu_dex(Cpu* cpu) {
     cpu->x = cpu->x - 1;
     // Update status registers
     cpu_status_reg_update_zero(cpu, cpu->x);
     cpu_status_reg_update_negative(cpu, cpu->x);
 }
 
-void cpu_alu_txa(Cpu *cpu) {
+void cpu_alu_txa(Cpu* cpu) {
     cpu->a = cpu->x;
     cpu_status_reg_update_zero(cpu, cpu->x);
     cpu_status_reg_update_negative(cpu, cpu->x);
 }
 
-void cpu_alu_tya(Cpu *cpu) {
+void cpu_alu_tya(Cpu* cpu) {
     cpu->a = cpu->y;
     cpu_status_reg_update_zero(cpu, cpu->y);
     cpu_status_reg_update_negative(cpu, cpu->y);
 }
 
-void cpu_alu_tax(Cpu *cpu) {
+void cpu_alu_tax(Cpu* cpu) {
     cpu->x = cpu->a;
     cpu_status_reg_update_zero(cpu, cpu->x);
     cpu_status_reg_update_negative(cpu, cpu->x);
 }
 
-void cpu_alu_tay(Cpu *cpu) {
+void cpu_alu_tay(Cpu* cpu) {
     cpu->y = cpu->a;
     cpu_status_reg_update_zero(cpu, cpu->y);
     cpu_status_reg_update_negative(cpu, cpu->y);
 }
 
-void cpu_alu_clv(Cpu *cpu) {
+void cpu_alu_clv(Cpu* cpu) {
     // Set status flag
     cpu_status_reg_update_overflow(cpu, 0);
 }
 
-void cpu_alu_inx(Cpu *cpu) {
+void cpu_alu_inx(Cpu* cpu) {
     cpu->x = cpu->x + 1;
     // Set status flag
     cpu_status_reg_update_zero(cpu, cpu->x);
     cpu_status_reg_update_negative(cpu, cpu->x);
 }
 
-void cpu_alu_iny(Cpu *cpu) {
+void cpu_alu_iny(Cpu* cpu) {
     cpu->y = cpu->y + 1;
     // Set status flag
     cpu_status_reg_update_zero(cpu, cpu->y);
     cpu_status_reg_update_negative(cpu, cpu->y);
 }
 
-void cpu_wait_php_pha(Cpu *cpu) {
+void cpu_wait_php_pha(Cpu* cpu) {
     // Read byte after opcode
     cpu_mem_read(cpu, cpu->pc);
 
@@ -416,37 +374,37 @@ void cpu_wait_php_pha(Cpu *cpu) {
     cpu->cur_step = cpu_wait_do_alu;
 }
 
-void cpu_wait_do_alu(Cpu *cpu) {
+void cpu_wait_do_alu(Cpu* cpu) {
     cpu->pending_alu(cpu);            // Do push/pull
     cpu->cur_step = cpu_fetch_opcode; // Back to getting next opcode
 }
 
-void cpu_alu_php(Cpu *cpu) {
+void cpu_alu_php(Cpu* cpu) {
     // Push status register onto stack with bit 5 and BREAK set to 1
     CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp--;
     cpu_mem_write(cpu, stack_pos, cpu->sr | CPU_FLAG_B | CPU_FLAG_U);
 }
 
-void cpu_alu_pha(Cpu *cpu) {
+void cpu_alu_pha(Cpu* cpu) {
     // Push status register onto stack with bit 5 and BREAK set to 1
     CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp--;
     cpu_mem_write(cpu, stack_pos, cpu->a);
 }
 
-void cpu_wait1_plp_pla(Cpu *cpu) {
+void cpu_wait1_plp_pla(Cpu* cpu) {
     // Dummy read read on next instruction byte
     cpu_mem_read(cpu, cpu->pc);
     cpu->cur_step = cpu_wait2_plp_pla;
 }
 
-void cpu_wait2_plp_pla(Cpu *cpu) {
+void cpu_wait2_plp_pla(Cpu* cpu) {
     // Dummy read on stack pointer with increment
     CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp++;
     cpu_mem_read(cpu, stack_pos);
     cpu->cur_step = cpu_wait_do_alu;
 }
 
-void cpu_alu_plp(Cpu *cpu) {
+void cpu_alu_plp(Cpu* cpu) {
     // Pull new status register from stack
     CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp;
     CpuByte stack_read = cpu_mem_read(cpu, stack_pos);
@@ -455,7 +413,7 @@ void cpu_alu_plp(Cpu *cpu) {
     cpu->sr = (stack_read & ~CPU_FLAG_B) | CPU_FLAG_U;
 }
 
-void cpu_alu_pla(Cpu *cpu) {
+void cpu_alu_pla(Cpu* cpu) {
     // Pull new status register from stack
     CpuWord stack_pos = CPU_MEM_STACK_START + cpu->sp;
     CpuByte stack_read = cpu_mem_read(cpu, stack_pos);
@@ -468,12 +426,12 @@ void cpu_alu_pla(Cpu *cpu) {
     cpu_status_reg_update_negative(cpu, cpu->a);
 }
 
-void cpu_alu_txs(Cpu *cpu) {
+void cpu_alu_txs(Cpu* cpu) {
     // Set X register to stack pointer
     cpu->sp = cpu->x;
 }
 
-void cpu_alu_tsx(Cpu *cpu) {
+void cpu_alu_tsx(Cpu* cpu) {
     // Set X register to stack pointer
     cpu->x = cpu->sp;
 
@@ -482,17 +440,17 @@ void cpu_alu_tsx(Cpu *cpu) {
     cpu_status_reg_update_negative(cpu, cpu->x);
 }
 
-void cpu_alu_cli(Cpu *cpu) {
+void cpu_alu_cli(Cpu* cpu) {
     // Set status register
     cpu_status_reg_update_interrupt_disable(cpu, 0);
 }
 
-void cpu_alu_sei(Cpu *cpu) {
+void cpu_alu_sei(Cpu* cpu) {
     // Set status register
     cpu_status_reg_update_interrupt_disable(cpu, 1);
 }
 
-void cpu_alu_asl(Cpu *cpu) {
+void cpu_alu_asl(Cpu* cpu) {
     CpuByte old = cpu->a;
     cpu->a = cpu->a << 1;
 
@@ -502,7 +460,7 @@ void cpu_alu_asl(Cpu *cpu) {
     cpu_status_reg_update_negative(cpu, cpu->a);
 }
 
-void cpu_alu_rol(Cpu *cpu) {
+void cpu_alu_rol(Cpu* cpu) {
     CpuByte old = cpu->a;
     cpu->a = cpu->a << 1;
     cpu->a = cpu->a | !!(cpu->sr & CPU_FLAG_C);
@@ -513,7 +471,7 @@ void cpu_alu_rol(Cpu *cpu) {
     cpu_status_reg_update_negative(cpu, cpu->a);
 }
 
-void cpu_alu_lsr(Cpu *cpu) {
+void cpu_alu_lsr(Cpu* cpu) {
     CpuByte old = cpu->a;
     cpu->a = cpu->a >> 1;
 
@@ -523,7 +481,7 @@ void cpu_alu_lsr(Cpu *cpu) {
     cpu_status_reg_update_negative(cpu, cpu->a);
 }
 
-void cpu_alu_ror(Cpu *cpu) {
+void cpu_alu_ror(Cpu* cpu) {
     CpuByte old = cpu->a;
     cpu->a = cpu->a >> 1;
     cpu->a = cpu->a | ((cpu->sr & CPU_FLAG_C) ? 0x80 : 0x00);

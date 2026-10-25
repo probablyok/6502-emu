@@ -61,3 +61,4 @@ tests/test_json
 
 # Code editor / formatting
 .clang-format
+compile_commands.json

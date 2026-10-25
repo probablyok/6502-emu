@@ -1,7 +1,5 @@
 #include "cpu_macros.h"
-#include "cpu_mem.h"
 #include "cpu_state.h"
-#include <stdio.h>
 
 int main(void) {
     // Create CPU and initialise memory
