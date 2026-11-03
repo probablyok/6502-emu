@@ -211,4 +211,15 @@ void cpu_alu_inc(Cpu* cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_dec(Cpu* cpu);
 
+/// @brief STY Instruction ALU logic: Store register Y in memory
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_sty(Cpu* cpu);
+
+/// @brief STA Instruction ALU logic: Store register A in memory
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_sta(Cpu* cpu);
+
+/// @brief STX Instruction ALU logic: Store register X in memory
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_stx(Cpu* cpu);
 #endif

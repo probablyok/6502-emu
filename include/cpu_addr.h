@@ -18,15 +18,15 @@ void cpu_addr_implied(Cpu* cpu);
 
 /// @brief Read the low address byte from the opcode
 /// @param The emulated 6052 CPU
-void cpu_addr_absolute_read_low(Cpu* cpu);
+void cpu_addr_absolute_low(Cpu* cpu);
 
 /// @brief Read the high address byte from the opcode
 /// @param The emulated 6502 CPU
-void cpu_addr_absolute_read_high(Cpu* cpu);
+void cpu_addr_absolute_high(Cpu* cpu);
 
 /// @brief Using the saved 16-bit word from address opcode reads, run pending ALU instruction
 /// @brief The emulated 6502 CPU
-void cpu_addr_aboslute_read(Cpu* cpu);
+void cpu_addr_aboslute(Cpu* cpu);
 
 /// @brief Read the high address byte from the opcode for RMW abs instructions
 /// @param The emulated 6502 CPU

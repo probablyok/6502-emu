@@ -430,3 +430,18 @@ void cpu_alu_dec(Cpu* cpu) {
     cpu_status_reg_update_negative(cpu, cpu->data_bus);
     cpu_status_reg_update_zero(cpu, cpu->data_bus);
 }
+
+void cpu_alu_sty(Cpu* cpu) {
+    // Store index Y in memory
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->y);
+}
+
+void cpu_alu_sta(Cpu* cpu) {
+    // Store index A in memory
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->a);
+}
+
+void cpu_alu_stx(Cpu* cpu) {
+    // Store index X in memory
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->x);
+}

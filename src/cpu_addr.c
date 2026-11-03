@@ -44,19 +44,19 @@ void cpu_addr_implied(Cpu* cpu) {
     cpu->cur_step = cpu_fetch_opcode;
 }
 
-void cpu_addr_absolute_read_low(Cpu* cpu) {
+void cpu_addr_absolute_low(Cpu* cpu) {
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
-    cpu->cur_step = cpu_addr_absolute_read_high;
+    cpu->cur_step = cpu_addr_absolute_high;
 }
 
-void cpu_addr_absolute_read_high(Cpu* cpu) {
+void cpu_addr_absolute_high(Cpu* cpu) {
     // Read the high byte
     cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc++)) << 8) | cpu->addr_operand;
-    cpu->cur_step = cpu_addr_aboslute_read;
+    cpu->cur_step = cpu_addr_aboslute;
 }
 
-void cpu_addr_aboslute_read(Cpu* cpu) {
+void cpu_addr_aboslute(Cpu* cpu) {
     // Read data from opcode address
     cpu_mem_read(cpu, cpu->addr_operand);
 

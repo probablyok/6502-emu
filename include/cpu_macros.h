@@ -3,6 +3,8 @@
 
 // Max/min sizes
 #define CPU_MEM_MAX_SIZE (256 * 256)
+#define CPU_MEM_NUM_OPCODES 256
+#define CPU_MEM_NUM_LEGAL_OPCODES 151
 
 // Important memory locations
 #define CPU_MEM_RESET_VEC_ADDR_H 0xFFFC
@@ -38,6 +40,9 @@
 #define CPU_OP_DEC_ABSOLUTE 0xCE
 #define CPU_OP_INC_ABSOLUTE 0xEE
 // Write
+#define CPU_OP_STY_ABSOLUTE 0x8C
+#define CPU_OP_STA_ABSOLUTE 0x8D
+#define CPU_OP_STX_ABSOLUTE 0x8E
 
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09
