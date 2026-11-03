@@ -1,3 +1,4 @@
+#include "cpu_addr.h"
 #include "cpu_state.h"
 #include "safe_wrappers.h"
 #include <stdio.h>

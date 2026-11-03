@@ -1,3 +1,4 @@
+#include "cpu_addr.h"
 #include "cpu_macros.h"
 #include "cpu_state.h"
 

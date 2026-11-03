@@ -1,0 +1,31 @@
+#ifndef CPU_ADDR_
+#define CPU_ADDR_
+
+#include "cpu_state.h"
+
+/// @brief Reads the current opcode in the program counter before incrementing
+/// it. Then performs decode logic to get instruction steps
+/// @param cpu The emulated 6502 CPU
+void cpu_fetch_opcode(Cpu* cpu);
+
+/// @brief Handle immediate addressing and run pending ALU
+/// @param cpu The emulated 6502 CPU
+void cpu_addr_immediate(Cpu* cpu);
+
+/// @brief Handle implied addressing and run pending ALU
+/// @param cpu The emulated 6502 CPU
+void cpu_addr_implied(Cpu* cpu);
+
+/// @brief Read the high address byte from the opcode
+/// @param The emulated 6502 CPU
+void cpu_addr_absolute_read_high(Cpu* cpu);
+
+/// @brief Read the low address byte from the opcode
+/// @param The emulated 6052 CPU
+void cpu_addr_absolute_read_low(Cpu* cpu);
+
+/// @brief Using the saved 16-bit word from address opcode reads, run pending ALU instruction
+/// @brief The emulated 6502 CPU
+void cpu_addr_aboslute_read(Cpu* cpu);
+
+#endif
