@@ -43,7 +43,17 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_ROL_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_rol},
     [CPU_OP_LSR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_lsr},
     [CPU_OP_ROR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_ror},
-    [CPU_OP_ORA_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ora}};
+    [CPU_OP_ORA_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ora},
+    [CPU_OP_AND_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_and},
+    [CPU_OP_EOR_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_eor},
+    [CPU_OP_ADC_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_adc},
+    [CPU_OP_LDA_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_lda},
+    [CPU_OP_CMP_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_cmp},
+    [CPU_OP_SBC_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_sbc},
+    [CPU_OP_LDY_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ldy},
+    [CPU_OP_CPY_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_cpy},
+    [CPU_OP_CPX_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_cpx},
+};
 
 /// @brief Set/unset the zero flag in the status register based on input
 /// @param cpu The emulated 6502 CPU
@@ -478,7 +488,7 @@ void cpu_alu_asl(Cpu* cpu) {
     CpuByte old = cpu->a;
     cpu->a = cpu->a << 1;
 
-    // Set status register
+    // Set status register 
     cpu_status_reg_update_carry(cpu, old & 0x80);
     cpu_status_reg_update_zero(cpu, cpu->a);
     cpu_status_reg_update_negative(cpu, cpu->a);
