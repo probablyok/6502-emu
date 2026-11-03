@@ -421,3 +421,12 @@ void cpu_alu_inc(Cpu* cpu) {
     cpu_status_reg_update_negative(cpu, cpu->data_bus);
     cpu_status_reg_update_zero(cpu, cpu->data_bus);
 }
+
+void cpu_alu_dec(Cpu* cpu) {
+    // Increment the memory by 1
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus - 1);
+
+    // Set status registers
+    cpu_status_reg_update_negative(cpu, cpu->data_bus);
+    cpu_status_reg_update_zero(cpu, cpu->data_bus);
+}

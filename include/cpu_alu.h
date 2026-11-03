@@ -207,4 +207,8 @@ void cpu_alu_bit(Cpu* cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_inc(Cpu* cpu);
 
+/// @brief DEC Instruction ALU logic: Decrement value in memory by one
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_dec(Cpu* cpu);
+
 #endif
