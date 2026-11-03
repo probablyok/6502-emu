@@ -410,5 +410,14 @@ void cpu_alu_bit(Cpu* cpu) {
     // Set status registers
     cpu_status_reg_update_negative(cpu, cpu->data_bus);            // Result bit 7
     cpu_status_reg_update_overflow(cpu, cpu->data_bus & (1 << 6)); // Result bit 6
-    cpu_status_reg_update_zero(cpu, result);
+    cpu_status_reg_update_zero(cpu, result);                       // Result itself
+}
+
+void cpu_alu_inc(Cpu* cpu) {
+    // Increment the memory by 1
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus + 1);
+
+    // Set status registers
+    cpu_status_reg_update_negative(cpu, cpu->data_bus);
+    cpu_status_reg_update_zero(cpu, cpu->data_bus);
 }

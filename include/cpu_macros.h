@@ -35,6 +35,7 @@
 #define CPU_OP_ROL_ABSOLUTE 0x2E
 #define CPU_OP_LSR_ABSOLUTE 0x4E
 #define CPU_OP_ROR_ABSOLUTE 0x6E
+#define CPU_OP_INC_ABSOLUTE 0xEE
 // Write
 
 // Immediate addressing

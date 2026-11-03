@@ -59,6 +59,7 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_ROL_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_rol_mem},
     [CPU_OP_LSR_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_lsr_mem},
     [CPU_OP_ROR_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_ror_mem},
+    [CPU_OP_INC_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_inc},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

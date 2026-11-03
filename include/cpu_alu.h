@@ -203,4 +203,8 @@ void cpu_alu_ror_mem(Cpu* cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_bit(Cpu* cpu);
 
+/// @brief INC Instruction ALU logic: Increment value in memory by one
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_inc(Cpu* cpu);
+
 #endif
