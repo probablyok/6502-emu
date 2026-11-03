@@ -16,16 +16,37 @@ void cpu_addr_immediate(Cpu* cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_addr_implied(Cpu* cpu);
 
-/// @brief Read the high address byte from the opcode
-/// @param The emulated 6502 CPU
-void cpu_addr_absolute_read_high(Cpu* cpu);
-
 /// @brief Read the low address byte from the opcode
 /// @param The emulated 6052 CPU
 void cpu_addr_absolute_read_low(Cpu* cpu);
 
+/// @brief Read the high address byte from the opcode
+/// @param The emulated 6502 CPU
+void cpu_addr_absolute_read_high(Cpu* cpu);
+
 /// @brief Using the saved 16-bit word from address opcode reads, run pending ALU instruction
 /// @brief The emulated 6502 CPU
 void cpu_addr_aboslute_read(Cpu* cpu);
+
+/// @brief Read the high address byte from the opcode for RMW abs instructions
+/// @param The emulated 6502 CPU
+void cpu_addr_absolute_rmw_low(Cpu* cpu);
+
+/// @brief Read the high address byte from the opcode for RMW abs instructions
+/// @param The emulated 6502 CPU
+void cpu_addr_absolute_rmw_high(Cpu* cpu);
+
+/// @brief Using the saved 16-bit word from address opcode reads, run pending ALU instruction for
+/// RMW abs instructions
+/// @brief The emulated 6502 CPU
+void cpu_addr_absolute_rmw_read(Cpu* cpu);
+
+/// @brief Dummy write back to effective address
+/// @brief The emulated 6502 CPU
+void cpu_addr_absolute_rmw_write(Cpu* cpu);
+
+/// @brief Write operated value to effective address after doing ALU operation
+/// @brief The emulated 6502 CPU
+void cpu_addr_absolute_rmw_write2(Cpu* cpu);
 
 #endif

@@ -17,6 +17,7 @@
 // Op codes
 
 // Absolute addressing
+// Read
 #define CPU_OP_ORA_ABSOLUTE 0x0D
 #define CPU_OP_AND_ABSOLUTE 0x2D
 #define CPU_OP_EOR_ABSOLUTE 0x4D
@@ -28,6 +29,12 @@
 #define CPU_OP_CMP_ABSOLUTE 0xCD
 #define CPU_OP_CPX_ABSOLUTE 0xEC
 #define CPU_OP_SBC_ABSOLUTE 0xED
+// Read-Modify-Write
+#define CPU_OP_ASL_ABSOLUTE 0x0E
+#define CPU_OP_ROL_ABSOLUTE 0x2E
+#define CPU_OP_LSR_ABSOLUTE 0x4E
+#define CPU_OP_ROR_ABSOLUTE 0x6E
+// Write
 
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09

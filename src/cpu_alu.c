@@ -359,3 +359,45 @@ void cpu_alu_ror(Cpu* cpu) {
     cpu_status_reg_update_zero(cpu, cpu->a);
     cpu_status_reg_update_negative(cpu, cpu->a);
 }
+
+void cpu_alu_asl_mem(Cpu* cpu) {
+    CpuByte old = cpu->data_bus;
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus << 1);
+
+    // Set status register
+    cpu_status_reg_update_carry(cpu, old & 0x80);
+    cpu_status_reg_update_zero(cpu, cpu->data_bus);
+    cpu_status_reg_update_negative(cpu, cpu->data_bus);
+}
+
+void cpu_alu_rol_mem(Cpu* cpu) {
+    CpuByte old = cpu->data_bus;
+    CpuByte temp = cpu->data_bus << 1;
+    cpu_mem_write(cpu, cpu->addr_bus, temp | !!(cpu->sr & CPU_FLAG_C));
+
+    // Set status register
+    cpu_status_reg_update_carry(cpu, old & 0x80);
+    cpu_status_reg_update_zero(cpu, cpu->data_bus);
+    cpu_status_reg_update_negative(cpu, cpu->data_bus);
+}
+
+void cpu_alu_lsr_mem(Cpu* cpu) {
+    CpuByte old = cpu->data_bus;
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus >> 1);
+
+    // Set status register
+    cpu_status_reg_update_carry(cpu, old & 0x01);
+    cpu_status_reg_update_zero(cpu, cpu->data_bus);
+    cpu_status_reg_update_negative(cpu, cpu->data_bus);
+}
+
+void cpu_alu_ror_mem(Cpu* cpu) {
+    CpuByte old = cpu->data_bus;
+    CpuByte temp = cpu->data_bus >> 1;
+    cpu_mem_write(cpu, cpu->addr_bus, temp | ((cpu->sr & CPU_FLAG_C) ? 0x80 : 0x00));
+
+    // Set status register
+    cpu_status_reg_update_carry(cpu, old & 0x01);
+    cpu_status_reg_update_zero(cpu, cpu->data_bus);
+    cpu_status_reg_update_negative(cpu, cpu->data_bus);
+}

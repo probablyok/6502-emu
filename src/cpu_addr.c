@@ -44,6 +44,18 @@ void cpu_addr_implied(Cpu* cpu) {
     cpu->cur_step = cpu_fetch_opcode;
 }
 
+void cpu_addr_absolute_read_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_absolute_read_high;
+}
+
+void cpu_addr_absolute_read_high(Cpu* cpu) {
+    // Read the high byte
+    cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc++)) << 8) | cpu->addr_operand;
+    cpu->cur_step = cpu_addr_aboslute_read;
+}
+
 void cpu_addr_aboslute_read(Cpu* cpu) {
     // Read data from opcode address
     cpu_mem_read(cpu, cpu->addr_operand);
@@ -56,14 +68,38 @@ void cpu_addr_aboslute_read(Cpu* cpu) {
     cpu->cur_step = cpu_fetch_opcode;
 }
 
-void cpu_addr_absolute_read_high(Cpu* cpu) {
-    // Read the high byte
-    cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc++)) << 8) | cpu->addr_operand;
-    cpu->cur_step = cpu_addr_aboslute_read;
-}
-
-void cpu_addr_absolute_read_low(Cpu* cpu) {
+void cpu_addr_absolute_rmw_low(Cpu* cpu) {
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
-    cpu->cur_step = cpu_addr_absolute_read_high;
+    cpu->cur_step = cpu_addr_absolute_rmw_high;
+}
+
+void cpu_addr_absolute_rmw_high(Cpu* cpu) {
+    // Read the high byte
+    cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc++)) << 8) | cpu->addr_operand;
+    cpu->cur_step = cpu_addr_absolute_rmw_read;
+}
+
+void cpu_addr_absolute_rmw_read(Cpu* cpu) {
+    // Read data from opcode address
+    cpu_mem_read(cpu, cpu->addr_operand);
+
+    cpu->cur_step = cpu_addr_absolute_rmw_write;
+}
+
+void cpu_addr_absolute_rmw_write(Cpu* cpu) {
+    // Dummy write before operation
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus);
+
+    cpu->cur_step = cpu_addr_absolute_rmw_write2;
+}
+
+void cpu_addr_absolute_rmw_write2(Cpu* cpu) {
+    // Do operation
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    // Back to fetching opcodes
+    cpu->cur_step = cpu_fetch_opcode;
 }

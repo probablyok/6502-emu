@@ -183,4 +183,20 @@ void cpu_alu_lsr(Cpu* cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_ror(Cpu* cpu);
 
+/// @brief ROR Instruction ALU logic: Rotate one bit right in memory
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_asl_mem(Cpu* cpu);
+
+/// @brief ROL Instruction ALU logic: Rotate one bit left in memory
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_rol_mem(Cpu* cpu);
+
+/// @brief LSR Instruction ALU logic: Shift right one bit in memory
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_lsr_mem(Cpu* cpu);
+
+/// @brief ROR Instruction ALU logic: Rotate one bit right in memory
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_ror_mem(Cpu* cpu);
+
 #endif
