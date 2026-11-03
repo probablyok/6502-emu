@@ -1,5 +1,6 @@
 #include "cpu_alu.h"
 #include "cpu_addr.h"
+#include "cpu_macros.h"
 #include "cpu_mem.h"
 #include "cpu_state.h"
 
@@ -400,4 +401,14 @@ void cpu_alu_ror_mem(Cpu* cpu) {
     cpu_status_reg_update_carry(cpu, old & 0x01);
     cpu_status_reg_update_zero(cpu, cpu->data_bus);
     cpu_status_reg_update_negative(cpu, cpu->data_bus);
+}
+
+void cpu_alu_bit(Cpu* cpu) {
+    // AND the accumulator and memory value
+    CpuByte result = cpu->a & cpu->data_bus;
+
+    // Set status registers
+    cpu_status_reg_update_negative(cpu, cpu->data_bus);            // Result bit 7
+    cpu_status_reg_update_overflow(cpu, cpu->data_bus & (1 << 6)); // Result bit 6
+    cpu_status_reg_update_zero(cpu, result);
 }

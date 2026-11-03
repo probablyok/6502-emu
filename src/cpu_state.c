@@ -54,6 +54,7 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_CPY_ABSOLUTE] = {.first_step = cpu_addr_absolute_read_low, .alu_op = cpu_alu_cpy},
     [CPU_OP_CPX_ABSOLUTE] = {.first_step = cpu_addr_absolute_read_low, .alu_op = cpu_alu_cpx},
     [CPU_OP_LDX_ABSOLUTE] = {.first_step = cpu_addr_absolute_read_low, .alu_op = cpu_alu_ldx},
+    [CPU_OP_BIT_ABSOLUTE] = {.first_step = cpu_addr_absolute_read_low, .alu_op = cpu_alu_bit},
     [CPU_OP_ASL_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_asl_mem},
     [CPU_OP_ROL_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_rol_mem},
     [CPU_OP_LSR_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_lsr_mem},

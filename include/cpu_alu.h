@@ -199,4 +199,8 @@ void cpu_alu_lsr_mem(Cpu* cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_ror_mem(Cpu* cpu);
 
+/// @brief BIT Instruction ALU logic: Tests bits in memory with accumulator
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_bit(Cpu* cpu);
+
 #endif

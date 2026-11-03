@@ -19,6 +19,7 @@
 // Absolute addressing
 // Read
 #define CPU_OP_ORA_ABSOLUTE 0x0D
+#define CPU_OP_BIT_ABSOLUTE 0x2C
 #define CPU_OP_AND_ABSOLUTE 0x2D
 #define CPU_OP_EOR_ABSOLUTE 0x4D
 #define CPU_OP_ADC_ABSOLUTE 0x6D
