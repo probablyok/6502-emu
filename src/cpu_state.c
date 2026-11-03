@@ -53,6 +53,7 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_LDY_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ldy},
     [CPU_OP_CPY_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_cpy},
     [CPU_OP_CPX_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_cpx},
+    [CPU_OP_LDX_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ldx},
 };
 
 /// @brief Set/unset the zero flag in the status register based on input
@@ -488,7 +489,7 @@ void cpu_alu_asl(Cpu* cpu) {
     CpuByte old = cpu->a;
     cpu->a = cpu->a << 1;
 
-    // Set status register 
+    // Set status register
     cpu_status_reg_update_carry(cpu, old & 0x80);
     cpu_status_reg_update_zero(cpu, cpu->a);
     cpu_status_reg_update_negative(cpu, cpu->a);
