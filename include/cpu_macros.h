@@ -16,6 +16,9 @@
 
 // Op codes
 
+// Absolute addressing
+#define CPU_OP_ORA_ABSOLUTE 0x0D
+
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09
 #define CPU_OP_AND_IMMEDIATE 0x29

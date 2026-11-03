@@ -43,7 +43,7 @@ static const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_ROL_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_rol},
     [CPU_OP_LSR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_lsr},
     [CPU_OP_ROR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_ror},
-};
+    [CPU_OP_ORA_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ora}};
 
 /// @brief Set/unset the zero flag in the status register based on input
 /// @param cpu The emulated 6502 CPU
@@ -133,6 +133,30 @@ void cpu_addr_implied(Cpu* cpu) {
 
     // Operation complete, fetch new opcode
     cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_absolute(Cpu* cpu) {
+    // Read data from opcode address
+    cpu_mem_read(cpu, cpu->addr_operand);
+
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    // Operation complete, fetch new opcode
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_absolute_high(Cpu* cpu) {
+    // Read the high byte
+    cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc++)) << 8) | cpu->addr_operand;
+    cpu->cur_step = cpu_addr_absolute;
+}
+
+void cpu_addr_absolute_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_absolute_high;
 }
 
 void cpu_alu_lda(Cpu* cpu) {

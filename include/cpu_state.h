@@ -20,6 +20,9 @@ typedef struct Cpu {
     void (*cur_step)(struct Cpu*);
     void (*pending_alu)(struct Cpu*);
 
+    // Keep track of multi-cycle address reads
+    CpuWord addr_operand;
+
     // CPU Memory
     CpuByte mem[CPU_MEM_MAX_SIZE];
 } Cpu;
@@ -57,6 +60,18 @@ void cpu_addr_immediate(Cpu* cpu);
 /// @brief Handle implied addressing and run pending ALU
 /// @param cpu The emulated 6502 CPU
 void cpu_addr_implied(Cpu* cpu);
+
+/// @brief Read the high address byte from the opcode
+/// @param The emulated 6502 CPU
+void cpu_addr_absolute_high(Cpu* cpu);
+
+/// @brief Read the low address byte from the opcode
+/// @param The emulated 6052 CPU
+void cpu_addr_absolute_low(Cpu* cpu);
+
+/// @brief Using the saved 16-bit word from address opcode reads, run pending ALU instruction
+/// @brief The emulated 6502 CPU
+void cpu_addr_absolute(Cpu* cpu);
 
 /// @brief LDA Instruction ALU logic: Load accumulator with memory in data bus
 /// @param cpu The emulated 6502 CPU
