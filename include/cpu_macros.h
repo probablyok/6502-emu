@@ -60,6 +60,9 @@
 #define CPU_OP_SBC_ZERO_PAGE 0xE5
 // Read-Modify-Write
 // Write
+#define CPU_OP_STY_ZERO_PAGE 0x84
+#define CPU_OP_STA_ZERO_PAGE 0x85
+#define CPU_OP_STX_ZERO_PAGE 0x86
 
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09

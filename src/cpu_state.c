@@ -85,6 +85,9 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_CPX_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_cpx},
     [CPU_OP_LDX_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_ldx},
     [CPU_OP_BIT_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_bit},
+    [CPU_OP_STY_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_sty},
+    [CPU_OP_STA_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_sta},
+    [CPU_OP_STX_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_stx},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {
