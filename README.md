@@ -6,7 +6,8 @@ Basic NMOS 6502 Emulator implemented in C.
 
 - Cycle level accurate emulation
 - Test suite for each instruction
-- ROM loading support
+- ROM loading support in CLI
+- GUI
 
 # Usage
 
