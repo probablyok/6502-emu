@@ -49,4 +49,13 @@ void cpu_addr_absolute_rmw_write(Cpu* cpu);
 /// @brief The emulated 6502 CPU
 void cpu_addr_absolute_rmw_write2(Cpu* cpu);
 
+/// @brief Read the low address byte from the opcode, assuming high byte is zero-page
+/// @param The emulated 6052 CPU
+void cpu_addr_zpg_low(Cpu* cpu);
+
+/// @brief Write operated value to effective address after doing ALU operation for zero-page
+/// addressing
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg(Cpu* cpu);
+
 #endif

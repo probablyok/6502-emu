@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 const CpuInstruction INSTRUCTION_TABLE[256] = {
+    // IMMEDIATE ADDRESSING
     [CPU_OP_LDA_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_lda},
     [CPU_OP_LDX_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_ldx},
     [CPU_OP_LDY_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_ldy},
@@ -17,6 +18,8 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_CPY_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_cpy},
     [CPU_OP_CPX_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_cpx},
     [CPU_OP_SBC_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_sbc},
+
+    // IMPLIED ADDRESSING
     [CPU_OP_SED_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_sed},
     [CPU_OP_CLD_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_cld},
     [CPU_OP_NOP_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_nop},
@@ -39,10 +42,14 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_TSX_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_tsx},
     [CPU_OP_CLI_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_cli},
     [CPU_OP_SEI_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_sei},
+
+    // ACCUMULATOR ADDRESSING
     [CPU_OP_ASL_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_asl},
     [CPU_OP_ROL_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_rol},
     [CPU_OP_LSR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_lsr},
     [CPU_OP_ROR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_ror},
+
+    // ABSOLUTE ADDRESSING
     [CPU_OP_ORA_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ora},
     [CPU_OP_AND_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_and},
     [CPU_OP_EOR_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_eor},
@@ -64,6 +71,20 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_ROR_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_ror_mem},
     [CPU_OP_INC_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_inc},
     [CPU_OP_DEC_ABSOLUTE] = {.first_step = cpu_addr_absolute_rmw_low, .alu_op = cpu_alu_dec},
+
+    // ZERO-PAGE ADDERSSING
+    [CPU_OP_ORA_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_ora},
+    [CPU_OP_AND_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_and},
+    [CPU_OP_EOR_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_eor},
+    [CPU_OP_ADC_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_adc},
+    [CPU_OP_LDA_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_lda},
+    [CPU_OP_CMP_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_cmp},
+    [CPU_OP_SBC_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_sbc},
+    [CPU_OP_LDY_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_ldy},
+    [CPU_OP_CPY_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_cpy},
+    [CPU_OP_CPX_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_cpx},
+    [CPU_OP_LDX_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_ldx},
+    [CPU_OP_BIT_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_bit},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

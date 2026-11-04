@@ -44,6 +44,23 @@
 #define CPU_OP_STA_ABSOLUTE 0x8D
 #define CPU_OP_STX_ABSOLUTE 0x8E
 
+// Zero-page addressing
+// Read
+#define CPU_OP_ORA_ZERO_PAGE 0x05
+#define CPU_OP_BIT_ZERO_PAGE 0x24
+#define CPU_OP_AND_ZERO_PAGE 0x25
+#define CPU_OP_EOR_ZERO_PAGE 0x45
+#define CPU_OP_ADC_ZERO_PAGE 0x65
+#define CPU_OP_LDY_ZERO_PAGE 0xA4
+#define CPU_OP_LDA_ZERO_PAGE 0xA5
+#define CPU_OP_LDX_ZERO_PAGE 0xA6
+#define CPU_OP_CPY_ZERO_PAGE 0xC4
+#define CPU_OP_CMP_ZERO_PAGE 0xC5
+#define CPU_OP_CPX_ZERO_PAGE 0xE4
+#define CPU_OP_SBC_ZERO_PAGE 0xE5
+// Read-Modify-Write
+// Write
+
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09
 #define CPU_OP_AND_IMMEDIATE 0x29

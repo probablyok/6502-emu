@@ -103,3 +103,21 @@ void cpu_addr_absolute_rmw_write2(Cpu* cpu) {
     // Back to fetching opcodes
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_zpg_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_zpg;
+}
+
+void cpu_addr_zpg(Cpu* cpu) {
+    // Read data from opcode address
+    cpu_mem_read(cpu, cpu->addr_operand);
+
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    // Operation complete, fetch new opcode
+    cpu->cur_step = cpu_fetch_opcode;
+}
