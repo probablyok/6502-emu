@@ -121,3 +121,33 @@ void cpu_addr_zpg(Cpu* cpu) {
     // Operation complete, fetch new opcode
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_zpg_rmw_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_zpg_rmw_read;
+}
+
+void cpu_addr_zpg_rmw_read(Cpu* cpu) {
+    // Read data from opcode address
+    cpu_mem_read(cpu, cpu->addr_operand);
+
+    cpu->cur_step = cpu_addr_zpg_rmw_write;
+}
+
+void cpu_addr_zpg_rmw_write(Cpu* cpu) {
+    // Dummy write before operation
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus);
+
+    cpu->cur_step = cpu_addr_zpg_rmw_write2;
+}
+
+void cpu_addr_zpg_rmw_write2(Cpu* cpu) {
+    // Do operation
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    // Back to fetching opcodes
+    cpu->cur_step = cpu_fetch_opcode;
+}

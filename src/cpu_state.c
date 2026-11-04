@@ -88,6 +88,12 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_STY_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_sty},
     [CPU_OP_STA_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_sta},
     [CPU_OP_STX_ZERO_PAGE] = {.first_step = cpu_addr_zpg_low, .alu_op = cpu_alu_stx},
+    [CPU_OP_ASL_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_asl_mem},
+    [CPU_OP_ROL_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_rol_mem},
+    [CPU_OP_LSR_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_lsr_mem},
+    [CPU_OP_ROR_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_ror_mem},
+    [CPU_OP_INC_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_inc},
+    [CPU_OP_DEC_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_dec},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

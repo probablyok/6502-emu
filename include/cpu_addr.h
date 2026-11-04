@@ -58,4 +58,22 @@ void cpu_addr_zpg_low(Cpu* cpu);
 /// @brief The emulated 6502 CPU
 void cpu_addr_zpg(Cpu* cpu);
 
+/// @brief Read the high address byte from the opcode for RMW zpg instructions
+/// @param The emulated 6502 CPU
+void cpu_addr_zpg_rmw_low(Cpu* cpu);
+
+/// @brief Using the saved 16-bit word from address opcode reads, run pending ALU instruction for
+/// RMW zpg instructions
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg_rmw_read(Cpu* cpu);
+
+/// @brief Dummy write back to effective address for RMW zpg instructions
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg_rmw_write(Cpu* cpu);
+
+/// @brief Write operated value to effective address after doing ALU operation for RMW zpg
+/// instructions
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg_rmw_write2(Cpu* cpu);
+
 #endif
