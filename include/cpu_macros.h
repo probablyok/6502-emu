@@ -80,6 +80,8 @@
 #define CPU_OP_LDA_ABS_X_INDEXED 0xBD
 #define CPU_OP_CMP_ABS_X_INDEXED 0xDD
 #define CPU_OP_SBC_ABS_X_INDEXED 0xFD
+// Write
+#define CPU_OP_STA_ABS_X_INDEXED 0x9D
 
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09

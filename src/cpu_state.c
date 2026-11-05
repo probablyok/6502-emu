@@ -104,6 +104,7 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_LDA_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_lda},
     [CPU_OP_CMP_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_cmp},
     [CPU_OP_SBC_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_sbc},
+    [CPU_OP_STA_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_write_low, .alu_op = cpu_alu_sta},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

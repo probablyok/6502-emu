@@ -201,3 +201,44 @@ void cpu_addr_abs_x_read2(Cpu* cpu) {
 
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_abs_x_write_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_abs_x_write_high;
+}
+
+void cpu_addr_abs_x_write_high(Cpu* cpu) {
+    // Read the high byte
+    cpu_mem_read(cpu, cpu->pc++);
+
+    // Add X to the low byte
+    cpu->addr_operand += cpu->x;
+
+    cpu->cur_step = cpu_addr_abs_x_write_read;
+}
+
+void cpu_addr_abs_x_write_read(Cpu* cpu) {
+    CpuByte high = cpu->data_bus;
+    CpuWord low = cpu->addr_operand;
+
+    // Perform potentially invalid read
+    // High byte is still on the address bus
+    cpu_mem_read(cpu, ((CpuWord)(high << 8) | (low & 0xFF)));
+
+    // Page boundary might have been crossed, second read performed must correct if necessary
+    CpuByte overflow = (low >> 8) & 0x01;
+    cpu->addr_operand = ((CpuWord)(high + overflow) << 8) | (low & 0xFF);
+
+    cpu->cur_step = cpu_addr_abs_x_write;
+}
+
+void cpu_addr_abs_x_write(Cpu* cpu) {
+    cpu_mem_read(cpu, cpu->addr_operand);
+
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    cpu->cur_step = cpu_fetch_opcode;
+}

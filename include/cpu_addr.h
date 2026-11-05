@@ -93,4 +93,22 @@ void cpu_addr_abs_x_read1(Cpu* cpu);
 /// @brief The emulated 6502 CPU
 void cpu_addr_abs_x_read2(Cpu* cpu);
 
+/// @brief Read low byte for absolute X indexing on write-based opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_x_write_low(Cpu* cpu);
+
+/// @brief Read high byte for absolute X indexing on write-based opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_x_write_high(Cpu* cpu);
+
+/// @brief Perform effective read at potentially incorrect address if page boundary was crossed.
+/// For write-based opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_x_write_read(Cpu* cpu);
+
+/// @brief Perform effective read and get next opcode after fixing page boundary crossing for write
+/// based-opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_x_write(Cpu* cpu);
+
 #endif
