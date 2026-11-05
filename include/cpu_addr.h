@@ -111,4 +111,11 @@ void cpu_addr_abs_x_write_read(Cpu* cpu);
 /// @brief The emulated 6502 CPU
 void cpu_addr_abs_x_write(Cpu* cpu);
 
+void cpu_addr_abs_x_rmw_low(Cpu* cpu);
+void cpu_addr_abs_x_rmw_high(Cpu* cpu);
+void cpu_addr_abs_x_rmw_read1(Cpu* cpu);
+void cpu_addr_abs_x_rmw_read2(Cpu* cpu);
+void cpu_addr_abs_x_rmw_write1(Cpu* cpu);
+void cpu_addr_abs_x_rmw_write2(Cpu* cpu);
+
 #endif

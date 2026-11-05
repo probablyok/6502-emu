@@ -242,3 +242,57 @@ void cpu_addr_abs_x_write(Cpu* cpu) {
 
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_abs_x_rmw_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_abs_x_rmw_high;
+}
+
+void cpu_addr_abs_x_rmw_high(Cpu* cpu) {
+    // Read the high byte
+    cpu_mem_read(cpu, cpu->pc++);
+
+    // Add X to the low byte
+    cpu->addr_operand += cpu->x;
+
+    cpu->cur_step = cpu_addr_abs_x_rmw_read1;
+}
+
+void cpu_addr_abs_x_rmw_read1(Cpu* cpu) {
+    CpuByte high = cpu->data_bus;
+    CpuWord low = cpu->addr_operand;
+
+    // Perform potentially invalid read
+    // High byte is still on the address bus
+    cpu_mem_read(cpu, ((CpuWord)(high << 8) | (low & 0xFF)));
+
+    // Page boundary might have been crossed, second read performed must correct if necessary
+    CpuByte overflow = (low >> 8) & 0x01;
+    cpu->addr_operand = ((CpuWord)(high + overflow) << 8) | (low & 0xFF);
+
+    cpu->cur_step = cpu_addr_abs_x_rmw_read2;
+}
+
+void cpu_addr_abs_x_rmw_read2(Cpu* cpu) {
+    // Re-read from effective address
+    cpu_mem_read(cpu, cpu->addr_operand);
+
+    cpu->cur_step = cpu_addr_abs_x_rmw_write1;
+}
+
+void cpu_addr_abs_x_rmw_write1(Cpu* cpu) {
+    // Dummy write to effective address, then do operation after
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus);
+
+    cpu->cur_step = cpu_addr_abs_x_rmw_write2;
+}
+
+void cpu_addr_abs_x_rmw_write2(Cpu* cpu) {
+    // Operated value writes back
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    cpu->cur_step = cpu_fetch_opcode;
+}
