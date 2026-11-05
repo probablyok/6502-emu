@@ -127,6 +127,7 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_EOR_ABS_Y_INDEXED] = {.first_step = cpu_addr_abs_idx_low_y, .alu_op = cpu_alu_eor},
     [CPU_OP_ADC_ABS_Y_INDEXED] = {.first_step = cpu_addr_abs_idx_low_y, .alu_op = cpu_alu_adc},
     [CPU_OP_LDA_ABS_Y_INDEXED] = {.first_step = cpu_addr_abs_idx_low_y, .alu_op = cpu_alu_lda},
+    [CPU_OP_LDX_ABS_Y_INDEXED] = {.first_step = cpu_addr_abs_idx_low_y, .alu_op = cpu_alu_ldx},
     [CPU_OP_CMP_ABS_Y_INDEXED] = {.first_step = cpu_addr_abs_idx_low_y, .alu_op = cpu_alu_cmp},
     [CPU_OP_SBC_ABS_Y_INDEXED] = {.first_step = cpu_addr_abs_idx_low_y, .alu_op = cpu_alu_sbc},
     [CPU_OP_STA_ABS_Y_INDEXED] = {.first_step = cpu_addr_abs_idx_write_low_y,
