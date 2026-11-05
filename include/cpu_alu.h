@@ -222,4 +222,9 @@ void cpu_alu_sta(Cpu* cpu);
 /// @brief STX Instruction ALU logic: Store register X in memory
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_stx(Cpu* cpu);
+
+/// @brief JMP Instruction ALU logic: Change program counter to address in temp jmp variable
+/// @param cpu The emulated 6502 CPU
+void cpu_alu_jmp(Cpu* cpu);
+
 #endif

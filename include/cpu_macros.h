@@ -18,7 +18,11 @@
 
 // Op codes
 
+// Indirect addressing
+#define CPU_OP_JMP_INDIRECT 0x6C
+
 // Absolute addressing
+#define CPU_OP_JMP_ABSOLUTE 0x4C
 // Read
 #define CPU_OP_ORA_ABSOLUTE 0x0D
 #define CPU_OP_BIT_ABSOLUTE 0x2C

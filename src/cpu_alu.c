@@ -445,3 +445,8 @@ void cpu_alu_stx(Cpu* cpu) {
     // Store index X in memory
     cpu_mem_write(cpu, cpu->addr_bus, cpu->x);
 }
+
+void cpu_alu_jmp(Cpu* cpu) {
+    // Move program counter to address in temp address byte
+    cpu->pc = cpu->jmp_buffer;
+}

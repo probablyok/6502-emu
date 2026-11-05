@@ -49,7 +49,11 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_LSR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_lsr},
     [CPU_OP_ROR_ACCUMULATOR] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_ror},
 
+    // INDIRECT ADDRESSING
+    [CPU_OP_JMP_INDIRECT] = {.first_step = cpu_addr_indirect_jmp_low, .alu_op = cpu_alu_jmp},
+
     // ABSOLUTE ADDRESSING
+    [CPU_OP_JMP_ABSOLUTE] = {.first_step = cpu_addr_absolute_jmp_low, .alu_op = cpu_alu_jmp},
     [CPU_OP_ORA_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ora},
     [CPU_OP_AND_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_and},
     [CPU_OP_EOR_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_eor},

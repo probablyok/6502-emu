@@ -45,6 +45,60 @@ void cpu_addr_implied(Cpu* cpu) {
     cpu->cur_step = cpu_fetch_opcode;
 }
 
+void cpu_addr_absolute_jmp_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->jmp_buffer = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_absolute_jmp_high;
+}
+
+void cpu_addr_absolute_jmp_high(Cpu* cpu) {
+    // Read the high byte
+    cpu->jmp_buffer = ((CpuWord)(cpu_mem_read(cpu, cpu->pc)) << 8) | cpu->jmp_buffer;
+
+    // Set PC to new address
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_indirect_jmp_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_indirect_jmp_high;
+}
+
+void cpu_addr_indirect_jmp_high(Cpu* cpu) {
+    // Read the high byte
+    cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc)) << 8) | cpu->addr_operand;
+    cpu->cur_step = cpu_addr_indirect_jmp_read1;
+}
+
+void cpu_addr_indirect_jmp_read1(Cpu* cpu) {
+    // Read PCL from addr_operand
+    cpu->jmp_buffer = cpu_mem_read(cpu, cpu->addr_operand);
+    cpu->cur_step = cpu_addr_indirect_jmp_read2;
+}
+
+void cpu_addr_indirect_jmp_read2(Cpu* cpu) {
+    // Move across in memory in some page with wrapping
+    CpuWord next =
+        (cpu->addr_operand & 0xFF00) |
+        (((cpu->addr_operand & 0x00FF) == 0xFF) ? 0x00 : (cpu->addr_operand & 0x00FF) + 1);
+
+    // Read PCH
+    CpuByte high = cpu_mem_read(cpu, next);
+    cpu->jmp_buffer = ((CpuWord)high << 8) | cpu->jmp_buffer;
+
+    // Set PC to new address
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
 void cpu_addr_absolute_low(Cpu* cpu) {
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
