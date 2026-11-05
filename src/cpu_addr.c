@@ -326,3 +326,29 @@ void cpu_addr_abs_idx_rmw_write2(Cpu* cpu) {
 
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_zpg_idx_low_x(Cpu* cpu) {
+    cpu->idx_reg = 0;
+
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_zpg_idx_read1;
+}
+
+void cpu_addr_zpg_idx_read1(Cpu* cpu) {
+    cpu_mem_read(cpu, cpu->addr_operand);
+    cpu->cur_step = cpu_addr_zpg_idx_read2;
+}
+
+void cpu_addr_zpg_idx_read2(Cpu* cpu) {
+    // Add index register and read effective address
+    CpuByte effective_low = cpu->addr_bus + (cpu->idx_reg ? cpu->y : cpu->x);
+    cpu_mem_read(cpu, effective_low);
+
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    // Operation complete, fetch new opcode
+    cpu->cur_step = cpu_fetch_opcode;
+}
