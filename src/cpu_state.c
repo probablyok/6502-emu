@@ -137,6 +137,8 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_LDA_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_x, .alu_op = cpu_alu_lda},
     [CPU_OP_CMP_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_x, .alu_op = cpu_alu_cmp},
     [CPU_OP_SBC_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_x, .alu_op = cpu_alu_sbc},
+    [CPU_OP_STY_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_x, .alu_op = cpu_alu_sty},
+    [CPU_OP_STA_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_x, .alu_op = cpu_alu_sta},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

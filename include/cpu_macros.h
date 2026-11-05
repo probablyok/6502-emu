@@ -112,6 +112,9 @@
 #define CPU_OP_LDA_ZPG_X_INDEXED 0xB5
 #define CPU_OP_CMP_ZPG_X_INDEXED 0xD5
 #define CPU_OP_SBC_ZPG_X_INDEXED 0xF5
+// Write
+#define CPU_OP_STY_ZPG_X_INDEXED 0x94
+#define CPU_OP_STA_ZPG_X_INDEXED 0x95
 
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09
