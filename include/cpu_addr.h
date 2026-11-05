@@ -16,17 +16,28 @@ void cpu_addr_immediate(Cpu* cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_addr_implied(Cpu* cpu);
 
-/// @brief Read the low address byte from abs jmp
+/// @brief Read the low address byte for abs jmp
 /// @param The emulated 6052 CPU
 void cpu_addr_absolute_jmp_low(Cpu* cpu);
 
-/// @brief Read the high address byte from abs jmp and change PC
+/// @brief Read the high address byte for abs jmp and change PC
 /// @param The emulated 6502 CPU
 void cpu_addr_absolute_jmp_high(Cpu* cpu);
 
+/// @brief Read the low address byte for indirect jmp
+/// @param The emulated 6052 CPU
 void cpu_addr_indirect_jmp_low(Cpu* cpu);
+
+/// @brief Read the high address byte for indirect jmp
+/// @param The emulated 6502 CPU
 void cpu_addr_indirect_jmp_high(Cpu* cpu);
+
+/// @brief Set PCL from effective address read
+/// @param The emulated 6502 CPU
 void cpu_addr_indirect_jmp_read1(Cpu* cpu);
+
+/// @brief Set PCH from effective address read incremented by 1 with page wrap
+/// @param The emulated 6502 CPU
 void cpu_addr_indirect_jmp_read2(Cpu* cpu);
 
 /// @brief Read the low address byte from the opcode
