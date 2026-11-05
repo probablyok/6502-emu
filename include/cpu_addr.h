@@ -160,4 +160,24 @@ void cpu_addr_zpg_idx_read1(Cpu* cpu);
 /// @brief The emulated 6502 CPU
 void cpu_addr_zpg_idx_read2(Cpu* cpu);
 
+/// @brief Read low byte for zpg indexing using X reg on RMW opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg_idx_rmw_low_x(Cpu* cpu);
+
+/// @brief Dummy read of address for zpg indexing on RMW opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg_idx_rmw_read1(Cpu* cpu);
+
+/// @brief Effective read of address with index added for zpg indexing on RMW opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg_idx_rmw_read2(Cpu* cpu);
+
+/// @brief Dummy write of data for zpg indexing on RMW opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg_idx_rmw_write1(Cpu* cpu);
+
+/// @brief Effective write of operated data for zpg indexing on RMW opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu);
+
 #endif

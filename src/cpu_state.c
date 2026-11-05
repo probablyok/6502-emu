@@ -139,6 +139,16 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_SBC_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_x, .alu_op = cpu_alu_sbc},
     [CPU_OP_STY_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_x, .alu_op = cpu_alu_sty},
     [CPU_OP_STA_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_x, .alu_op = cpu_alu_sta},
+    [CPU_OP_ASL_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_rmw_low_x,
+                                  .alu_op = cpu_alu_asl_mem},
+    [CPU_OP_ROL_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_rmw_low_x,
+                                  .alu_op = cpu_alu_rol_mem},
+    [CPU_OP_LSR_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_rmw_low_x,
+                                  .alu_op = cpu_alu_lsr_mem},
+    [CPU_OP_ROR_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_rmw_low_x,
+                                  .alu_op = cpu_alu_ror_mem},
+    [CPU_OP_INC_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_rmw_low_x, .alu_op = cpu_alu_inc},
+    [CPU_OP_DEC_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_rmw_low_x, .alu_op = cpu_alu_dec},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

@@ -352,3 +352,40 @@ void cpu_addr_zpg_idx_read2(Cpu* cpu) {
     // Operation complete, fetch new opcode
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_zpg_idx_rmw_low_x(Cpu* cpu) {
+    cpu->idx_reg = 0;
+
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_zpg_idx_rmw_read1;
+}
+
+void cpu_addr_zpg_idx_rmw_read1(Cpu* cpu) {
+    cpu_mem_read(cpu, cpu->addr_operand);
+    cpu->cur_step = cpu_addr_zpg_idx_rmw_read2;
+}
+
+void cpu_addr_zpg_idx_rmw_read2(Cpu* cpu) {
+    // Add index register and read effective address
+    CpuByte effective_low = cpu->addr_bus + (cpu->idx_reg ? cpu->y : cpu->x);
+    cpu_mem_read(cpu, effective_low);
+
+    cpu->cur_step = cpu_addr_zpg_idx_rmw_write1;
+}
+
+void cpu_addr_zpg_idx_rmw_write1(Cpu* cpu) {
+    // Dummy write to effective address before doing ALU
+    cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus);
+    cpu->cur_step = cpu_addr_zpg_idx_rmw_write2;
+}
+
+void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu) {
+    // Do ALU instruction that also handles writing back to effective address
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    // Operation complete, fetch new opcode
+    cpu->cur_step = cpu_fetch_opcode;
+}
