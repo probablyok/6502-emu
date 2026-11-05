@@ -70,6 +70,17 @@
 #define CPU_OP_STA_ZERO_PAGE 0x85
 #define CPU_OP_STX_ZERO_PAGE 0x86
 
+// Indexed Addressing (Absolute,X)
+// Read
+#define CPU_OP_ORA_ABS_X_INDEXED 0x1D
+#define CPU_OP_AND_ABS_X_INDEXED 0x3D
+#define CPU_OP_EOR_ABS_X_INDEXED 0x5D
+#define CPU_OP_ADC_ABS_X_INDEXED 0x7D
+#define CPU_OP_LDY_ABS_X_INDEXED 0xBC
+#define CPU_OP_LDA_ABS_X_INDEXED 0xBD
+#define CPU_OP_CMP_ABS_X_INDEXED 0xDD
+#define CPU_OP_SBC_ABS_X_INDEXED 0xFD
+
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09
 #define CPU_OP_AND_IMMEDIATE 0x29

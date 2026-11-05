@@ -76,4 +76,21 @@ void cpu_addr_zpg_rmw_write(Cpu* cpu);
 /// @brief The emulated 6502 CPU
 void cpu_addr_zpg_rmw_write2(Cpu* cpu);
 
+/// @brief Read low byte for absolute X indexing
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_x_low(Cpu* cpu);
+
+/// @brief Read high byte for absolute X indexing
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_x_high(Cpu* cpu);
+
+/// @brief Perform effective read at potentially incorrect address if page boundary was crossed. If
+/// it was fine, fetches next opcode, otherwise needs to effective read on next cycle
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_x_read1(Cpu* cpu);
+
+/// @brief Perform effective read and get next opcode after fixing page boundary crossing
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_x_read2(Cpu* cpu);
+
 #endif

@@ -94,6 +94,16 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_ROR_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_ror_mem},
     [CPU_OP_INC_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_inc},
     [CPU_OP_DEC_ZERO_PAGE] = {.first_step = cpu_addr_zpg_rmw_low, .alu_op = cpu_alu_dec},
+
+    // ABSOLUTE,X INDEXED ADDRESING
+    [CPU_OP_ORA_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_ora},
+    [CPU_OP_AND_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_and},
+    [CPU_OP_EOR_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_eor},
+    [CPU_OP_ADC_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_adc},
+    [CPU_OP_LDY_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_ldy},
+    [CPU_OP_LDA_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_lda},
+    [CPU_OP_CMP_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_cmp},
+    [CPU_OP_SBC_ABS_X_INDEXED] = {.first_step = cpu_addr_abs_x_low, .alu_op = cpu_alu_sbc},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {
