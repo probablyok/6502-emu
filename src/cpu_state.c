@@ -149,6 +149,10 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
                                   .alu_op = cpu_alu_ror_mem},
     [CPU_OP_INC_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_rmw_low_x, .alu_op = cpu_alu_inc},
     [CPU_OP_DEC_ZPG_X_INDEXED] = {.first_step = cpu_addr_zpg_idx_rmw_low_x, .alu_op = cpu_alu_dec},
+
+    // ZERO-PAGE,Y INDEXED ADDRESSING
+    [CPU_OP_STX_ZPG_Y_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_y, .alu_op = cpu_alu_stx},
+    [CPU_OP_LDX_ZPG_Y_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_y, .alu_op = cpu_alu_ldx},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

@@ -123,6 +123,12 @@
 #define CPU_OP_STY_ZPG_X_INDEXED 0x94
 #define CPU_OP_STA_ZPG_X_INDEXED 0x95
 
+// Indexed Addressing (Zero-page,Y)
+// Read
+#define CPU_OP_STX_ZPG_Y_INDEXED 0x96
+// Write
+#define CPU_OP_LDX_ZPG_Y_INDEXED 0xB6
+
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09
 #define CPU_OP_AND_IMMEDIATE 0x29

@@ -335,6 +335,14 @@ void cpu_addr_zpg_idx_low_x(Cpu* cpu) {
     cpu->cur_step = cpu_addr_zpg_idx_read1;
 }
 
+void cpu_addr_zpg_idx_low_y(Cpu* cpu) {
+    cpu->idx_reg = 1;
+
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_zpg_idx_read1;
+}
+
 void cpu_addr_zpg_idx_read1(Cpu* cpu) {
     cpu_mem_read(cpu, cpu->addr_operand);
     cpu->cur_step = cpu_addr_zpg_idx_read2;
@@ -355,6 +363,14 @@ void cpu_addr_zpg_idx_read2(Cpu* cpu) {
 
 void cpu_addr_zpg_idx_rmw_low_x(Cpu* cpu) {
     cpu->idx_reg = 0;
+
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_zpg_idx_rmw_read1;
+}
+
+void cpu_addr_zpg_idx_rmw_low_y(Cpu* cpu) {
+    cpu->idx_reg = 1;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
