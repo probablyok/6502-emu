@@ -23,6 +23,9 @@ typedef struct Cpu {
     // Keep track of multi-cycle address reads
     CpuWord addr_operand;
 
+    // Flag for indexed addressing. 0 for X reg, 1 for Y reg
+    CpuByte idx_reg;
+
     // CPU Memory
     CpuByte mem[CPU_MEM_MAX_SIZE];
 } Cpu;

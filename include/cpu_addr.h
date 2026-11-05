@@ -78,44 +78,74 @@ void cpu_addr_zpg_rmw_write2(Cpu* cpu);
 
 /// @brief Read low byte for absolute X indexing
 /// @brief The emulated 6502 CPU
-void cpu_addr_abs_x_low(Cpu* cpu);
+void cpu_addr_abs_idx_low_x(Cpu* cpu);
 
-/// @brief Read high byte for absolute X indexing
+/// @brief Read low byte for absolute Y indexing
 /// @brief The emulated 6502 CPU
-void cpu_addr_abs_x_high(Cpu* cpu);
+void cpu_addr_abs_idx_low_y(Cpu* cpu);
+
+/// @brief Read high byte for absolute indexing
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_high(Cpu* cpu);
 
 /// @brief Perform effective read at potentially incorrect address if page boundary was crossed. If
 /// it was fine, fetches next opcode, otherwise needs to effective read on next cycle
 /// @brief The emulated 6502 CPU
-void cpu_addr_abs_x_read1(Cpu* cpu);
+void cpu_addr_abs_idx_read1(Cpu* cpu);
 
 /// @brief Perform effective read and get next opcode after fixing page boundary crossing
 /// @brief The emulated 6502 CPU
-void cpu_addr_abs_x_read2(Cpu* cpu);
+void cpu_addr_abs_idx_read2(Cpu* cpu);
 
 /// @brief Read low byte for absolute X indexing on write-based opcodes
 /// @brief The emulated 6502 CPU
-void cpu_addr_abs_x_write_low(Cpu* cpu);
+void cpu_addr_abs_idx_write_low_x(Cpu* cpu);
 
-/// @brief Read high byte for absolute X indexing on write-based opcodes
+/// @brief Read low byte for absolute Y indexing on write-based opcodes
 /// @brief The emulated 6502 CPU
-void cpu_addr_abs_x_write_high(Cpu* cpu);
+void cpu_addr_abs_idx_write_low_y(Cpu* cpu);
+
+/// @brief Read high byte for absoluteindexing on write-based opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_write_high(Cpu* cpu);
 
 /// @brief Perform effective read at potentially incorrect address if page boundary was crossed.
 /// For write-based opcodes
 /// @brief The emulated 6502 CPU
-void cpu_addr_abs_x_write_read(Cpu* cpu);
+void cpu_addr_abs_idx_write_read(Cpu* cpu);
 
 /// @brief Perform effective read and get next opcode after fixing page boundary crossing for write
 /// based-opcodes
 /// @brief The emulated 6502 CPU
-void cpu_addr_abs_x_write(Cpu* cpu);
+void cpu_addr_abs_idx_write(Cpu* cpu);
 
-void cpu_addr_abs_x_rmw_low(Cpu* cpu);
-void cpu_addr_abs_x_rmw_high(Cpu* cpu);
-void cpu_addr_abs_x_rmw_read1(Cpu* cpu);
-void cpu_addr_abs_x_rmw_read2(Cpu* cpu);
-void cpu_addr_abs_x_rmw_write1(Cpu* cpu);
-void cpu_addr_abs_x_rmw_write2(Cpu* cpu);
+/// @brief Read low byte for absolute X indexing on RMW opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_rmw_low_x(Cpu* cpu);
+
+/// @brief Read low byte for absolute Y indexing on RMW opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_rmw_low_y(Cpu* cpu);
+
+/// @brief Read high byte for absolute Y indexing on RMW opcodes
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_rmw_high(Cpu* cpu);
+
+/// @brief Perform effective read at potentially incorrect address if page boundary was crossed and
+/// fix for next cylce
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_rmw_read1(Cpu* cpu);
+
+/// @brief Perform read at fixed effective address
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_rmw_read2(Cpu* cpu);
+
+/// @brief Dummy write of non-operated value
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_rmw_write1(Cpu* cpu);
+
+/// @brief Effective write of operated value
+/// @brief The emulated 6502 CPU
+void cpu_addr_abs_idx_rmw_write2(Cpu* cpu);
 
 #endif

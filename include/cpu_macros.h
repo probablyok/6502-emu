@@ -90,6 +90,18 @@
 // Write
 #define CPU_OP_STA_ABS_X_INDEXED 0x9D
 
+// Indexed Addressing (Absolute,Y)
+// Read
+#define CPU_OP_ORA_ABS_Y_INDEXED 0x19
+#define CPU_OP_AND_ABS_Y_INDEXED 0x39
+#define CPU_OP_EOR_ABS_Y_INDEXED 0x59
+#define CPU_OP_ADC_ABS_Y_INDEXED 0x79
+#define CPU_OP_LDA_ABS_Y_INDEXED 0xB9
+#define CPU_OP_CMP_ABS_Y_INDEXED 0xD9
+#define CPU_OP_SBC_ABS_Y_INDEXED 0xF9
+// Write
+#define CPU_OP_STA_ABS_Y_INDEXED 0x99
+
 // Immediate addressing
 #define CPU_OP_ORA_IMMEDIATE 0x09
 #define CPU_OP_AND_IMMEDIATE 0x29
