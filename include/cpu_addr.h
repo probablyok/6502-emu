@@ -218,4 +218,16 @@ void cpu_addr_pre_idx_indirect_fetch_low(Cpu* cpu);
 void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu);
 void cpu_addr_pre_idx_indirect_read(Cpu* cpu);
 
+void cpu_addr_post_idx_indirect_low(Cpu* cpu);
+void cpu_addr_post_idx_indirect_fetch_low(Cpu* cpu);
+void cpu_addr_post_idx_indirect_fetch_high(Cpu* cpu);
+void cpu_addr_post_idx_indirect_read1(Cpu* cpu);
+void cpu_addr_post_idx_indirect_read2(Cpu* cpu);
+
+void cpu_addr_post_idx_indirect_write_low(Cpu* cpu);
+void cpu_addr_post_idx_indirect_write_fetch_low(Cpu* cpu);
+void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu);
+void cpu_addr_post_idx_indirect_write_read(Cpu* cpu);
+void cpu_addr_post_idx_indirect_write_write(Cpu* cpu);
+
 #endif

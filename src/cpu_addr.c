@@ -505,3 +505,115 @@ void cpu_addr_pre_idx_indirect_read(Cpu* cpu) {
 
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_post_idx_indirect_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_post_idx_indirect_fetch_low;
+}
+
+void cpu_addr_post_idx_indirect_fetch_low(Cpu* cpu) {
+    // Fetch the low effective address
+    cpu->ind_latch = cpu_mem_read(cpu, cpu->addr_operand);
+
+    cpu->cur_step = cpu_addr_post_idx_indirect_fetch_high;
+}
+
+void cpu_addr_post_idx_indirect_fetch_high(Cpu* cpu) {
+    // Read second byte in effective address while wrapping in zero-page
+    CpuWord next =
+        (cpu->addr_operand & 0xFF00) |
+        (((cpu->addr_operand & 0x00FF) == 0xFF) ? 0x00 : (cpu->addr_operand & 0x00FF) + 1);
+
+    cpu_mem_read(cpu, next);
+
+    // Add Y on latch, enter next cycle with high byte still on data bus
+    cpu->ind_latch += cpu->y;
+
+    cpu->cur_step = cpu_addr_post_idx_indirect_read1;
+}
+
+void cpu_addr_post_idx_indirect_read1(Cpu* cpu) {
+    CpuByte high = cpu->data_bus;
+    CpuWord low = cpu->ind_latch;
+
+    // Perform potentially invalid read
+    // High byte is still on the address bus
+    cpu_mem_read(cpu, ((CpuWord)(high << 8) | (low & 0xFF)));
+
+    // Read was valid without fix
+    if (low < 0x100) {
+        if (cpu->pending_alu) {
+            cpu->pending_alu(cpu);
+        }
+        cpu->cur_step = cpu_fetch_opcode;
+        return;
+    }
+
+    // Page boundary was crossed, second read performed must correct
+    cpu->ind_latch = ((CpuWord)(high + 1) << 8) | (low & 0xFF);
+
+    cpu->cur_step = cpu_addr_post_idx_indirect_read2;
+}
+
+void cpu_addr_post_idx_indirect_read2(Cpu* cpu) {
+    cpu_mem_read(cpu, cpu->ind_latch);
+
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_post_idx_indirect_write_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_post_idx_indirect_write_fetch_low;
+}
+
+void cpu_addr_post_idx_indirect_write_fetch_low(Cpu* cpu) {
+    // Fetch the low effective address
+    cpu->ind_latch = cpu_mem_read(cpu, cpu->addr_operand);
+
+    cpu->cur_step = cpu_addr_post_idx_indirect_write_fetch_high;
+}
+
+void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu) {
+    // Read second byte in effective address while wrapping in zero-page
+    CpuWord next =
+        (cpu->addr_operand & 0xFF00) |
+        (((cpu->addr_operand & 0x00FF) == 0xFF) ? 0x00 : (cpu->addr_operand & 0x00FF) + 1);
+
+    cpu_mem_read(cpu, next);
+
+    // Add Y on latch, enter next cycle with high byte still on data bus
+    cpu->ind_latch += cpu->y;
+
+    cpu->cur_step = cpu_addr_post_idx_indirect_write_read;
+}
+
+void cpu_addr_post_idx_indirect_write_read(Cpu* cpu) {
+    CpuByte high = cpu->data_bus;
+    CpuWord low = cpu->ind_latch;
+
+    // Perform potentially invalid read
+    // High byte is still on the address bus
+    cpu_mem_read(cpu, ((CpuWord)(high << 8) | (low & 0xFF)));
+
+    // Page boundary might have been crossed, second read performed must correct if necessary
+    CpuByte overflow = (low >> 8) & 0x01;
+    cpu->ind_latch = ((CpuWord)(high + overflow) << 8) | (low & 0xFF);
+
+    cpu->cur_step = cpu_addr_post_idx_indirect_write_write;
+}
+
+void cpu_addr_post_idx_indirect_write_write(Cpu* cpu) {
+    cpu_mem_read(cpu, cpu->ind_latch);
+
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    cpu->cur_step = cpu_fetch_opcode;
+}
