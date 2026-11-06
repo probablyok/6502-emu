@@ -212,4 +212,10 @@ void cpu_addr_zpg_idx_rmw_write1(Cpu* cpu);
 /// @brief The emulated 6502 CPU
 void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu);
 
+void cpu_addr_pre_idx_indirect_low(Cpu* cpu);
+void cpu_addr_pre_idx_indirect_read_ptr(Cpu* cpu);
+void cpu_addr_pre_idx_indirect_fetch_low(Cpu* cpu);
+void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu);
+void cpu_addr_pre_idx_indirect_read(Cpu* cpu);
+
 #endif

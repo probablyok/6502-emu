@@ -158,6 +158,24 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     // ZERO-PAGE,Y INDEXED ADDRESSING
     [CPU_OP_STX_ZPG_Y_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_y, .alu_op = cpu_alu_stx},
     [CPU_OP_LDX_ZPG_Y_INDEXED] = {.first_step = cpu_addr_zpg_idx_low_y, .alu_op = cpu_alu_ldx},
+
+    // PRE-INDEXED INDIRECT ADDRESSING
+    [CPU_OP_ORA_PRE_IDX_INDIRECT] = {.first_step = cpu_addr_pre_idx_indirect_low,
+                                     .alu_op = cpu_alu_ora},
+    [CPU_OP_AND_PRE_IDX_INDIRECT] = {.first_step = cpu_addr_pre_idx_indirect_low,
+                                     .alu_op = cpu_alu_and},
+    [CPU_OP_EOR_PRE_IDX_INDIRECT] = {.first_step = cpu_addr_pre_idx_indirect_low,
+                                     .alu_op = cpu_alu_eor},
+    [CPU_OP_ADC_PRE_IDX_INDIRECT] = {.first_step = cpu_addr_pre_idx_indirect_low,
+                                     .alu_op = cpu_alu_adc},
+    [CPU_OP_LDA_PRE_IDX_INDIRECT] = {.first_step = cpu_addr_pre_idx_indirect_low,
+                                     .alu_op = cpu_alu_lda},
+    [CPU_OP_CMP_PRE_IDX_INDIRECT] = {.first_step = cpu_addr_pre_idx_indirect_low,
+                                     .alu_op = cpu_alu_cmp},
+    [CPU_OP_SBC_PRE_IDX_INDIRECT] = {.first_step = cpu_addr_pre_idx_indirect_low,
+                                     .alu_op = cpu_alu_sbc},
+    [CPU_OP_STA_PRE_IDX_INDIRECT] = {.first_step = cpu_addr_pre_idx_indirect_low,
+                                     .alu_op = cpu_alu_sta},
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

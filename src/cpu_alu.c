@@ -448,5 +448,5 @@ void cpu_alu_stx(Cpu* cpu) {
 
 void cpu_alu_jmp(Cpu* cpu) {
     // Move program counter to address in temp address byte
-    cpu->pc = cpu->jmp_buffer;
+    cpu->pc = cpu->ind_latch;
 }

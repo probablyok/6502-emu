@@ -21,6 +21,19 @@
 // Indirect addressing
 #define CPU_OP_JMP_INDIRECT 0x6C
 
+// Pre-Indexed Indirect addressing
+// Read
+#define CPU_OP_ORA_PRE_IDX_INDIRECT 0x01
+#define CPU_OP_AND_PRE_IDX_INDIRECT 0x21
+#define CPU_OP_EOR_PRE_IDX_INDIRECT 0x41
+#define CPU_OP_ADC_PRE_IDX_INDIRECT 0x61
+#define CPU_OP_LDA_PRE_IDX_INDIRECT 0xA1
+#define CPU_OP_CMP_PRE_IDX_INDIRECT 0xC1
+#define CPU_OP_SBC_PRE_IDX_INDIRECT 0xE1
+// Read-Modify-Write
+// Write
+#define CPU_OP_STA_PRE_IDX_INDIRECT 0x81
+
 // Absolute addressing
 #define CPU_OP_JMP_ABSOLUTE 0x4C
 // Read

@@ -47,13 +47,13 @@ void cpu_addr_implied(Cpu* cpu) {
 
 void cpu_addr_absolute_jmp_low(Cpu* cpu) {
     // Read the low byte
-    cpu->jmp_buffer = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->ind_latch = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
     cpu->cur_step = cpu_addr_absolute_jmp_high;
 }
 
 void cpu_addr_absolute_jmp_high(Cpu* cpu) {
     // Read the high byte
-    cpu->jmp_buffer = ((CpuWord)(cpu_mem_read(cpu, cpu->pc)) << 8) | cpu->jmp_buffer;
+    cpu->ind_latch = ((CpuWord)(cpu_mem_read(cpu, cpu->pc)) << 8) | cpu->ind_latch;
 
     // Set PC to new address
     if (cpu->pending_alu) {
@@ -77,7 +77,7 @@ void cpu_addr_indirect_jmp_high(Cpu* cpu) {
 
 void cpu_addr_indirect_jmp_read1(Cpu* cpu) {
     // Read PCL from addr_operand
-    cpu->jmp_buffer = cpu_mem_read(cpu, cpu->addr_operand);
+    cpu->ind_latch = cpu_mem_read(cpu, cpu->addr_operand);
     cpu->cur_step = cpu_addr_indirect_jmp_read2;
 }
 
@@ -89,7 +89,7 @@ void cpu_addr_indirect_jmp_read2(Cpu* cpu) {
 
     // Read PCH
     CpuByte high = cpu_mem_read(cpu, next);
-    cpu->jmp_buffer = ((CpuWord)high << 8) | cpu->jmp_buffer;
+    cpu->ind_latch = ((CpuWord)high << 8) | cpu->ind_latch;
 
     // Set PC to new address
     if (cpu->pending_alu) {
@@ -457,5 +457,51 @@ void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu) {
     }
 
     // Operation complete, fetch new opcode
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_pre_idx_indirect_low(Cpu* cpu) {
+    // Read the low byte
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_pre_idx_indirect_read_ptr;
+}
+
+void cpu_addr_pre_idx_indirect_read_ptr(Cpu* cpu) {
+    // Dummy read on non-effective address
+    cpu_mem_read(cpu, cpu->addr_operand);
+
+    // Add X to the address (wrap in zero-page)
+    cpu->addr_operand = (CpuByte)((cpu->addr_operand & 0xFF) + cpu->x);
+
+    cpu->cur_step = cpu_addr_pre_idx_indirect_fetch_low;
+}
+
+void cpu_addr_pre_idx_indirect_fetch_low(Cpu* cpu) {
+    // Read first byte in effective address
+    cpu->ind_latch = cpu_mem_read(cpu, cpu->addr_operand);
+
+    cpu->cur_step = cpu_addr_pre_idx_indirect_fetch_high;
+}
+
+void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu) {
+    // Read second byte in effective address while wrapping in zero-page
+    CpuWord next =
+        (cpu->addr_operand & 0xFF00) |
+        (((cpu->addr_operand & 0x00FF) == 0xFF) ? 0x00 : (cpu->addr_operand & 0x00FF) + 1);
+
+    CpuByte high = cpu_mem_read(cpu, next);
+    cpu->ind_latch = ((CpuWord)high << 8) | cpu->ind_latch;
+
+    cpu->cur_step = cpu_addr_pre_idx_indirect_read;
+}
+
+void cpu_addr_pre_idx_indirect_read(Cpu* cpu) {
+    // Read from effective address
+    cpu_mem_read(cpu, cpu->ind_latch);
+
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
     cpu->cur_step = cpu_fetch_opcode;
 }
