@@ -60,5 +60,6 @@ dkms.conf
 tests/test_json
 
 # Code editor / formatting
+.cache
 .clang-format
 compile_commands.json
