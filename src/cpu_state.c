@@ -20,11 +20,13 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_SBC_IMMEDIATE] = {.first_step = cpu_addr_immediate, .alu_op = cpu_alu_sbc},
 
     // IMPLIED ADDRESSING
+    [CPU_OP_BRK_IMPLIED] = {.first_step = cpu_addr_brk_dummy_read, .alu_op = NULL},
     [CPU_OP_SED_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_sed},
     [CPU_OP_CLD_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_cld},
     [CPU_OP_NOP_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_nop},
     [CPU_OP_CLC_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_clc},
     [CPU_OP_SEC_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_sec},
+    [CPU_OP_RTI_IMPLIED] = {.first_step = cpu_addr_rti_dummy_read, .alu_op = NULL},
     [CPU_OP_DEY_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_dey},
     [CPU_OP_DEX_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_dex},
     [CPU_OP_TXA_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_txa},

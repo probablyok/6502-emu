@@ -233,4 +233,18 @@ void cpu_addr_post_idx_indirect_write_write(Cpu* cpu);
 void cpu_addr_relative_fetch_offset(Cpu* cpu);
 void cpu_addr_relative_dummy_read(Cpu* cpu);
 void cpu_addr_relative_invalid_read(Cpu* cpu);
+
+void cpu_addr_brk_dummy_read(Cpu* cpu);
+void cpu_addr_brk_push1(Cpu* cpu);
+void cpu_addr_brk_push2(Cpu* cpu);
+void cpu_addr_brk_push3(Cpu* cpu);
+void cpu_addr_brk_vec_low_fetch(Cpu* cpu);
+void cpu_addr_brk_vec_high_fetch(Cpu* cpu);
+
+void cpu_addr_rti_dummy_read(Cpu* cpu);
+void cpu_addr_rti_inc_sp(Cpu* cpu);
+void cpu_addr_rti_pull1(Cpu* cpu);
+void cpu_addr_rti_pull2(Cpu* cpu);
+void cpu_addr_rti_pull3(Cpu* cpu);
+
 #endif

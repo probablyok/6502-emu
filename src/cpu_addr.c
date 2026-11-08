@@ -1,4 +1,5 @@
 #include "cpu_addr.h"
+#include "cpu_macros.h"
 #include "cpu_mem.h"
 #include "cpu_state.h"
 #include "cpu_types.h"
@@ -659,5 +660,80 @@ void cpu_addr_relative_dummy_read(Cpu* cpu) {
 void cpu_addr_relative_invalid_read(Cpu* cpu) {
     // Read on invalid address and then fetch from correct address
     cpu_mem_read(cpu, cpu->addr_operand);
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_brk_dummy_read(Cpu* cpu) {
+    // Dummy read
+    cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_brk_push1;
+}
+
+void cpu_addr_brk_push1(Cpu* cpu) {
+    // Push PCH onto the stack
+    cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->pc >> 8);
+
+    cpu->cur_step = cpu_addr_brk_push2;
+}
+
+void cpu_addr_brk_push2(Cpu* cpu) {
+    // Push PCL onto the stack
+    cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->pc & 0x00FF);
+
+    cpu->cur_step = cpu_addr_brk_push3;
+}
+
+void cpu_addr_brk_push3(Cpu* cpu) {
+    // Push SR onto the stack
+    cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->sr | CPU_FLAG_B);
+
+    // Disable interrupts to prevent nested IRQs
+    cpu->sr |= CPU_FLAG_I;
+
+    cpu->cur_step = cpu_addr_brk_vec_low_fetch;
+}
+
+void cpu_addr_brk_vec_low_fetch(Cpu* cpu) {
+    // Fetch low byte from IRQ vector
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, CPU_MEM_IRQ_VEC_ADDR_L);
+
+    cpu->cur_step = cpu_addr_brk_vec_high_fetch;
+}
+
+void cpu_addr_brk_vec_high_fetch(Cpu* cpu) {
+    // Fetch high byte from IRQ vector
+    cpu->pc = ((CpuWord)cpu_mem_read(cpu, CPU_MEM_IRQ_VEC_ADDR_H) << 8) | cpu->addr_operand;
+
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_rti_dummy_read(Cpu* cpu) {
+    // Dummy read
+    cpu_mem_read(cpu, cpu->pc);
+    cpu->cur_step = cpu_addr_rti_inc_sp;
+}
+
+void cpu_addr_rti_inc_sp(Cpu* cpu) {
+    // Increment the stack pointer adter read on empty stack slot
+    cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++);
+    cpu->cur_step = cpu_addr_rti_pull1;
+}
+
+void cpu_addr_rti_pull1(Cpu* cpu) {
+    // Pull the SR off stack
+    // Ignore the B flag and force U to 1
+    cpu->sr = (cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++) & ~CPU_FLAG_B) | CPU_FLAG_U;
+    cpu->cur_step = cpu_addr_rti_pull2;
+}
+
+void cpu_addr_rti_pull2(Cpu* cpu) {
+    // Pull PCL
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++);
+    cpu->cur_step = cpu_addr_rti_pull3;
+}
+
+void cpu_addr_rti_pull3(Cpu* cpu) {
+    // Pull PCH
+    cpu->pc = ((CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp) << 8) | cpu->addr_operand;
     cpu->cur_step = cpu_fetch_opcode;
 }
