@@ -49,6 +49,7 @@
 
 // Absolute addressing
 #define CPU_OP_JMP_ABSOLUTE 0x4C
+#define CPU_OP_JSR_ABSOLUTE 0x20
 // Read
 #define CPU_OP_ORA_ABSOLUTE 0x0D
 #define CPU_OP_BIT_ABSOLUTE 0x2C
@@ -182,6 +183,7 @@
 #define CPU_OP_RTI_IMPLIED 0x40
 #define CPU_OP_PHA_IMPLIED 0x48
 #define CPU_OP_CLI_IMPLIED 0x58
+#define CPU_OP_RTS_IMPLIED 0x60
 #define CPU_OP_PLA_IMPLIED 0x68
 #define CPU_OP_SEI_IMPLIED 0x78
 #define CPU_OP_DEY_IMPLIED 0x88

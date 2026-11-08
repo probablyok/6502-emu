@@ -247,4 +247,16 @@ void cpu_addr_rti_pull1(Cpu* cpu);
 void cpu_addr_rti_pull2(Cpu* cpu);
 void cpu_addr_rti_pull3(Cpu* cpu);
 
+void cpu_addr_jsr_fetch_low(Cpu* cpu);
+void cpu_addr_jsr_dummy(Cpu* cpu);
+void cpu_addr_jsr_push1(Cpu* cpu);
+void cpu_addr_jsr_push2(Cpu* cpu);
+void cpu_addr_jsr_fetch_high(Cpu* cpu);
+
+void cpu_addr_rts_dummy1(Cpu* cpu);
+void cpu_addr_rts_dummy2(Cpu* cpu);
+void cpu_addr_rts_pull1(Cpu* cpu);
+void cpu_addr_rts_pull2(Cpu* cpu);
+void cpu_addr_rts_inc(Cpu* cpu);
+
 #endif

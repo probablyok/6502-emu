@@ -737,3 +737,63 @@ void cpu_addr_rti_pull3(Cpu* cpu) {
     cpu->pc = ((CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp) << 8) | cpu->addr_operand;
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_jsr_fetch_low(Cpu* cpu) {
+    // Read operand
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_addr_jsr_dummy;
+}
+
+void cpu_addr_jsr_dummy(Cpu* cpu) {
+    // Some internal operation. Just read stack
+    cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp);
+    cpu->cur_step = cpu_addr_jsr_push1;
+}
+
+void cpu_addr_jsr_push1(Cpu* cpu) {
+    // Push PCH onto the stack
+    cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->pc >> 8);
+    cpu->cur_step = cpu_addr_jsr_push2;
+}
+
+void cpu_addr_jsr_push2(Cpu* cpu) {
+    // Push PCL onto the stack
+    cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->pc & 0x00FF);
+    cpu->cur_step = cpu_addr_jsr_fetch_high;
+}
+
+void cpu_addr_jsr_fetch_high(Cpu* cpu) {
+    // Read high byte to move PC to effective address
+    cpu->pc = ((CpuWord)cpu_mem_read(cpu, cpu->pc) << 8) | cpu->addr_operand;
+    cpu->cur_step = cpu_fetch_opcode;
+}
+
+void cpu_addr_rts_dummy1(Cpu* cpu) {
+    // Dummy read on PC
+    cpu_mem_read(cpu, cpu->pc);
+    cpu->cur_step = cpu_addr_rts_dummy2;
+}
+
+void cpu_addr_rts_dummy2(Cpu* cpu) {
+    // Dummy read on stack
+    cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++);
+    cpu->cur_step = cpu_addr_rts_pull1;
+}
+
+void cpu_addr_rts_pull1(Cpu* cpu) {
+    // Pull PCL off stack
+    cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++);
+    cpu->cur_step = cpu_addr_rts_pull2;
+}
+
+void cpu_addr_rts_pull2(Cpu* cpu) {
+    // Pull PCH off stack
+    cpu->pc = ((CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp) << 8) | cpu->addr_operand;
+    cpu->cur_step = cpu_addr_rts_inc;
+}
+
+void cpu_addr_rts_inc(Cpu* cpu) {
+    // Fix off by one in stack
+    cpu_mem_read(cpu, cpu->pc++);
+    cpu->cur_step = cpu_fetch_opcode;
+}

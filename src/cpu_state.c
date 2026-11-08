@@ -27,6 +27,7 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
     [CPU_OP_CLC_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_clc},
     [CPU_OP_SEC_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_sec},
     [CPU_OP_RTI_IMPLIED] = {.first_step = cpu_addr_rti_dummy_read, .alu_op = NULL},
+    [CPU_OP_RTS_IMPLIED] = {.first_step = cpu_addr_rts_dummy1, .alu_op = NULL},
     [CPU_OP_DEY_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_dey},
     [CPU_OP_DEX_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_dex},
     [CPU_OP_TXA_IMPLIED] = {.first_step = cpu_addr_implied, .alu_op = cpu_alu_txa},
@@ -56,6 +57,7 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
 
     // ABSOLUTE ADDRESSING
     [CPU_OP_JMP_ABSOLUTE] = {.first_step = cpu_addr_absolute_jmp_low, .alu_op = cpu_alu_jmp},
+    [CPU_OP_JSR_ABSOLUTE] = {.first_step = cpu_addr_jsr_fetch_low, .alu_op = NULL},
     [CPU_OP_ORA_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_ora},
     [CPU_OP_AND_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_and},
     [CPU_OP_EOR_ABSOLUTE] = {.first_step = cpu_addr_absolute_low, .alu_op = cpu_alu_eor},
