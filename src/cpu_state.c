@@ -194,6 +194,17 @@ const CpuInstruction INSTRUCTION_TABLE[256] = {
                                       .alu_op = cpu_alu_sbc},
     [CPU_OP_STA_POST_IDX_INDIRECT] = {.first_step = cpu_addr_post_idx_indirect_write_low,
                                       .alu_op = cpu_alu_sta},
+
+    // RELATIVE ADDRESSING
+    [CPU_OP_BPL_RELATIVE] = {.first_step = cpu_addr_relative_fetch_offset, .alu_op = cpu_alu_bpl},
+    [CPU_OP_BMI_RELATIVE] = {.first_step = cpu_addr_relative_fetch_offset, .alu_op = cpu_alu_bmi},
+    [CPU_OP_BVC_RELATIVE] = {.first_step = cpu_addr_relative_fetch_offset, .alu_op = cpu_alu_bvc},
+    [CPU_OP_BVS_RELATIVE] = {.first_step = cpu_addr_relative_fetch_offset, .alu_op = cpu_alu_bvs},
+    [CPU_OP_BCC_RELATIVE] = {.first_step = cpu_addr_relative_fetch_offset, .alu_op = cpu_alu_bcc},
+    [CPU_OP_BCS_RELATIVE] = {.first_step = cpu_addr_relative_fetch_offset, .alu_op = cpu_alu_bcs},
+    [CPU_OP_BNE_RELATIVE] = {.first_step = cpu_addr_relative_fetch_offset, .alu_op = cpu_alu_bne},
+    [CPU_OP_BEQ_RELATIVE] = {.first_step = cpu_addr_relative_fetch_offset, .alu_op = cpu_alu_beq},
+
 };
 
 void cpu_status_reg_update_zero(Cpu* cpu, CpuByte data) {

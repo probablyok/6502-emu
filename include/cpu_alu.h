@@ -227,4 +227,35 @@ void cpu_alu_stx(Cpu* cpu);
 /// @param cpu The emulated 6502 CPU
 void cpu_alu_jmp(Cpu* cpu);
 
+/// @brief BPL Insturction ALU logic: Set internal branch flag if N=0
+/// @param cpu the emulated 6502 CPU
+void cpu_alu_bpl(Cpu* cpu);
+
+/// @brief BMI Insturction ALU logic: Set internal branch flag if N=1
+/// @param cpu the emulated 6502 CPU
+void cpu_alu_bmi(Cpu* cpu);
+
+/// @brief BVC Insturction ALU logic: Set internal branch flag if V=0
+/// @param cpu the emulated 6502 CPU
+void cpu_alu_bvc(Cpu* cpu);
+
+/// @brief BVS Insturction ALU logic: Set internal branch flag if V=1
+/// @param cpu the emulated 6502 CPU
+void cpu_alu_bvs(Cpu* cpu);
+
+/// @brief BCC Insturction ALU logic: Set internal branch flag if C=0
+/// @param cpu the emulated 6502 CPU
+void cpu_alu_bcc(Cpu* cpu);
+
+/// @brief BCS Insturction ALU logic: Set internal branch flag if C=1
+/// @param cpu the emulated 6502 CPU
+void cpu_alu_bcs(Cpu* cpu);
+
+/// @brief BNE Insturction ALU logic: Set internal branch flag if Z=0
+/// @param cpu the emulated 6502 CP
+void cpu_alu_bne(Cpu* cpu);
+
+/// @brief BEQ Insturction ALU logic: Set internal branch flag if Z=1
+/// @param cpu the emulated 6502 CPU
+void cpu_alu_beq(Cpu* cpu);
 #endif

@@ -22,10 +22,10 @@ typedef struct Cpu {
 
     // Keep track of multi-cycle address reads
     CpuWord addr_operand;
-
     // Indirect addressing write location before setting PC
     CpuWord ind_latch;
-
+    // Flag for branch conditions that branching ALU instructions set
+    CpuByte do_branch;
     // Flag for indexed addressing. 0 for X reg, 1 for Y reg
     CpuByte idx_reg;
 

@@ -201,6 +201,16 @@
 #define CPU_OP_LSR_ACCUMULATOR 0x4A
 #define CPU_OP_ROR_ACCUMULATOR 0x6A
 
+// Relative addressing
+#define CPU_OP_BPL_RELATIVE 0x10
+#define CPU_OP_BMI_RELATIVE 0x30
+#define CPU_OP_BVC_RELATIVE 0x50
+#define CPU_OP_BVS_RELATIVE 0x70
+#define CPU_OP_BCC_RELATIVE 0x90
+#define CPU_OP_BCS_RELATIVE 0xB0
+#define CPU_OP_BNE_RELATIVE 0xD0
+#define CPU_OP_BEQ_RELATIVE 0xF0
+
 // Status register masks
 #define CPU_FLAG_N (1 << 7)
 #define CPU_FLAG_V (1 << 6)

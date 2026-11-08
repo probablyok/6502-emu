@@ -230,4 +230,7 @@ void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu);
 void cpu_addr_post_idx_indirect_write_read(Cpu* cpu);
 void cpu_addr_post_idx_indirect_write_write(Cpu* cpu);
 
+void cpu_addr_relative_fetch_offset(Cpu* cpu);
+void cpu_addr_relative_dummy_read(Cpu* cpu);
+void cpu_addr_relative_invalid_read(Cpu* cpu);
 #endif

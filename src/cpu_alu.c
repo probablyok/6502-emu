@@ -450,3 +450,19 @@ void cpu_alu_jmp(Cpu* cpu) {
     // Move program counter to address in temp address byte
     cpu->pc = cpu->ind_latch;
 }
+
+void cpu_alu_bpl(Cpu* cpu) { cpu->do_branch = !!!(cpu->sr & CPU_FLAG_N); }
+
+void cpu_alu_bmi(Cpu* cpu) { cpu->do_branch = !!(cpu->sr & CPU_FLAG_N); }
+
+void cpu_alu_bvc(Cpu* cpu) { cpu->do_branch = !!!(cpu->sr & CPU_FLAG_V); }
+
+void cpu_alu_bvs(Cpu* cpu) { cpu->do_branch = !!(cpu->sr & CPU_FLAG_V); }
+
+void cpu_alu_bcc(Cpu* cpu) { cpu->do_branch = !!!(cpu->sr & CPU_FLAG_C); }
+
+void cpu_alu_bcs(Cpu* cpu) { cpu->do_branch = !!(cpu->sr & CPU_FLAG_C); }
+
+void cpu_alu_bne(Cpu* cpu) { cpu->do_branch = !!!(cpu->sr & CPU_FLAG_Z); }
+
+void cpu_alu_beq(Cpu* cpu) { cpu->do_branch = !!(cpu->sr & CPU_FLAG_Z); }

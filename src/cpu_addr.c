@@ -617,3 +617,47 @@ void cpu_addr_post_idx_indirect_write_write(Cpu* cpu) {
 
     cpu->cur_step = cpu_fetch_opcode;
 }
+
+void cpu_addr_relative_fetch_offset(Cpu* cpu) {
+    cpu->addr_operand = cpu_mem_read(cpu, cpu->pc++);
+
+    // Perform ALU logic to branch if necessary
+    if (cpu->pending_alu) {
+        cpu->pending_alu(cpu);
+    }
+
+    // Branch if branch flag was set by ALU logic
+    cpu->cur_step = cpu_fetch_opcode;
+    if (cpu->do_branch) {
+        cpu->cur_step = cpu_addr_relative_dummy_read;
+    }
+}
+
+void cpu_addr_relative_dummy_read(Cpu* cpu) {
+    // Dummy read from PC immediately
+    cpu_mem_read(cpu, cpu->pc);
+
+    // Retrieve offset
+    CpuByteSigned offset = (CpuByteSigned)(cpu->addr_operand & 0xFF);
+    // Find target PC
+    CpuWord new_pc = cpu->pc + offset;
+
+    // Page boundary crossing check
+    if ((cpu->pc & 0xFF00) == (new_pc & 0xFF00)) {
+        // New PC lands on same page, no extra cycle needed
+        cpu->pc = new_pc;
+        cpu->cur_step = cpu_fetch_opcode;
+        return;
+    }
+
+    // New PC was on adjacent page, fix with extra cycle
+    cpu->addr_operand = (cpu->pc & 0xFF00) | (new_pc & 0x00FF);
+    cpu->pc = new_pc;
+    cpu->cur_step = cpu_addr_relative_invalid_read;
+}
+
+void cpu_addr_relative_invalid_read(Cpu* cpu) {
+    // Read on invalid address and then fetch from correct address
+    cpu_mem_read(cpu, cpu->addr_operand);
+    cpu->cur_step = cpu_fetch_opcode;
+}
