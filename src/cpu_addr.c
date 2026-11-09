@@ -7,86 +7,68 @@
 
 // Inter-execution cycle logic that should never be called outside of the addressing pipeline (i.e.
 // only ever call the exposed, first instruction function)
-void cpu_addr_indirect_jmp_high(Cpu* cpu);
-void cpu_addr_indirect_jmp_read1(Cpu* cpu);
-void cpu_addr_indirect_jmp_read2(Cpu* cpu);
-
-void cpu_addr_absolute_jmp_high(Cpu* cpu);
-
-void cpu_addr_absolute_high(Cpu* cpu);
-void cpu_addr_aboslute(Cpu* cpu);
-
-void cpu_addr_absolute_rmw_high(Cpu* cpu);
-void cpu_addr_absolute_rmw_read(Cpu* cpu);
-void cpu_addr_absolute_rmw_write(Cpu* cpu);
-void cpu_addr_absolute_rmw_write2(Cpu* cpu);
-
-void cpu_addr_zpg(Cpu* cpu);
-
-void cpu_addr_zpg_rmw_read(Cpu* cpu);
-void cpu_addr_zpg_rmw_write(Cpu* cpu);
-void cpu_addr_zpg_rmw_write2(Cpu* cpu);
-
-void cpu_addr_abs_idx_high(Cpu* cpu);
-void cpu_addr_abs_idx_read1(Cpu* cpu);
-void cpu_addr_abs_idx_read2(Cpu* cpu);
-
-void cpu_addr_abs_idx_write_high(Cpu* cpu);
-void cpu_addr_abs_idx_write_read(Cpu* cpu);
-void cpu_addr_abs_idx_write(Cpu* cpu);
-
-void cpu_addr_abs_idx_rmw_high(Cpu* cpu);
-void cpu_addr_abs_idx_rmw_read1(Cpu* cpu);
-void cpu_addr_abs_idx_rmw_read2(Cpu* cpu);
-void cpu_addr_abs_idx_rmw_write1(Cpu* cpu);
-void cpu_addr_abs_idx_rmw_write2(Cpu* cpu);
-
-void cpu_addr_zpg_idx_read1(Cpu* cpu);
-void cpu_addr_zpg_idx_read2(Cpu* cpu);
-
-void cpu_addr_zpg_idx_rmw_read1(Cpu* cpu);
-void cpu_addr_zpg_idx_rmw_read2(Cpu* cpu);
-void cpu_addr_zpg_idx_rmw_write1(Cpu* cpu);
-void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu);
-
-void cpu_addr_pre_idx_indirect_read_ptr(Cpu* cpu);
-void cpu_addr_pre_idx_indirect_fetch_low(Cpu* cpu);
-void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu);
-void cpu_addr_pre_idx_indirect_read(Cpu* cpu);
-
-void cpu_addr_post_idx_indirect_fetch_low(Cpu* cpu);
-void cpu_addr_post_idx_indirect_fetch_high(Cpu* cpu);
-void cpu_addr_post_idx_indirect_read1(Cpu* cpu);
-void cpu_addr_post_idx_indirect_read2(Cpu* cpu);
-
-void cpu_addr_post_idx_indirect_write_fetch_low(Cpu* cpu);
-void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu);
-void cpu_addr_post_idx_indirect_write_read(Cpu* cpu);
-void cpu_addr_post_idx_indirect_write_write(Cpu* cpu);
-
-void cpu_addr_relative_dummy_read(Cpu* cpu);
-void cpu_addr_relative_invalid_read(Cpu* cpu);
-
-void cpu_addr_brk_push1(Cpu* cpu);
-void cpu_addr_brk_push2(Cpu* cpu);
-void cpu_addr_brk_push3(Cpu* cpu);
-void cpu_addr_brk_vec_low_fetch(Cpu* cpu);
-void cpu_addr_brk_vec_high_fetch(Cpu* cpu);
-
-void cpu_addr_rti_inc_sp(Cpu* cpu);
-void cpu_addr_rti_pull1(Cpu* cpu);
-void cpu_addr_rti_pull2(Cpu* cpu);
-void cpu_addr_rti_pull3(Cpu* cpu);
-
-void cpu_addr_jsr_dummy(Cpu* cpu);
-void cpu_addr_jsr_push1(Cpu* cpu);
-void cpu_addr_jsr_push2(Cpu* cpu);
-void cpu_addr_jsr_fetch_high(Cpu* cpu);
-
-void cpu_addr_rts_dummy2(Cpu* cpu);
-void cpu_addr_rts_pull1(Cpu* cpu);
-void cpu_addr_rts_pull2(Cpu* cpu);
-void cpu_addr_rts_inc(Cpu* cpu);
+static void cpu_addr_indirect_jmp_high(Cpu* cpu);
+static void cpu_addr_indirect_jmp_read1(Cpu* cpu);
+static void cpu_addr_indirect_jmp_read2(Cpu* cpu);
+static void cpu_addr_absolute_jmp_high(Cpu* cpu);
+static void cpu_addr_absolute_high(Cpu* cpu);
+static void cpu_addr_aboslute(Cpu* cpu);
+static void cpu_addr_absolute_rmw_high(Cpu* cpu);
+static void cpu_addr_absolute_rmw_read(Cpu* cpu);
+static void cpu_addr_absolute_rmw_write(Cpu* cpu);
+static void cpu_addr_absolute_rmw_write2(Cpu* cpu);
+static void cpu_addr_zpg(Cpu* cpu);
+static void cpu_addr_zpg_rmw_read(Cpu* cpu);
+static void cpu_addr_zpg_rmw_write(Cpu* cpu);
+static void cpu_addr_zpg_rmw_write2(Cpu* cpu);
+static void cpu_addr_abs_idx_high(Cpu* cpu);
+static void cpu_addr_abs_idx_read1(Cpu* cpu);
+static void cpu_addr_abs_idx_read2(Cpu* cpu);
+static void cpu_addr_abs_idx_write_high(Cpu* cpu);
+static void cpu_addr_abs_idx_write_read(Cpu* cpu);
+static void cpu_addr_abs_idx_write(Cpu* cpu);
+static void cpu_addr_abs_idx_rmw_high(Cpu* cpu);
+static void cpu_addr_abs_idx_rmw_read1(Cpu* cpu);
+static void cpu_addr_abs_idx_rmw_read2(Cpu* cpu);
+static void cpu_addr_abs_idx_rmw_write1(Cpu* cpu);
+static void cpu_addr_abs_idx_rmw_write2(Cpu* cpu);
+static void cpu_addr_zpg_idx_read1(Cpu* cpu);
+static void cpu_addr_zpg_idx_read2(Cpu* cpu);
+static void cpu_addr_zpg_idx_rmw_read1(Cpu* cpu);
+static void cpu_addr_zpg_idx_rmw_read2(Cpu* cpu);
+static void cpu_addr_zpg_idx_rmw_write1(Cpu* cpu);
+static void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu);
+static void cpu_addr_pre_idx_indirect_read_ptr(Cpu* cpu);
+static void cpu_addr_pre_idx_indirect_fetch_low(Cpu* cpu);
+static void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu);
+static void cpu_addr_pre_idx_indirect_read(Cpu* cpu);
+static void cpu_addr_post_idx_indirect_fetch_low(Cpu* cpu);
+static void cpu_addr_post_idx_indirect_fetch_high(Cpu* cpu);
+static void cpu_addr_post_idx_indirect_read1(Cpu* cpu);
+static void cpu_addr_post_idx_indirect_read2(Cpu* cpu);
+static void cpu_addr_post_idx_indirect_write_fetch_low(Cpu* cpu);
+static void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu);
+static void cpu_addr_post_idx_indirect_write_read(Cpu* cpu);
+static void cpu_addr_post_idx_indirect_write_write(Cpu* cpu);
+static void cpu_addr_relative_dummy_read(Cpu* cpu);
+static void cpu_addr_relative_invalid_read(Cpu* cpu);
+static void cpu_addr_brk_push1(Cpu* cpu);
+static void cpu_addr_brk_push2(Cpu* cpu);
+static void cpu_addr_brk_push3(Cpu* cpu);
+static void cpu_addr_brk_vec_low_fetch(Cpu* cpu);
+static void cpu_addr_brk_vec_high_fetch(Cpu* cpu);
+static void cpu_addr_rti_inc_sp(Cpu* cpu);
+static void cpu_addr_rti_pull1(Cpu* cpu);
+static void cpu_addr_rti_pull2(Cpu* cpu);
+static void cpu_addr_rti_pull3(Cpu* cpu);
+static void cpu_addr_jsr_dummy(Cpu* cpu);
+static void cpu_addr_jsr_push1(Cpu* cpu);
+static void cpu_addr_jsr_push2(Cpu* cpu);
+static void cpu_addr_jsr_fetch_high(Cpu* cpu);
+static void cpu_addr_rts_dummy2(Cpu* cpu);
+static void cpu_addr_rts_pull1(Cpu* cpu);
+static void cpu_addr_rts_pull2(Cpu* cpu);
+static void cpu_addr_rts_inc(Cpu* cpu);
 
 void cpu_fetch_opcode(Cpu* cpu) {
     // Read opcode from PC
@@ -135,7 +117,7 @@ void cpu_addr_absolute_jmp_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_absolute_jmp_high;
 }
 
-void cpu_addr_absolute_jmp_high(Cpu* cpu) {
+static void cpu_addr_absolute_jmp_high(Cpu* cpu) {
     // Read the high byte
     cpu->ind_latch = ((CpuWord)(cpu_mem_read(cpu, cpu->pc)) << 8) | cpu->ind_latch;
 
@@ -153,19 +135,19 @@ void cpu_addr_indirect_jmp_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_indirect_jmp_high;
 }
 
-void cpu_addr_indirect_jmp_high(Cpu* cpu) {
+static void cpu_addr_indirect_jmp_high(Cpu* cpu) {
     // Read the high byte
     cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc)) << 8) | cpu->addr_operand;
     cpu->cur_step = cpu_addr_indirect_jmp_read1;
 }
 
-void cpu_addr_indirect_jmp_read1(Cpu* cpu) {
+static void cpu_addr_indirect_jmp_read1(Cpu* cpu) {
     // Read PCL from addr_operand
     cpu->ind_latch = cpu_mem_read(cpu, cpu->addr_operand);
     cpu->cur_step = cpu_addr_indirect_jmp_read2;
 }
 
-void cpu_addr_indirect_jmp_read2(Cpu* cpu) {
+static void cpu_addr_indirect_jmp_read2(Cpu* cpu) {
     // Move across in memory in some page with wrapping
     CpuWord next =
         (cpu->addr_operand & 0xFF00) |
@@ -189,13 +171,13 @@ void cpu_addr_absolute_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_absolute_high;
 }
 
-void cpu_addr_absolute_high(Cpu* cpu) {
+static void cpu_addr_absolute_high(Cpu* cpu) {
     // Read the high byte
     cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc++)) << 8) | cpu->addr_operand;
     cpu->cur_step = cpu_addr_aboslute;
 }
 
-void cpu_addr_aboslute(Cpu* cpu) {
+static void cpu_addr_aboslute(Cpu* cpu) {
     // Read data from opcode address
     cpu_mem_read(cpu, cpu->addr_operand);
 
@@ -213,27 +195,27 @@ void cpu_addr_absolute_rmw_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_absolute_rmw_high;
 }
 
-void cpu_addr_absolute_rmw_high(Cpu* cpu) {
+static void cpu_addr_absolute_rmw_high(Cpu* cpu) {
     // Read the high byte
     cpu->addr_operand = ((CpuWord)(cpu_mem_read(cpu, cpu->pc++)) << 8) | cpu->addr_operand;
     cpu->cur_step = cpu_addr_absolute_rmw_read;
 }
 
-void cpu_addr_absolute_rmw_read(Cpu* cpu) {
+static void cpu_addr_absolute_rmw_read(Cpu* cpu) {
     // Read data from opcode address
     cpu_mem_read(cpu, cpu->addr_operand);
 
     cpu->cur_step = cpu_addr_absolute_rmw_write;
 }
 
-void cpu_addr_absolute_rmw_write(Cpu* cpu) {
+static void cpu_addr_absolute_rmw_write(Cpu* cpu) {
     // Dummy write before operation
     cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus);
 
     cpu->cur_step = cpu_addr_absolute_rmw_write2;
 }
 
-void cpu_addr_absolute_rmw_write2(Cpu* cpu) {
+static void cpu_addr_absolute_rmw_write2(Cpu* cpu) {
     // Do operation
     if (cpu->pending_alu) {
         cpu->pending_alu(cpu);
@@ -249,7 +231,7 @@ void cpu_addr_zpg_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_zpg;
 }
 
-void cpu_addr_zpg(Cpu* cpu) {
+static void cpu_addr_zpg(Cpu* cpu) {
     // Read data from opcode address
     cpu_mem_read(cpu, cpu->addr_operand);
 
@@ -267,21 +249,21 @@ void cpu_addr_zpg_rmw_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_zpg_rmw_read;
 }
 
-void cpu_addr_zpg_rmw_read(Cpu* cpu) {
+static void cpu_addr_zpg_rmw_read(Cpu* cpu) {
     // Read data from opcode address
     cpu_mem_read(cpu, cpu->addr_operand);
 
     cpu->cur_step = cpu_addr_zpg_rmw_write;
 }
 
-void cpu_addr_zpg_rmw_write(Cpu* cpu) {
+static void cpu_addr_zpg_rmw_write(Cpu* cpu) {
     // Dummy write before operation
     cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus);
 
     cpu->cur_step = cpu_addr_zpg_rmw_write2;
 }
 
-void cpu_addr_zpg_rmw_write2(Cpu* cpu) {
+static void cpu_addr_zpg_rmw_write2(Cpu* cpu) {
     // Do operation
     if (cpu->pending_alu) {
         cpu->pending_alu(cpu);
@@ -292,7 +274,7 @@ void cpu_addr_zpg_rmw_write2(Cpu* cpu) {
 }
 
 void cpu_addr_abs_idx_low_x(Cpu* cpu) {
-    cpu->idx_reg = 0;
+    cpu->idx_reg = CPU_IDX_USE_X;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
@@ -300,14 +282,14 @@ void cpu_addr_abs_idx_low_x(Cpu* cpu) {
 }
 
 void cpu_addr_abs_idx_low_y(Cpu* cpu) {
-    cpu->idx_reg = 1;
+    cpu->idx_reg = CPU_IDX_USE_Y;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
     cpu->cur_step = cpu_addr_abs_idx_high;
 }
 
-void cpu_addr_abs_idx_high(Cpu* cpu) {
+static void cpu_addr_abs_idx_high(Cpu* cpu) {
     // Read the high byte
     cpu_mem_read(cpu, cpu->pc++);
 
@@ -317,7 +299,7 @@ void cpu_addr_abs_idx_high(Cpu* cpu) {
     cpu->cur_step = cpu_addr_abs_idx_read1;
 }
 
-void cpu_addr_abs_idx_read1(Cpu* cpu) {
+static void cpu_addr_abs_idx_read1(Cpu* cpu) {
     CpuByte high = cpu->data_bus;
     CpuWord low = cpu->addr_operand;
 
@@ -340,7 +322,7 @@ void cpu_addr_abs_idx_read1(Cpu* cpu) {
     cpu->cur_step = cpu_addr_abs_idx_read2;
 }
 
-void cpu_addr_abs_idx_read2(Cpu* cpu) {
+static void cpu_addr_abs_idx_read2(Cpu* cpu) {
     cpu_mem_read(cpu, cpu->addr_operand);
 
     if (cpu->pending_alu) {
@@ -351,7 +333,7 @@ void cpu_addr_abs_idx_read2(Cpu* cpu) {
 }
 
 void cpu_addr_abs_idx_write_low_x(Cpu* cpu) {
-    cpu->idx_reg = 0;
+    cpu->idx_reg = CPU_IDX_USE_X;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
@@ -359,14 +341,14 @@ void cpu_addr_abs_idx_write_low_x(Cpu* cpu) {
 }
 
 void cpu_addr_abs_idx_write_low_y(Cpu* cpu) {
-    cpu->idx_reg = 1;
+    cpu->idx_reg = CPU_IDX_USE_Y;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
     cpu->cur_step = cpu_addr_abs_idx_write_high;
 }
 
-void cpu_addr_abs_idx_write_high(Cpu* cpu) {
+static void cpu_addr_abs_idx_write_high(Cpu* cpu) {
     // Read the high byte
     cpu_mem_read(cpu, cpu->pc++);
 
@@ -376,7 +358,7 @@ void cpu_addr_abs_idx_write_high(Cpu* cpu) {
     cpu->cur_step = cpu_addr_abs_idx_write_read;
 }
 
-void cpu_addr_abs_idx_write_read(Cpu* cpu) {
+static void cpu_addr_abs_idx_write_read(Cpu* cpu) {
     CpuByte high = cpu->data_bus;
     CpuWord low = cpu->addr_operand;
 
@@ -391,7 +373,7 @@ void cpu_addr_abs_idx_write_read(Cpu* cpu) {
     cpu->cur_step = cpu_addr_abs_idx_write;
 }
 
-void cpu_addr_abs_idx_write(Cpu* cpu) {
+static void cpu_addr_abs_idx_write(Cpu* cpu) {
     cpu_mem_read(cpu, cpu->addr_operand);
 
     if (cpu->pending_alu) {
@@ -402,7 +384,7 @@ void cpu_addr_abs_idx_write(Cpu* cpu) {
 }
 
 void cpu_addr_abs_idx_rmw_low_x(Cpu* cpu) {
-    cpu->idx_reg = 0;
+    cpu->idx_reg = CPU_IDX_USE_X;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
@@ -410,14 +392,14 @@ void cpu_addr_abs_idx_rmw_low_x(Cpu* cpu) {
 }
 
 void cpu_addr_abs_idx_rmw_low_y(Cpu* cpu) {
-    cpu->idx_reg = 1;
+    cpu->idx_reg = CPU_IDX_USE_Y;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
     cpu->cur_step = cpu_addr_abs_idx_rmw_high;
 }
 
-void cpu_addr_abs_idx_rmw_high(Cpu* cpu) {
+static void cpu_addr_abs_idx_rmw_high(Cpu* cpu) {
     // Read the high byte
     cpu_mem_read(cpu, cpu->pc++);
 
@@ -427,7 +409,7 @@ void cpu_addr_abs_idx_rmw_high(Cpu* cpu) {
     cpu->cur_step = cpu_addr_abs_idx_rmw_read1;
 }
 
-void cpu_addr_abs_idx_rmw_read1(Cpu* cpu) {
+static void cpu_addr_abs_idx_rmw_read1(Cpu* cpu) {
     CpuByte high = cpu->data_bus;
     CpuWord low = cpu->addr_operand;
 
@@ -442,21 +424,21 @@ void cpu_addr_abs_idx_rmw_read1(Cpu* cpu) {
     cpu->cur_step = cpu_addr_abs_idx_rmw_read2;
 }
 
-void cpu_addr_abs_idx_rmw_read2(Cpu* cpu) {
+static void cpu_addr_abs_idx_rmw_read2(Cpu* cpu) {
     // Re-read from effective address
     cpu_mem_read(cpu, cpu->addr_operand);
 
     cpu->cur_step = cpu_addr_abs_idx_rmw_write1;
 }
 
-void cpu_addr_abs_idx_rmw_write1(Cpu* cpu) {
+static void cpu_addr_abs_idx_rmw_write1(Cpu* cpu) {
     // Dummy write to effective address, then do operation after
     cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus);
 
     cpu->cur_step = cpu_addr_abs_idx_rmw_write2;
 }
 
-void cpu_addr_abs_idx_rmw_write2(Cpu* cpu) {
+static void cpu_addr_abs_idx_rmw_write2(Cpu* cpu) {
     // Operated value writes back
     if (cpu->pending_alu) {
         cpu->pending_alu(cpu);
@@ -466,7 +448,7 @@ void cpu_addr_abs_idx_rmw_write2(Cpu* cpu) {
 }
 
 void cpu_addr_zpg_idx_low_x(Cpu* cpu) {
-    cpu->idx_reg = 0;
+    cpu->idx_reg = CPU_IDX_USE_X;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
@@ -474,19 +456,19 @@ void cpu_addr_zpg_idx_low_x(Cpu* cpu) {
 }
 
 void cpu_addr_zpg_idx_low_y(Cpu* cpu) {
-    cpu->idx_reg = 1;
+    cpu->idx_reg = CPU_IDX_USE_Y;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
     cpu->cur_step = cpu_addr_zpg_idx_read1;
 }
 
-void cpu_addr_zpg_idx_read1(Cpu* cpu) {
+static void cpu_addr_zpg_idx_read1(Cpu* cpu) {
     cpu_mem_read(cpu, cpu->addr_operand);
     cpu->cur_step = cpu_addr_zpg_idx_read2;
 }
 
-void cpu_addr_zpg_idx_read2(Cpu* cpu) {
+static void cpu_addr_zpg_idx_read2(Cpu* cpu) {
     // Add index register and read effective address
     CpuByte effective_low = cpu->addr_bus + (cpu->idx_reg ? cpu->y : cpu->x);
     cpu_mem_read(cpu, effective_low);
@@ -500,7 +482,7 @@ void cpu_addr_zpg_idx_read2(Cpu* cpu) {
 }
 
 void cpu_addr_zpg_idx_rmw_low_x(Cpu* cpu) {
-    cpu->idx_reg = 0;
+    cpu->idx_reg = CPU_IDX_USE_X;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
@@ -508,19 +490,19 @@ void cpu_addr_zpg_idx_rmw_low_x(Cpu* cpu) {
 }
 
 void cpu_addr_zpg_idx_rmw_low_y(Cpu* cpu) {
-    cpu->idx_reg = 1;
+    cpu->idx_reg = CPU_IDX_USE_Y;
 
     // Read the low byte
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, cpu->pc++);
     cpu->cur_step = cpu_addr_zpg_idx_rmw_read1;
 }
 
-void cpu_addr_zpg_idx_rmw_read1(Cpu* cpu) {
+static void cpu_addr_zpg_idx_rmw_read1(Cpu* cpu) {
     cpu_mem_read(cpu, cpu->addr_operand);
     cpu->cur_step = cpu_addr_zpg_idx_rmw_read2;
 }
 
-void cpu_addr_zpg_idx_rmw_read2(Cpu* cpu) {
+static void cpu_addr_zpg_idx_rmw_read2(Cpu* cpu) {
     // Add index register and read effective address
     CpuByte effective_low = cpu->addr_bus + (cpu->idx_reg ? cpu->y : cpu->x);
     cpu_mem_read(cpu, effective_low);
@@ -528,13 +510,13 @@ void cpu_addr_zpg_idx_rmw_read2(Cpu* cpu) {
     cpu->cur_step = cpu_addr_zpg_idx_rmw_write1;
 }
 
-void cpu_addr_zpg_idx_rmw_write1(Cpu* cpu) {
+static void cpu_addr_zpg_idx_rmw_write1(Cpu* cpu) {
     // Dummy write to effective address before doing ALU
     cpu_mem_write(cpu, cpu->addr_bus, cpu->data_bus);
     cpu->cur_step = cpu_addr_zpg_idx_rmw_write2;
 }
 
-void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu) {
+static void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu) {
     // Do ALU instruction that also handles writing back to effective address
     if (cpu->pending_alu) {
         cpu->pending_alu(cpu);
@@ -550,7 +532,7 @@ void cpu_addr_pre_idx_indirect_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_pre_idx_indirect_read_ptr;
 }
 
-void cpu_addr_pre_idx_indirect_read_ptr(Cpu* cpu) {
+static void cpu_addr_pre_idx_indirect_read_ptr(Cpu* cpu) {
     // Dummy read on non-effective address
     cpu_mem_read(cpu, cpu->addr_operand);
 
@@ -560,14 +542,14 @@ void cpu_addr_pre_idx_indirect_read_ptr(Cpu* cpu) {
     cpu->cur_step = cpu_addr_pre_idx_indirect_fetch_low;
 }
 
-void cpu_addr_pre_idx_indirect_fetch_low(Cpu* cpu) {
+static void cpu_addr_pre_idx_indirect_fetch_low(Cpu* cpu) {
     // Read first byte in effective address
     cpu->ind_latch = cpu_mem_read(cpu, cpu->addr_operand);
 
     cpu->cur_step = cpu_addr_pre_idx_indirect_fetch_high;
 }
 
-void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu) {
+static void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu) {
     // Read second byte in effective address while wrapping in zero-page
     CpuWord next =
         (cpu->addr_operand & 0xFF00) |
@@ -579,7 +561,7 @@ void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu) {
     cpu->cur_step = cpu_addr_pre_idx_indirect_read;
 }
 
-void cpu_addr_pre_idx_indirect_read(Cpu* cpu) {
+static void cpu_addr_pre_idx_indirect_read(Cpu* cpu) {
     // Read from effective address
     cpu_mem_read(cpu, cpu->ind_latch);
 
@@ -596,14 +578,14 @@ void cpu_addr_post_idx_indirect_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_post_idx_indirect_fetch_low;
 }
 
-void cpu_addr_post_idx_indirect_fetch_low(Cpu* cpu) {
+static void cpu_addr_post_idx_indirect_fetch_low(Cpu* cpu) {
     // Fetch the low effective address
     cpu->ind_latch = cpu_mem_read(cpu, cpu->addr_operand);
 
     cpu->cur_step = cpu_addr_post_idx_indirect_fetch_high;
 }
 
-void cpu_addr_post_idx_indirect_fetch_high(Cpu* cpu) {
+static void cpu_addr_post_idx_indirect_fetch_high(Cpu* cpu) {
     // Read second byte in effective address while wrapping in zero-page
     CpuWord next =
         (cpu->addr_operand & 0xFF00) |
@@ -617,7 +599,7 @@ void cpu_addr_post_idx_indirect_fetch_high(Cpu* cpu) {
     cpu->cur_step = cpu_addr_post_idx_indirect_read1;
 }
 
-void cpu_addr_post_idx_indirect_read1(Cpu* cpu) {
+static void cpu_addr_post_idx_indirect_read1(Cpu* cpu) {
     CpuByte high = cpu->data_bus;
     CpuWord low = cpu->ind_latch;
 
@@ -640,7 +622,7 @@ void cpu_addr_post_idx_indirect_read1(Cpu* cpu) {
     cpu->cur_step = cpu_addr_post_idx_indirect_read2;
 }
 
-void cpu_addr_post_idx_indirect_read2(Cpu* cpu) {
+static void cpu_addr_post_idx_indirect_read2(Cpu* cpu) {
     cpu_mem_read(cpu, cpu->ind_latch);
 
     if (cpu->pending_alu) {
@@ -656,14 +638,14 @@ void cpu_addr_post_idx_indirect_write_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_post_idx_indirect_write_fetch_low;
 }
 
-void cpu_addr_post_idx_indirect_write_fetch_low(Cpu* cpu) {
+static void cpu_addr_post_idx_indirect_write_fetch_low(Cpu* cpu) {
     // Fetch the low effective address
     cpu->ind_latch = cpu_mem_read(cpu, cpu->addr_operand);
 
     cpu->cur_step = cpu_addr_post_idx_indirect_write_fetch_high;
 }
 
-void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu) {
+static void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu) {
     // Read second byte in effective address while wrapping in zero-page
     CpuWord next =
         (cpu->addr_operand & 0xFF00) |
@@ -677,7 +659,7 @@ void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu) {
     cpu->cur_step = cpu_addr_post_idx_indirect_write_read;
 }
 
-void cpu_addr_post_idx_indirect_write_read(Cpu* cpu) {
+static void cpu_addr_post_idx_indirect_write_read(Cpu* cpu) {
     CpuByte high = cpu->data_bus;
     CpuWord low = cpu->ind_latch;
 
@@ -692,7 +674,7 @@ void cpu_addr_post_idx_indirect_write_read(Cpu* cpu) {
     cpu->cur_step = cpu_addr_post_idx_indirect_write_write;
 }
 
-void cpu_addr_post_idx_indirect_write_write(Cpu* cpu) {
+static void cpu_addr_post_idx_indirect_write_write(Cpu* cpu) {
     cpu_mem_read(cpu, cpu->ind_latch);
 
     if (cpu->pending_alu) {
@@ -717,7 +699,7 @@ void cpu_addr_relative_fetch_offset(Cpu* cpu) {
     }
 }
 
-void cpu_addr_relative_dummy_read(Cpu* cpu) {
+static void cpu_addr_relative_dummy_read(Cpu* cpu) {
     // Dummy read from PC immediately
     cpu_mem_read(cpu, cpu->pc);
 
@@ -740,7 +722,7 @@ void cpu_addr_relative_dummy_read(Cpu* cpu) {
     cpu->cur_step = cpu_addr_relative_invalid_read;
 }
 
-void cpu_addr_relative_invalid_read(Cpu* cpu) {
+static void cpu_addr_relative_invalid_read(Cpu* cpu) {
     // Read on invalid address and then fetch from correct address
     cpu_mem_read(cpu, cpu->addr_operand);
     cpu->cur_step = cpu_fetch_opcode;
@@ -752,21 +734,21 @@ void cpu_addr_brk_dummy_read(Cpu* cpu) {
     cpu->cur_step = cpu_addr_brk_push1;
 }
 
-void cpu_addr_brk_push1(Cpu* cpu) {
+static void cpu_addr_brk_push1(Cpu* cpu) {
     // Push PCH onto the stack
     cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->pc >> 8);
 
     cpu->cur_step = cpu_addr_brk_push2;
 }
 
-void cpu_addr_brk_push2(Cpu* cpu) {
+static void cpu_addr_brk_push2(Cpu* cpu) {
     // Push PCL onto the stack
     cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->pc & 0x00FF);
 
     cpu->cur_step = cpu_addr_brk_push3;
 }
 
-void cpu_addr_brk_push3(Cpu* cpu) {
+static void cpu_addr_brk_push3(Cpu* cpu) {
     // Push SR onto the stack
     cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->sr | CPU_FLAG_B);
 
@@ -776,14 +758,14 @@ void cpu_addr_brk_push3(Cpu* cpu) {
     cpu->cur_step = cpu_addr_brk_vec_low_fetch;
 }
 
-void cpu_addr_brk_vec_low_fetch(Cpu* cpu) {
+static void cpu_addr_brk_vec_low_fetch(Cpu* cpu) {
     // Fetch low byte from IRQ vector
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, CPU_MEM_IRQ_VEC_ADDR_L);
 
     cpu->cur_step = cpu_addr_brk_vec_high_fetch;
 }
 
-void cpu_addr_brk_vec_high_fetch(Cpu* cpu) {
+static void cpu_addr_brk_vec_high_fetch(Cpu* cpu) {
     // Fetch high byte from IRQ vector
     cpu->pc = ((CpuWord)cpu_mem_read(cpu, CPU_MEM_IRQ_VEC_ADDR_H) << 8) | cpu->addr_operand;
 
@@ -796,26 +778,26 @@ void cpu_addr_rti_dummy_read(Cpu* cpu) {
     cpu->cur_step = cpu_addr_rti_inc_sp;
 }
 
-void cpu_addr_rti_inc_sp(Cpu* cpu) {
+static void cpu_addr_rti_inc_sp(Cpu* cpu) {
     // Increment the stack pointer adter read on empty stack slot
     cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++);
     cpu->cur_step = cpu_addr_rti_pull1;
 }
 
-void cpu_addr_rti_pull1(Cpu* cpu) {
+static void cpu_addr_rti_pull1(Cpu* cpu) {
     // Pull the SR off stack
     // Ignore the B flag and force U to 1
     cpu->sr = (cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++) & ~CPU_FLAG_B) | CPU_FLAG_U;
     cpu->cur_step = cpu_addr_rti_pull2;
 }
 
-void cpu_addr_rti_pull2(Cpu* cpu) {
+static void cpu_addr_rti_pull2(Cpu* cpu) {
     // Pull PCL
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++);
     cpu->cur_step = cpu_addr_rti_pull3;
 }
 
-void cpu_addr_rti_pull3(Cpu* cpu) {
+static void cpu_addr_rti_pull3(Cpu* cpu) {
     // Pull PCH
     cpu->pc = ((CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp) << 8) | cpu->addr_operand;
     cpu->cur_step = cpu_fetch_opcode;
@@ -827,25 +809,25 @@ void cpu_addr_jsr_fetch_low(Cpu* cpu) {
     cpu->cur_step = cpu_addr_jsr_dummy;
 }
 
-void cpu_addr_jsr_dummy(Cpu* cpu) {
+static void cpu_addr_jsr_dummy(Cpu* cpu) {
     // Some internal operation. Just read stack
     cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp);
     cpu->cur_step = cpu_addr_jsr_push1;
 }
 
-void cpu_addr_jsr_push1(Cpu* cpu) {
+static void cpu_addr_jsr_push1(Cpu* cpu) {
     // Push PCH onto the stack
     cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->pc >> 8);
     cpu->cur_step = cpu_addr_jsr_push2;
 }
 
-void cpu_addr_jsr_push2(Cpu* cpu) {
+static void cpu_addr_jsr_push2(Cpu* cpu) {
     // Push PCL onto the stack
     cpu_mem_write(cpu, CPU_MEM_STACK_START + cpu->sp--, cpu->pc & 0x00FF);
     cpu->cur_step = cpu_addr_jsr_fetch_high;
 }
 
-void cpu_addr_jsr_fetch_high(Cpu* cpu) {
+static void cpu_addr_jsr_fetch_high(Cpu* cpu) {
     // Read high byte to move PC to effective address
     cpu->pc = ((CpuWord)cpu_mem_read(cpu, cpu->pc) << 8) | cpu->addr_operand;
     cpu->cur_step = cpu_fetch_opcode;
@@ -857,25 +839,25 @@ void cpu_addr_rts_dummy1(Cpu* cpu) {
     cpu->cur_step = cpu_addr_rts_dummy2;
 }
 
-void cpu_addr_rts_dummy2(Cpu* cpu) {
+static void cpu_addr_rts_dummy2(Cpu* cpu) {
     // Dummy read on stack
     cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++);
     cpu->cur_step = cpu_addr_rts_pull1;
 }
 
-void cpu_addr_rts_pull1(Cpu* cpu) {
+static void cpu_addr_rts_pull1(Cpu* cpu) {
     // Pull PCL off stack
     cpu->addr_operand = (CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp++);
     cpu->cur_step = cpu_addr_rts_pull2;
 }
 
-void cpu_addr_rts_pull2(Cpu* cpu) {
+static void cpu_addr_rts_pull2(Cpu* cpu) {
     // Pull PCH off stack
     cpu->pc = ((CpuWord)cpu_mem_read(cpu, CPU_MEM_STACK_START + cpu->sp) << 8) | cpu->addr_operand;
     cpu->cur_step = cpu_addr_rts_inc;
 }
 
-void cpu_addr_rts_inc(Cpu* cpu) {
+static void cpu_addr_rts_inc(Cpu* cpu) {
     // Fix off by one in stack
     cpu_mem_read(cpu, cpu->pc++);
     cpu->cur_step = cpu_fetch_opcode;
