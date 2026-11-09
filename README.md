@@ -1,6 +1,6 @@
-# 6502-emu
+# kikuyu
 
-Basic NMOS 6502 Emulator implemented in C.
+Kikuyu is a basic NMOS 6502 Emulator implemented in C.
 
 # Features (WIP)
 
@@ -15,7 +15,7 @@ In the root directory of the project, compile and run the emulator with,
 
 ```
 make
-./6502-emu
+./kikuyu
 ```
 
 Compile the test suite and run all tests with,
