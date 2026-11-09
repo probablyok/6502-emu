@@ -1,5 +1,5 @@
-#ifndef CPU_ALU_
-#define CPU_ALU_
+#ifndef CPU_ALU_H
+#define CPU_ALU_H
 
 #include "cpu_state.h"
 
@@ -258,4 +258,5 @@ void cpu_alu_bne(Cpu* cpu);
 /// @brief BEQ Insturction ALU logic: Set internal branch flag if Z=1
 /// @param cpu the emulated 6502 CPU
 void cpu_alu_beq(Cpu* cpu);
-#endif
+
+#endif // CPU_ALU_H

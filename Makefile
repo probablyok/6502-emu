@@ -1,6 +1,6 @@
 # Compiler flags
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra -Wpedantic
+CFLAGS := -std=c99 -Wall -Wextra -Wpedantic -O2
 DEBUG := -g
 LDFLAGS :=
 
@@ -14,7 +14,7 @@ TEST_DIR := tests
 CFLAGS += -I$(INC_DIR)
 
 # Target executable and src/obj mappings
-TARGET := 6502-emu
+TARGET := kikuyu
 TEST_TARGET := run_tests
 
 # Sources

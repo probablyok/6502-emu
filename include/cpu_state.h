@@ -11,23 +11,23 @@ typedef struct Cpu {
     CpuWord pc;
 
     // Internal latches
-    CpuByte opcode;
-    CpuWord addr_bus;
-    CpuByte data_bus;
-    CpuByte is_read;
+    CpuByte opcode;   // Stores opcode currently being worked on
+    CpuWord addr_bus; // Stores the current address
+    CpuByte data_bus; // Stores the data located at the current address
+    CpuByte is_read;  // Flag specifying whether the CPU is reading/writing to current address
 
-    // State machine pointer
-    void (*cur_step)(struct Cpu*);
-    void (*pending_alu)(struct Cpu*);
-
-    // Keep track of multi-cycle address reads
+    // Keep track of multi-cycle address reads from the operand(s)
     CpuWord addr_operand;
     // Indirect addressing write location before setting PC
     CpuWord ind_latch;
     // Flag for branch conditions that branching ALU instructions set
     CpuByte do_branch;
-    // Flag for indexed addressing. 0 for X reg, 1 for Y reg
+    // Flag for indexed addressing
     CpuByte idx_reg;
+
+    // State machine pointer
+    void (*cur_step)(struct Cpu*);
+    void (*pending_alu)(struct Cpu*);
 
     // CPU Memory
     CpuByte mem[CPU_MEM_MAX_SIZE];

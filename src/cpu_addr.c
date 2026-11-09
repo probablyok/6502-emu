@@ -5,6 +5,89 @@
 #include "cpu_types.h"
 #include <stdlib.h>
 
+// Inter-execution cycle logic that should never be called outside of the addressing pipeline (i.e.
+// only ever call the exposed, first instruction function)
+void cpu_addr_indirect_jmp_high(Cpu* cpu);
+void cpu_addr_indirect_jmp_read1(Cpu* cpu);
+void cpu_addr_indirect_jmp_read2(Cpu* cpu);
+
+void cpu_addr_absolute_jmp_high(Cpu* cpu);
+
+void cpu_addr_absolute_high(Cpu* cpu);
+void cpu_addr_aboslute(Cpu* cpu);
+
+void cpu_addr_absolute_rmw_high(Cpu* cpu);
+void cpu_addr_absolute_rmw_read(Cpu* cpu);
+void cpu_addr_absolute_rmw_write(Cpu* cpu);
+void cpu_addr_absolute_rmw_write2(Cpu* cpu);
+
+void cpu_addr_zpg(Cpu* cpu);
+
+void cpu_addr_zpg_rmw_read(Cpu* cpu);
+void cpu_addr_zpg_rmw_write(Cpu* cpu);
+void cpu_addr_zpg_rmw_write2(Cpu* cpu);
+
+void cpu_addr_abs_idx_high(Cpu* cpu);
+void cpu_addr_abs_idx_read1(Cpu* cpu);
+void cpu_addr_abs_idx_read2(Cpu* cpu);
+
+void cpu_addr_abs_idx_write_high(Cpu* cpu);
+void cpu_addr_abs_idx_write_read(Cpu* cpu);
+void cpu_addr_abs_idx_write(Cpu* cpu);
+
+void cpu_addr_abs_idx_rmw_high(Cpu* cpu);
+void cpu_addr_abs_idx_rmw_read1(Cpu* cpu);
+void cpu_addr_abs_idx_rmw_read2(Cpu* cpu);
+void cpu_addr_abs_idx_rmw_write1(Cpu* cpu);
+void cpu_addr_abs_idx_rmw_write2(Cpu* cpu);
+
+void cpu_addr_zpg_idx_read1(Cpu* cpu);
+void cpu_addr_zpg_idx_read2(Cpu* cpu);
+
+void cpu_addr_zpg_idx_rmw_read1(Cpu* cpu);
+void cpu_addr_zpg_idx_rmw_read2(Cpu* cpu);
+void cpu_addr_zpg_idx_rmw_write1(Cpu* cpu);
+void cpu_addr_zpg_idx_rmw_write2(Cpu* cpu);
+
+void cpu_addr_pre_idx_indirect_read_ptr(Cpu* cpu);
+void cpu_addr_pre_idx_indirect_fetch_low(Cpu* cpu);
+void cpu_addr_pre_idx_indirect_fetch_high(Cpu* cpu);
+void cpu_addr_pre_idx_indirect_read(Cpu* cpu);
+
+void cpu_addr_post_idx_indirect_fetch_low(Cpu* cpu);
+void cpu_addr_post_idx_indirect_fetch_high(Cpu* cpu);
+void cpu_addr_post_idx_indirect_read1(Cpu* cpu);
+void cpu_addr_post_idx_indirect_read2(Cpu* cpu);
+
+void cpu_addr_post_idx_indirect_write_fetch_low(Cpu* cpu);
+void cpu_addr_post_idx_indirect_write_fetch_high(Cpu* cpu);
+void cpu_addr_post_idx_indirect_write_read(Cpu* cpu);
+void cpu_addr_post_idx_indirect_write_write(Cpu* cpu);
+
+void cpu_addr_relative_dummy_read(Cpu* cpu);
+void cpu_addr_relative_invalid_read(Cpu* cpu);
+
+void cpu_addr_brk_push1(Cpu* cpu);
+void cpu_addr_brk_push2(Cpu* cpu);
+void cpu_addr_brk_push3(Cpu* cpu);
+void cpu_addr_brk_vec_low_fetch(Cpu* cpu);
+void cpu_addr_brk_vec_high_fetch(Cpu* cpu);
+
+void cpu_addr_rti_inc_sp(Cpu* cpu);
+void cpu_addr_rti_pull1(Cpu* cpu);
+void cpu_addr_rti_pull2(Cpu* cpu);
+void cpu_addr_rti_pull3(Cpu* cpu);
+
+void cpu_addr_jsr_dummy(Cpu* cpu);
+void cpu_addr_jsr_push1(Cpu* cpu);
+void cpu_addr_jsr_push2(Cpu* cpu);
+void cpu_addr_jsr_fetch_high(Cpu* cpu);
+
+void cpu_addr_rts_dummy2(Cpu* cpu);
+void cpu_addr_rts_pull1(Cpu* cpu);
+void cpu_addr_rts_pull2(Cpu* cpu);
+void cpu_addr_rts_inc(Cpu* cpu);
+
 void cpu_fetch_opcode(Cpu* cpu) {
     // Read opcode from PC
     cpu->opcode = cpu_mem_read(cpu, cpu->pc++);

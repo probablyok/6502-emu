@@ -7,19 +7,25 @@
 #define CPU_MEM_NUM_LEGAL_OPCODES 151
 
 // Important memory locations
+#define CPU_MEM_NMI_VEC_ADDR_L 0xFFFA
+#define CPU_MEM_NMI_VEC_ADDR_H 0xFFFB
+
 #define CPU_MEM_RESET_VEC_ADDR_H 0xFFFC
 #define CPU_MEM_RESET_VEC_ADDR_L 0xFFFD
+
 #define CPU_MEM_IRQ_VEC_ADDR_L 0xFFFE
 #define CPU_MEM_IRQ_VEC_ADDR_H 0xFFFF
+
 #define CPU_MEM_STACK_START 0x0100
 #define CPU_MEM_STACK_END 0x01FF
 
 // Flags
 #define CPU_IS_READ 1
 #define CPU_IS_WRITE 0
+#define CPU_IDX_USE_Y 1
+#define CPU_IDX_USE_X 0
 
-// Op codes
-
+// Op-codes
 // Indirect addressing
 #define CPU_OP_JMP_INDIRECT 0x6C
 
