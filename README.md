@@ -42,7 +42,7 @@ make clean-tests
 # References
 
 - [6502 Instruction Set](https://www.masswerk.at/6502/6502_instruction_set.html)
-  - Contains details about the 6602 ISA
+  - Contains details about the 6502 ISA
   - Explains addressing modes, register purposes, memory, etc.
 - [65x02 Processor Tests](https://github.com/SingleStepTests/65x02)
   - Language agnostic JSON test cases for each 6502 opcode
