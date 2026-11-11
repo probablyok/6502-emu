@@ -11,14 +11,21 @@ typedef struct {
                      // base 10)
 } CmdArgs;
 
-/// Alias to avoid verbosity
+// Alias to avoid verbosity
 typedef struct option Option;
 
+/// @brief Helper for displaying the helper message to avoid redundancy
+/// @param prog_name Name of the program. Extract if with `argv[0]`
+/// @param steam The output buffer being written to (usually `stderr` or `stdout`)
 void print_usage(char* prog_name, FILE* stream) {
     fprintf(stream, "Usage: %s [options] bin_file\n", prog_name);
 }
 
-int main(int argc, char** argv) {
+/// @brief Handler for processing and setting up emulator with CLI args
+/// @param argc The number of CLI args
+/// @param argv List of character buffers with CLI args in order
+//  @param cmd_args Structure holding processed arguments for emulator configuration
+void handle_args(int argc, char** argv, CmdArgs* cmd_args) {
     // Parse command line arguments
     int opt;
     int opt_idx = 0;
@@ -30,24 +37,25 @@ int main(int argc, char** argv) {
         {0, 0, 0, 0},
     };
 
-    CmdArgs cmd_args = {
-        .bin_file = NULL,
-        .bin_offset = 0,
-        .num_cycles = 100,
-    };
+    // Set defaults for processed cmd args
+    cmd_args->bin_file = NULL;
+    cmd_args->bin_offset = 0;
+    cmd_args->num_cycles = 100;
 
     // For converting strings
     char* endptr;
     long cycles, offset;
 
+    // Check all CLI args
     while ((opt = getopt_long(argc, argv, "o:c:h", long_options, &opt_idx)) != -1) {
         endptr = NULL;
         switch (opt) {
         case 'o':
+            // Convert the string rep. of cycles to long
             offset = strtol(optarg, &endptr, 16);
             if (optarg && *optarg != '\0' && *endptr == '\0') {
                 // Conversion successful
-                cmd_args.bin_offset = offset;
+                cmd_args->bin_offset = offset;
                 break;
             }
             fprintf(stderr, "Error: Invalid hex offset '%s'\n", optarg);
@@ -57,7 +65,7 @@ int main(int argc, char** argv) {
             cycles = strtol(optarg, &endptr, 10);
             if (optarg && *optarg != '\0' && *endptr == '\0') {
                 // Conversion successful
-                cmd_args.num_cycles = cycles;
+                cmd_args->num_cycles = cycles;
                 break;
             }
             fprintf(stderr, "Error: Invalid cycle count '%s'\n", optarg);
@@ -79,12 +87,17 @@ int main(int argc, char** argv) {
 
     // Get binary file
     if (optind < argc) {
-        cmd_args.bin_file = argv[optind];
+        cmd_args->bin_file = argv[optind];
     } else {
         fprintf(stderr, "Error: Missing required binary file (-b / --bin)\n");
         print_usage(argv[0], stderr);
         exit(EXIT_FAILURE);
     }
+}
+
+int main(int argc, char** argv) {
+    CmdArgs cmd_args;
+    handle_args(argc, argv, &cmd_args);
 
     return 0;
 }
