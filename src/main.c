@@ -1,3 +1,6 @@
+#include "cpu_state.h"
+#include "safe_wrappers.h"
+
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +42,7 @@ void handle_args(int argc, char** argv, CmdArgs* cmd_args) {
 
     // Set defaults for processed cmd args
     cmd_args->bin_file = NULL;
-    cmd_args->bin_offset = 0;
+    cmd_args->bin_offset = 0x8000;
     cmd_args->num_cycles = 100;
 
     // For converting strings
@@ -96,8 +99,15 @@ void handle_args(int argc, char** argv, CmdArgs* cmd_args) {
 }
 
 int main(int argc, char** argv) {
+    // Get emulation parameters
     CmdArgs cmd_args;
     handle_args(argc, argv, &cmd_args);
 
+    // Create CPU
+    Cpu cpu = {0};
+    // Load ROM into CPU
+    if (safe_read_file_bin(cmd_args.bin_file, &cpu, cmd_args.bin_offset)) {
+        exit(EXIT_FAILURE); // Crash on I/O error
+    }
     return 0;
 }
