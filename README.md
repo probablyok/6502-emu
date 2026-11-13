@@ -2,21 +2,36 @@
 
 Kikuyu is a basic NMOS 6502 Emulator implemented in C.
 
-# Features (WIP)
+# Disclaimer
 
-- Cycle level accurate emulation
-- Test suite for each instruction
-- ROM loading support in CLI
-- GUI
+Kikuyu is a WIP emulator mainly intended for learning about the functionality of an NMOS 6502 CPU. This project is not open to pull requests, but please feel free to fork and use within the license specifications. 
 
 # Usage
 
+
+## Emulator
 In the root directory of the project, compile and run the emulator with,
 
 ```
 make
-./kikuyu
+./kikuyu path_to_bin
 ```
+
+where `path_to_bin` in some 6502 assembled binary the emulator runs. You can choose the offset into memory where the program is placed with `-o` (`0x8000` by default) and the number of cycles to execute for with `-c` (100 by default). The binary file provided does does not need to be padded to 16KiB. If the `RESET` vector is not set by the provided file, its set to the memory offset. 
+
+Further information can be derived by running,
+
+```
+./kikuyu --help
+```
+
+You can clean any object/executable files made during the compilation with,
+
+```
+make clean
+```
+
+## Opcode Test Suite
 
 Compile the test suite and run all tests with,
 
