@@ -2,7 +2,9 @@
 #include "cpu_addr.h"
 #include "cpu_alu.h"
 #include "cpu_macros.h"
+#include "cpu_mem.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 const CpuInstruction INSTRUCTION_TABLE[256] = {
@@ -238,3 +240,28 @@ void cpu_status_reg_update_interrupt_disable(Cpu* cpu, int data) {
 int cpu_inst_implemented(CpuByte opcode) { return INSTRUCTION_TABLE[opcode].first_step == NULL; }
 
 void cpu_tick(Cpu* cpu) { cpu->cur_step(cpu); }
+
+void cpu_reset(Cpu* cpu) {
+    // Fetch PC from RESET vector
+    cpu->pc = ((CpuWord)cpu_mem_read(cpu, CPU_MEM_RESET_VEC_ADDR_H) << 8 |
+               cpu_mem_read(cpu, CPU_MEM_RESET_VEC_ADDR_L));
+    cpu->sp = 0xFD;                    // Stack pointer init
+    cpu->sr = CPU_FLAG_U | CPU_FLAG_I; // Disable IRQs and set unused flag
+    cpu->cur_step = cpu_fetch_opcode;  // Start fetch-decode-execute
+}
+
+void cpu_disp_state(Cpu* cpu) {
+    // Core registers
+    printf("  Registers: PC:0x%04X A:0x%02X X:0x%02X Y:0x%02X SP:0x%02X\n", cpu->pc, cpu->a, cpu->x,
+           cpu->y, cpu->sp);
+
+    // Status register
+    printf("  Status:    0x%02X [N:%d V:%d U:%d B:%d D:%d I:%d C:%d]\n", cpu->sr,
+           !!(cpu->sr & CPU_FLAG_N), !!(cpu->sr & CPU_FLAG_V), !!(cpu->sr & CPU_FLAG_U),
+           !!(cpu->sr & CPU_FLAG_B), !!(cpu->sr & CPU_FLAG_D), !!(cpu->sr & CPU_FLAG_I),
+           !!(cpu->sr & CPU_FLAG_C));
+
+    // Buses
+    printf("  Buses:     Addr:0x%04X Data:0x%02X Opcode:0x%02X R/W:%s\n", cpu->addr_bus,
+           cpu->data_bus, cpu->opcode, cpu->is_read ? "R" : "W");
+}

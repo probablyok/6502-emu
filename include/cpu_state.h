@@ -91,4 +91,12 @@ void cpu_status_reg_update_decimal(Cpu* cpu, int data);
 /// @param condition The data to set
 void cpu_status_reg_update_interrupt_disable(Cpu* cpu, int data);
 
+/// @brief Emulate 7-cycle start-up sequence for CPU and begin fetch-decode-execute logic
+/// @param cpu The emulated 6502 CPU
+void cpu_reset(Cpu* cpu);
+
+/// @brief Print representation of internal CPU state to the CLI
+/// @param cpu The emulated 6502 CPU
+void cpu_disp_state(Cpu* cpu);
+
 #endif // CPU_STATE_H
